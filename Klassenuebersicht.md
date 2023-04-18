@@ -26,3 +26,10 @@ removeTask
 getTaskByTitle
 getTasksByTagName
 updateTask
+
+
+
+Application:
+
+Attribute:
+Methoden: saveProjects, loadProjects
