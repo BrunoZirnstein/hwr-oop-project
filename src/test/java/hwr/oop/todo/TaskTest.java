@@ -12,9 +12,10 @@ class TaskTest {
     @Test
     void createTaskTest() {
         ArrayList<TaskTag> list = new ArrayList<>();
+        Project project = new Project("Housing", null);
         list.add(new TaskTag("phone"));
 
-        Task task = new Task("Water plants", list, "Water all the plants in the living room and in the bedroom.", LocalDate.of(2023, 05, 30), TaskStatus.TODO, TaskPriority.HIGH);
+        Task task = new Task("Water plants", list, project,"Water all the plants in the living room and in the bedroom.", LocalDate.of(2023, 05, 30), TaskStatus.TODO, TaskPriority.HIGH);
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(list);
         assertThat(task.description()).isEqualTo("Water all the plants in the living room and in the bedroom.");
