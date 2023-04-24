@@ -1,5 +1,8 @@
 package hwr.oop.todo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class MainMenu extends Menu {
 	private final ProjectMenu projectMenu;
 	
@@ -8,7 +11,7 @@ public class MainMenu extends Menu {
 		projectMenu = new ProjectMenu();
 	}
 	
-	public void open() {
+	public void open() throws FileNotFoundException {
 		System.out.println("Welcome to the ultimate-u-never-forget ToDo List");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("\n[MainMenu]");
@@ -21,12 +24,15 @@ public class MainMenu extends Menu {
 		handleInput(input.nextInt());
 	}
 	
-	private void handleInput(int input)
-	{
+	private void handleInput(int input) throws FileNotFoundException {
 		switch(input)
 		{
 			case 1:
-				projectMenu.openCreate();
+				try {
+					projectMenu.openCreate();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
 				break;
 			case 2:
 				break;
