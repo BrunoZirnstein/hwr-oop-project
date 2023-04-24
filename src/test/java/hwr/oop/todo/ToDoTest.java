@@ -24,6 +24,10 @@ class ToDoTest {
 
     @Test
     void taskByTitle() {
+        ToDo list = new ToDo("Jason");
+        Task task1 = new Task("Test",null,null,null,null,null, null);
+        list.addTask(task1);
+        assertThat(task1).isEqualTo(list.taskByTitle("Test"));
     }
 
 
@@ -48,6 +52,11 @@ class ToDoTest {
 
     @Test
     void taskByProject() {
+        ArrayList<Task> list = new ArrayList<Task>();
+        Project project = new Project("TestProject", LocalDate.of(2023,4,4));
+        ToDo user = new ToDo("Jason");
+        user.addTask(new Task("Baden", null, project, null, null, null, null));
+        assertThat(user.tasks().get(0)).isEqualTo(user.taskByProject("TestProject").get(0));
     }
 
     @Test
