@@ -15,6 +15,14 @@ public class ToDo {
         projects = new ArrayList<>();
     }
 
+    public List<Task> tasks() {
+        return tasks;
+    }
+
+    public List<Project> projects() {
+        return projects;
+    }
+
     public String user() {
         return user;
     }
@@ -36,9 +44,10 @@ public class ToDo {
         projects.add(project);
     }
 
-    public List<Task> tasks() {
-        return tasks;
+    public void deleteProject(Project project) {
+        projects.remove(project);
     }
+
     public Task taskByTitle(String title) {
         for (Task task: tasks) {
             if (Objects.equals(task.title(), title)) {

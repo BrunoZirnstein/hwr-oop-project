@@ -28,6 +28,11 @@ class ToDoTest {
         Task task1 = new Task.Builder("Test").build();
         list.addTask(task1);
         assertThat(task1).isEqualTo(list.taskByTitle("Test"));
+        list.removeTaskByObject(task1);
+        assertThat(task1).isNotIn(list);
+        list.addTask(task1);
+        list.removeTaskByName("Test");
+        assertThat(task1).isNotIn(list);
     }
 
 
@@ -42,9 +47,6 @@ class ToDoTest {
         user.addTask(new Task.Builder("Amen").tags(taglist).build());
         user.addTask(new Task.Builder("Bamen").tags(taglist).build());
         user.addTask(new Task.Builder("Damen").tags(taglist2).build());
-        System.out.println(user.taskByTagname("1"));
-        System.out.println(user.taskByTitle("Amen"));
-        System.out.println(user.taskByTitle("Bamen"));
         assertThat(user.taskByTagname("1")).contains(user.taskByTitle("Amen"), user.taskByTitle("Bamen"));
         assertThat(user.taskByTagname("3")).contains(user.taskByTitle("Damen"));
     }
@@ -53,7 +55,11 @@ class ToDoTest {
     void taskByProject() {
         Project project = new Project("TestProject", LocalDate.of(2023, 4, 4));
         ToDo user = new ToDo("Jason");
+        user.createProject(project);
+        assertThat(user.projects()).contains(project);
         user.addTask(new Task.Builder("Namen").project(project).build());
         assertThat(user.tasks().get(0)).isEqualTo(user.taskByProject("TestProject").get(0));
+        user.deleteProject(project);
+        assertThat(user.projects()).isEmpty();
     }
 }
