@@ -13,6 +13,7 @@ class ToDoTest {
     @Test
     void testTaskMethods() {
         ToDo list = new ToDo("Jason");
+        assertThat(list.user()).isEqualTo("Jason");
         Task task1 = new Task.Builder("Test").build();
         list.addTask(task1);
         assertThat(list.tasks().get(0)).isEqualTo(task1);
@@ -32,10 +33,9 @@ class ToDoTest {
 
     @Test
     void taskByTagname() {
-        ArrayList<Task> list = new ArrayList<Task>();
         ToDo user = new ToDo("Jason");
-        ArrayList<TaskTag> taglist = new ArrayList<TaskTag>();
-        ArrayList<TaskTag> taglist2 = new ArrayList<TaskTag>();
+        ArrayList<TaskTag> taglist = new ArrayList<>();
+        ArrayList<TaskTag> taglist2 = new ArrayList<>();
         taglist.add(new TaskTag("1"));
         taglist.add(new TaskTag("2"));
         taglist2.add(new TaskTag("3"));
@@ -51,14 +51,9 @@ class ToDoTest {
 
     @Test
     void taskByProject() {
-        ArrayList<Task> list = new ArrayList<Task>();
-        Project project = new Project("TestProject", LocalDate.of(2023,4,4));
+        Project project = new Project("TestProject", LocalDate.of(2023, 4, 4));
         ToDo user = new ToDo("Jason");
         user.addTask(new Task.Builder("Namen").project(project).build());
         assertThat(user.tasks().get(0)).isEqualTo(user.taskByProject("TestProject").get(0));
-    }
-
-    @Test
-    void updateTask() {
     }
 }

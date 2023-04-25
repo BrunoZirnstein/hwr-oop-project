@@ -1,6 +1,7 @@
 package hwr.oop.todo;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ToDo {
@@ -24,7 +25,7 @@ public class ToDo {
         this.tasks.remove(task);
     }
 
-    public ArrayList<Task> tasks() {
+    public List<Task> tasks() {
         return this.tasks;
     }
     public Task taskByTitle(String title) {
@@ -35,8 +36,8 @@ public class ToDo {
         }
         return null;
     }
-    public ArrayList<Task> taskByTagname(String tagname) {
-        ArrayList<Task> list = new ArrayList<Task>();
+    public List<Task> taskByTagname(String tagname) {
+        ArrayList<Task> list = new ArrayList<>();
         for (Task task: this.tasks) {
             for(TaskTag tag: task.tags()) {
                 if (Objects.equals(tagname, tag.title())) {
@@ -47,8 +48,8 @@ public class ToDo {
         return list;
     }
 
-    public ArrayList<Task> taskByProject(String projectname) {
-        ArrayList<Task> list = new ArrayList<Task>();
+    public List<Task> taskByProject(String projectname) {
+        ArrayList<Task> list = new ArrayList<>();
         for (Task task: this.tasks) {
             if (Objects.equals(projectname, task.project().title())) {
                 list.add(task);
@@ -56,9 +57,5 @@ public class ToDo {
 
         }
         return list;
-    }
-
-    public Task updateTask() {
-        return null;
     }
 }
