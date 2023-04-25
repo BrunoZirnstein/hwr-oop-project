@@ -16,12 +16,16 @@ This repository contains a student project created for an ongoing lecture on obj
 
 [TODO]: # (For each feature implemented, add a row to the table!)
 
-| Number | Feature | Tests | Responsible |
+| Number | Feature | Done | Responsible |
 |--------|---------|-------|-------------|
 | 1      | Tag Klasse       |   ✔️   | Niklas            |
-| 2      | Hauptmenü       |    ✔️  | Thomas            |
+| 2      | Hauptmenü       |      | Thomas            |
 | 3      | Task Klasse       |   ✔️   | Bruno            |
 | 4      | Projekt Klasse       |   ✔️   | Jason & Frauke            |
+| 5      | CSV Read & Write       |   ✔️   | Niklas            |
+| 6      | Task Klasse - optionale Parameter mit builder pattern      |   ✔️   | Bruno            |
+| 7      | Projekt Klasse anpassen       |   ✔️   | Jason & Frauke            |
+| 8      | ToDo Liste Klasse       |   ✔️   | Jason & Frauke            |
 
 
 
