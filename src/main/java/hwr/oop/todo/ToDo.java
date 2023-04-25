@@ -6,30 +6,36 @@ import java.util.Objects;
 
 public class ToDo {
     private String user;
-    private ArrayList<Task> tasks;
+    private List<Task> tasks;
+    private List<Project> projects;
 
     public ToDo(String user) {
         this.user = user;
-        this.tasks = new ArrayList<>();
+        tasks = new ArrayList<>();
+        projects = new ArrayList<>();
     }
 
     public String user() {
-        return this.user;
+        return user;
     }
 
     public void addTask(Task task) {
-        this.tasks.add(task);
+        tasks.add(task);
     }
 
     public void removeTask(Task task) {
-        this.tasks.remove(task);
+        tasks.remove(task);
+    }
+
+    public void createProject(Project project) {
+        projects.add(project);
     }
 
     public List<Task> tasks() {
-        return this.tasks;
+        return tasks;
     }
     public Task taskByTitle(String title) {
-        for (Task task: this.tasks) {
+        for (Task task: tasks) {
             if (Objects.equals(task.title(), title)) {
                 return task;
             }
@@ -38,7 +44,7 @@ public class ToDo {
     }
     public List<Task> taskByTagname(String tagname) {
         ArrayList<Task> list = new ArrayList<>();
-        for (Task task: this.tasks) {
+        for (Task task: tasks) {
             for(TaskTag tag: task.tags()) {
                 if (Objects.equals(tagname, tag.title())) {
                     list.add(task);
@@ -50,8 +56,9 @@ public class ToDo {
 
     public List<Task> taskByProject(String projectname) {
         ArrayList<Task> list = new ArrayList<>();
-        for (Task task: this.tasks) {
-            if (Objects.equals(projectname, task.project().title())) {
+        for (Task task: tasks) {
+            if (task.project().isEmpty()) continue;
+            if (Objects.equals(projectname, task.project().get().title())) {
                 list.add(task);
             }
 

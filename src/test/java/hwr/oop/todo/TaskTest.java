@@ -56,9 +56,9 @@ class TaskTest {
         assertThat(task.priority()).isEqualTo(TaskPriority.LOW);
         Project testProject2 = new Project("Themepark", null);
         task.changeProject(testProject2);
-        assertThat(task.project()).isEqualTo(testProject2);
-        task.removeProject();
-        assertThat(task.project()).isNull();
+        assertThat(task.project()).contains(testProject2);
+        task.deleteProject();
+        assertThat(task.project()).isEmpty();
 
     }
 }
