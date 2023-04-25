@@ -14,14 +14,14 @@ public class Task {
     private TaskPriority priority;
     private Project project;
 
-    private Task(Builder builder) {
-        this.title = builder.title;
-        this.tags = builder.tags;
-        this.description = builder.description;
-        this.deadline = builder.deadline;
-        this.status = builder.status;
-        this.priority = builder.priority;
-        this.project = builder.project;
+    private Task(String title, List<TaskTag> tags, String description, LocalDate deadline, TaskStatus status, TaskPriority priority, Project project) {
+        this.title = title;
+        this.tags = tags;
+        this.description = description;
+        this.deadline = deadline;
+        this.status = status;
+        this.priority = priority;
+        this.project = project;
     }
 
     public String title() {
@@ -127,7 +127,7 @@ public class Task {
         }
 
         public Task build() {
-            return new Task(this);
+            return new Task(title, tags, description, deadline, status, priority, project);
         }
     }
 }
