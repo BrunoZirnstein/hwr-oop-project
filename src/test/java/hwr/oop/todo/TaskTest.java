@@ -18,7 +18,7 @@ class TaskTest {
         assertThat(task.deadline()).isNull();
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isNull();
-        assertThat(task.project()).isEqualTo(new Project("untitled", null));
+        assertThat(task.project()).isEmpty();
     }
 
     @Test
@@ -31,6 +31,6 @@ class TaskTest {
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 5, 30));
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
-        assertThat(task.project()).isEqualTo(testProject);
+        assertThat(task.project()).contains(testProject); // contains checks if optional type value is equal to testProject
     }
 }

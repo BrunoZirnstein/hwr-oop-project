@@ -3,6 +3,7 @@ package hwr.oop.todo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Task {
     private final String title;
@@ -11,7 +12,7 @@ public class Task {
     private final LocalDate deadline;
     private final TaskStatus status;
     private final TaskPriority priority;
-    public Project project;
+    private Project project;
 
     private Task(Builder builder) {
         this.title = builder.title;
@@ -47,8 +48,8 @@ public class Task {
         return priority;
     }
 
-    public Project project() {
-        return project;
+    public Optional<Project> project() {
+        return Optional.ofNullable(project);
     }
 
     public static class Builder {
@@ -58,7 +59,7 @@ public class Task {
         private LocalDate deadline = null;
         private TaskStatus status = TaskStatus.TODO;
         private TaskPriority priority = null;
-        private Project project = new Project("untitled", null);
+        private Project project = null;
 
         public Builder(String title) {
             this.title = title;
@@ -92,5 +93,9 @@ public class Task {
         public Task build() {
             return new Task(this);
         }
+    }
+
+    public void deleteProject() {
+        project = null;
     }
 }
