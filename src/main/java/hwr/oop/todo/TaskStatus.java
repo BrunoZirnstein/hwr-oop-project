@@ -1,5 +1,7 @@
 package hwr.oop.todo;
 
 public enum TaskStatus {
-    TODO
+    TODO,
+    BLOCKED,
+    DONE
 }

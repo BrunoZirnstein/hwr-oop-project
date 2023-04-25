@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class Task {
-    private final String title;
-    private final List<TaskTag> tags;
-    private final String description;
-    private final LocalDate deadline;
-    private final TaskStatus status;
-    private final TaskPriority priority;
+    private String title;
+    private List<TaskTag> tags;
+    private String description;
+    private LocalDate deadline;
+    private TaskStatus status;
+    private TaskPriority priority;
     private Project project;
 
     private Task(Builder builder) {
@@ -52,8 +52,44 @@ public class Task {
         return Optional.ofNullable(project);
     }
 
+    public void renameTitle(String title) {
+        this.title = title;
+    }
+
+    public void addTag(TaskTag tag) {
+        this.tags.add(tag);
+    }
+
+    public void removeTag(String tagname) {
+        this.tags.removeIf(tag -> tag.title().equals(tagname));
+    }
+
+    public void changeDescription(String description) {
+        this.description = description;
+    }
+
+    public void moveDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void updateStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public void changePriority(TaskPriority priority) {
+        this.priority = priority;
+    }
+
+    public void changeProject(Project project) {
+        this.project = project;
+    }
+
+    public void deleteProject() {
+        this.project = null;
+    }
+
     public static class Builder {
-        private final String title;
+        private String title;
         private List<TaskTag> tags = new ArrayList<>();
         private String description = null;
         private LocalDate deadline = null;
@@ -93,9 +129,5 @@ public class Task {
         public Task build() {
             return new Task(this);
         }
-    }
-
-    public void deleteProject() {
-        project = null;
     }
 }
