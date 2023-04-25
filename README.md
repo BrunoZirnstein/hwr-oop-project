@@ -19,13 +19,17 @@ This repository contains a student project created for an ongoing lecture on obj
 | Number | Feature | Done | Responsible |
 |--------|---------|-------|-------------|
 | 1      | Tag Klasse       |   ✔️   | Niklas            |
-| 2      | Hauptmenü       |      | Thomas            |
+| 2      | Hauptmenü Projekt anlegen      |      | Thomas            |
 | 3      | Task Klasse       |   ✔️   | Bruno            |
 | 4      | Projekt Klasse       |   ✔️   | Jason & Frauke            |
 | 5      | CSV Read & Write       |   ✔️   | Niklas            |
 | 6      | Task Klasse - optionale Parameter mit builder pattern      |   ✔️   | Bruno            |
 | 7      | Projekt Klasse anpassen       |   ✔️   | Jason & Frauke            |
 | 8      | ToDo Liste Klasse       |   ✔️   | Jason & Frauke            |
+| 9      | Hauptmenü Tasks anlegen      |      | Thomas            |
+| 10      | Todo Klasse mit Projekten      |      | Bruno            |
+| 11      | Update task       |      | Jason & Frauke            |
+| 12      | CSV Read & Write anpassen       |      | Niklas            |
 
 
 
