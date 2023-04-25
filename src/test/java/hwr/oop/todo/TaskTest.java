@@ -18,16 +18,19 @@ class TaskTest {
         assertThat(task.deadline()).isNull();
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isNull();
+        assertThat(task.project()).isEqualTo(new Project("untitled", null));
     }
 
     @Test
     void createTaskWithParameters() {
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).build();
+        Project testProject = new Project("university", null);
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).project(testProject).build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
         assertThat(task.description()).isEqualTo("Water all the plants in the living room and in the bedroom.");
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 5, 30));
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
+        assertThat(task.project()).isEqualTo(testProject);
     }
 }

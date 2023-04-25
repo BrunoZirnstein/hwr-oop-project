@@ -11,6 +11,7 @@ public class Task {
     private final LocalDate deadline;
     private final TaskStatus status;
     private final TaskPriority priority;
+    public Project project;
 
     private Task(Builder builder) {
         this.title = builder.title;
@@ -19,6 +20,7 @@ public class Task {
         this.deadline = builder.deadline;
         this.status = builder.status;
         this.priority = builder.priority;
+        this.project = builder.project;
     }
 
     public String title() {
@@ -45,6 +47,10 @@ public class Task {
         return priority;
     }
 
+    public Project project() {
+        return project;
+    }
+
     public static class Builder {
         private final String title;
         private List<TaskTag> tags = new ArrayList<>();
@@ -52,6 +58,7 @@ public class Task {
         private LocalDate deadline = null;
         private TaskStatus status = TaskStatus.TODO;
         private TaskPriority priority = null;
+        private Project project = new Project("untitled", null);
 
         public Builder(String title) {
             this.title = title;
@@ -74,6 +81,11 @@ public class Task {
 
         public Builder priority(TaskPriority priority) {
             this.priority = priority;
+            return this;
+        }
+
+        public Builder project(Project project) {
+            this.project = project;
             return this;
         }
 
