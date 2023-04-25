@@ -1,9 +1,6 @@
 package hwr.oop.todo;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-public class MainMenu extends Menu {
+public class MainMenu {
 	private final ProjectMenu projectMenu;
 	
 	public MainMenu()
@@ -11,7 +8,7 @@ public class MainMenu extends Menu {
 		projectMenu = new ProjectMenu();
 	}
 	
-	public void open() throws FileNotFoundException {
+	public void open() {
 		System.out.println("Welcome to the ultimate-u-never-forget ToDo List");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("\n[MainMenu]");
@@ -21,18 +18,34 @@ public class MainMenu extends Menu {
 		System.out.println("[3] Create Tasks (quick create)");
 		System.out.println("[4] Create Task (detailed)");
 		
-		handleInput(input.nextInt());
+		promptInput();
 	}
 	
-	private void handleInput(int input) throws FileNotFoundException {
+	/**
+	 * Prompts and waits for user console input and handles invalid input (= a not integer input).
+	 */
+	private void promptInput()
+	{
+		System.out.print("> ");
+		int inputID = 0;
+		while(inputID == 0) {
+			try {
+				inputID = Integer.parseInt(Console.input.nextLine());			
+			}
+			catch(NumberFormatException ex) {
+				System.out.println("Invalid input. Please try again");
+			}			
+		}
+		
+		handleInput(inputID);
+	}
+	
+	private void handleInput(int input)
+	{
 		switch(input)
 		{
 			case 1:
-				try {
-					projectMenu.openCreate();
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
+				projectMenu.openCreate();
 				break;
 			case 2:
 				break;
@@ -41,6 +54,8 @@ public class MainMenu extends Menu {
 				break;
 				
 			default:
+				System.out.println("Invalid ID. Please enter a valid ID!");
+				promptInput();
 				break;
 		}
 	}
