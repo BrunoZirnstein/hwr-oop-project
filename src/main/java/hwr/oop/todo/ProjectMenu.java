@@ -16,7 +16,7 @@ public class ProjectMenu{
 		LocalDate deadline = promptDeadlineInput();
 		
 		
-		Project testproject = new Project(newProjectName, new ArrayList<Task>(), deadline); // TODO: Save project in Application class
+		Project testproject = new Project(newProjectName, deadline); // TODO: Save project in Application class
 		
 	}
 	
