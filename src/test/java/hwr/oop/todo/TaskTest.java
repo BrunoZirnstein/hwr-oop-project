@@ -10,17 +10,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TaskTest {
     @Test
-    void createTaskTest() {
-        ArrayList<TaskTag> list = new ArrayList<>();
-        list.add(new TaskTag("phone"));
-
-        Task task = new Task("Water plants", list, "Water all the plants in the living room and in the bedroom.", LocalDate.of(2023, 05, 30), TaskStatus.TODO, TaskPriority.HIGH);
+    void createTaskWithOnlyTitleTest() {
+        Task task = new Task.Builder("Water plants").build();
         assertThat(task.title()).isEqualTo("Water plants");
-        assertThat(task.tags()).isEqualTo(list);
+        assertThat(task.tags()).isEqualTo(new ArrayList<TaskTag>());
+        assertThat(task.description()).isNull();
+        assertThat(task.deadline()).isNull();
+        assertThat(task.status()).isEqualTo(TaskStatus.TODO);
+        assertThat(task.priority()).isNull();
+    }
+
+    @Test
+    void createTaskWithParameters() {
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).build();
+        assertThat(task.title()).isEqualTo("Water plants");
+        assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
         assertThat(task.description()).isEqualTo("Water all the plants in the living room and in the bedroom.");
-        assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 05, 30));
+        assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 5, 30));
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
     }
-
 }
