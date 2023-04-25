@@ -21,8 +21,12 @@ public class ToDo {
         this.tasks.add(task);
     }
 
-    public void removeTask(Task task) {
+    public void removeTaskByObject(Task task) {
         this.tasks.remove(task);
+    }
+
+    public void removeTaskByName(String taskname) {
+        this.tasks.removeIf(task -> task.title().equals(taskname));
     }
 
     public List<Task> tasks() {

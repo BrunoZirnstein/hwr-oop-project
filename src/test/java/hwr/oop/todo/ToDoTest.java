@@ -18,7 +18,7 @@ class ToDoTest {
         list.addTask(task1);
         assertThat(list.tasks().get(0)).isEqualTo(task1);
 
-        list.removeTask(task1);
+        list.removeTaskByObject(task1);
         assertThat(list.tasks()).isEmpty();
     }
 

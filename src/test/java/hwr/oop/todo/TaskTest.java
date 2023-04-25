@@ -43,9 +43,15 @@ class TaskTest {
         task.renameTitle("Rollercoaster City");
         assertThat(task.title()).isEqualTo("Rollercoaster City");
         task.addTag(new TaskTag("Building"));
+        TaskTag tag2 = new TaskTag("Metal");
+        task.addTag(tag2);
         assertThat(task.tags().get(1)).isEqualTo(new TaskTag("Building"));
-        task.removeTag("home");
+        assertThat(task.tags().get(2)).isEqualTo(new TaskTag("Metal"));
+        task.removeTagByName("home");
         assertThat(task.tags().get(0)).isEqualTo(new TaskTag("Building"));
+        assertThat(task.tags().get(1)).isEqualTo(new TaskTag("Metal"));
+        task.removeTagByObject(tag2);
+        assertThat(task.tags()).hasSize(1);
         task.changeDescription("Let's build a Rollercoaster");
         assertThat(task.description()).isEqualTo("Let's build a Rollercoaster");
         task.moveDeadline(LocalDate.of(2024,2,2));

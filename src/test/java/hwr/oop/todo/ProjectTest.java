@@ -19,9 +19,9 @@ class ProjectTest {
     @Test
     void testDeadline() {
         Project project = new Project("Test", LocalDate.of(2000, 1, 1));
-        assertThat(project.getDeadline()).isEqualTo(LocalDate.of(2000, 1, 1));
+        assertThat(project.deadline()).isEqualTo(LocalDate.of(2000, 1, 1));
         LocalDate date = LocalDate.of(2024, 4, 4);
         project.setDeadline(date);
-        assertThat(date).isEqualTo(project.getDeadline());
+        assertThat(date).isEqualTo(project.deadline());
     }
 }

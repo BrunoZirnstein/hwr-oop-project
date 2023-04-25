@@ -59,7 +59,11 @@ public class Task {
         this.tags.add(tag);
     }
 
-    public void removeTag(String tagname) {
+    public void removeTagByObject(TaskTag tag) {
+        this.tags.remove(tag);
+    }
+
+    public void removeTagByName(String tagname) {
         this.tags.removeIf(tag -> tag.title().equals(tagname));
     }
 

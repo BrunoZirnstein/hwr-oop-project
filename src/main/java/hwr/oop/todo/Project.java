@@ -19,7 +19,7 @@ public class Project {
         this.deadline = deadline;
     }
 
-    public LocalDate getDeadline() {
-        return this.deadline;
+    public LocalDate deadline() {
+        return deadline;
     }
 }
