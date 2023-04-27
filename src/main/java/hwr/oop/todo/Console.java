@@ -7,6 +7,20 @@ public class Console {
 	
 	public static void clear()
 	{
-		System.out.println("\n\n\n\n\n\n");
+		for(int i = 0; i<8; i++)
+		{
+			System.out.print(System.lineSeparator());
+		}
+	}
+	
+	public static void displayInputIndicator()
+	{
+		System.out.print("> ");
+	}
+	
+	public static void EnterToContinue() 
+	{
+		System.out.print("Press [ENTER] to continue...");
+		input.nextLine();
 	}
 }
