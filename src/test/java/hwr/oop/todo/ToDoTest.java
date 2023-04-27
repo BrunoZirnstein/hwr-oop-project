@@ -36,6 +36,7 @@ class ToDoTest {
         list.addTask(task1);
         list.removeTaskByName("Test");
         assertThat(task1).isNotIn(list);
+        assertThat(list.taskByTitle("Test1")).isNull();
     }
 
 
