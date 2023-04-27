@@ -18,28 +18,26 @@ class TaskTest {
         assertThat(task.deadline()).isNull();
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isNull();
-        assertThat(task.project()).isEmpty();
+        assertThat(task.projectName()).isEmpty();
     }
 
     @Test
     void createTaskWithParameters() {
-        Project testProject = new Project("university", null);
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).project(testProject).build();
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
         assertThat(task.description()).isEqualTo("Water all the plants in the living room and in the bedroom.");
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 5, 30));
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
-        assertThat(task.project()).contains(testProject); // contains checks if optional type value is equal to testProject
+        assertThat(task.projectName()).contains("university"); // contains checks if optional type value is equal to testProject
     }
 
     @Test
     void changeAttributesOfTask() {
-        Project testProject = new Project("university", null);
         List<TaskTag> taglist = new ArrayList<>();
         taglist.add(new TaskTag("home"));
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(taglist).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).project(testProject).build();
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(taglist).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
         task.renameTitle("Rollercoaster City");
         assertThat(task.title()).isEqualTo("Rollercoaster City");
         task.addTag(new TaskTag("Building"));
@@ -60,11 +58,10 @@ class TaskTest {
         assertThat(task.status()).isEqualTo(TaskStatus.BLOCKED);
         task.changePriority(TaskPriority.LOW);
         assertThat(task.priority()).isEqualTo(TaskPriority.LOW);
-        Project testProject2 = new Project("Themepark", null);
-        task.changeProject(testProject2);
-        assertThat(task.project()).contains(testProject2);
+        task.changeProject("Themepark");
+        assertThat(task.projectName()).contains("Themepark");
         task.deleteProject();
-        assertThat(task.project()).isEmpty();
+        assertThat(task.projectName()).isEmpty();
 
     }
 }

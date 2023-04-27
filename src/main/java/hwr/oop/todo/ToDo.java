@@ -3,6 +3,7 @@ package hwr.oop.todo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class ToDo {
     private String user;
@@ -19,8 +20,8 @@ public class ToDo {
         return tasks;
     }
 
-    public List<Project> projects() {
-        return projects;
+    public Optional<List<Project>> projects() {
+        return Optional.ofNullable(projects);
     }
 
     public String user() {
@@ -28,6 +29,14 @@ public class ToDo {
     }
 
     public void addTask(Task task) {
+        try {
+            if (task.projectName().isPresent()) {
+                getProjectByName(task.projectName().get());
+            }
+        } catch (ArrayIndexOutOfBoundsException  e) {
+            throw new RuntimeException("Cannot add project to ToDo list, given project name does not exist.");
+        }
+
         tasks.add(task);
     }
 
@@ -49,17 +58,18 @@ public class ToDo {
     }
 
     public Task taskByTitle(String title) {
-        for (Task task: tasks) {
+        for (Task task : tasks) {
             if (Objects.equals(task.title(), title)) {
                 return task;
             }
         }
         return null;
     }
+
     public List<Task> taskByTagname(String tagname) {
         ArrayList<Task> list = new ArrayList<>();
-        for (Task task: tasks) {
-            for(TaskTag tag: task.tags()) {
+        for (Task task : tasks) {
+            for (TaskTag tag : task.tags()) {
                 if (Objects.equals(tagname, tag.title())) {
                     list.add(task);
                 }
@@ -70,13 +80,27 @@ public class ToDo {
 
     public List<Task> taskByProject(String projectname) {
         ArrayList<Task> list = new ArrayList<>();
-        for (Task task: tasks) {
-            if (task.project().isEmpty()) continue;
-            if (Objects.equals(projectname, task.project().get().title())) {
+        for (Task task : tasks) {
+            if (task.projectName().isEmpty()) continue;
+            if (Objects.equals(projectname, task.projectName().get())) {
                 list.add(task);
             }
 
         }
         return list;
+    }
+
+    public void addProject(Project newProject) {
+        projects.add(newProject);
+    }
+
+    public void removeProject(String projectName) {
+        Project projectObject = getProjectByName(projectName);
+        projects.remove(projectObject);
+    }
+
+    public Project getProjectByName(String projectName) {
+        List<Project> filteredProjects = projects.stream().filter(p -> p.title().equals(projectName)).toList();
+        return filteredProjects.get(0);
     }
 }

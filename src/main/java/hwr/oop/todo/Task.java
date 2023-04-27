@@ -12,16 +12,16 @@ public class Task {
     private LocalDate deadline;
     private TaskStatus status;
     private TaskPriority priority;
-    private Project project;
+    private String projectName;
 
-    private Task(String title, List<TaskTag> tags, String description, LocalDate deadline, TaskStatus status, TaskPriority priority, Project project) {
+    private Task(String title, List<TaskTag> tags, String description, LocalDate deadline, TaskStatus status, TaskPriority priority, String projectName) {
         this.title = title;
         this.tags = tags;
         this.description = description;
         this.deadline = deadline;
         this.status = status;
         this.priority = priority;
-        this.project = project;
+        this.projectName = projectName;
     }
 
     public String title() {
@@ -48,8 +48,8 @@ public class Task {
         return priority;
     }
 
-    public Optional<Project> project() {
-        return Optional.ofNullable(project);
+    public Optional<String> projectName() {
+        return Optional.ofNullable(projectName);
     }
 
     public void renameTitle(String title) {
@@ -84,12 +84,12 @@ public class Task {
         this.priority = priority;
     }
 
-    public void changeProject(Project project) {
-        this.project = project;
+    public void changeProject(String projectName) {
+        this.projectName = projectName;
     }
 
     public void deleteProject() {
-        this.project = null;
+        this.projectName = null;
     }
 
     public static class Builder {
@@ -99,7 +99,7 @@ public class Task {
         private LocalDate deadline = null;
         private TaskStatus status = TaskStatus.TODO;
         private TaskPriority priority = null;
-        private Project project = null;
+        private String projectName = null;
 
         public Builder(String title) {
             this.title = title;
@@ -125,13 +125,13 @@ public class Task {
             return this;
         }
 
-        public Builder project(Project project) {
-            this.project = project;
+        public Builder projectName(String projectName) {
+            this.projectName = projectName;
             return this;
         }
 
         public Task build() {
-            return new Task(title, tags, description, deadline, status, priority, project);
+            return new Task(title, tags, description, deadline, status, priority, projectName);
         }
     }
 }

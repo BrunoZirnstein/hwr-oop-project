@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 
 class ToDoTest {
@@ -20,6 +22,29 @@ class ToDoTest {
 
         list.removeTaskByObject(task1);
         assertThat(list.tasks()).isEmpty();
+    }
+
+
+    @Test
+    void testProjectMethods() {
+        ToDo list = new ToDo("Bruno");
+        assertThat(list.projects()).contains(new ArrayList<>());
+
+        Project testProject = new Project("university", null);
+        list.addProject(testProject);
+        assertThat(list.projects().get().get(0)).isEqualTo(testProject);
+        assertDoesNotThrow(() -> list.removeProject("university"));
+        assertThat(list.projects()).contains(new ArrayList<>());
+    }
+
+    @Test
+    void testAddTaskThrowException() {
+        ToDo list = new ToDo("Bruno");
+        Task testTask = new Task.Builder("water plants").projectName("none existing project name").build();
+
+        assertThatThrownBy(() -> list.addTask(testTask))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageStartingWith("Cannot add project to ToDo list, given project name does not exist.");
     }
 
     @Test
@@ -56,10 +81,10 @@ class ToDoTest {
         Project project = new Project("TestProject", LocalDate.of(2023, 4, 4));
         ToDo user = new ToDo("Jason");
         user.createProject(project);
-        assertThat(user.projects()).contains(project);
-        user.addTask(new Task.Builder("Namen").project(project).build());
+        assertThat(user.projects().get().get(0)).isEqualTo(project);
+        user.addTask(new Task.Builder("Namen").projectName(project.title()).build());
         assertThat(user.tasks().get(0)).isEqualTo(user.taskByProject("TestProject").get(0));
         user.deleteProject(project);
-        assertThat(user.projects()).isEmpty();
+        assertThat(user.projects()).contains(new ArrayList<>());
     }
 }
