@@ -47,14 +47,14 @@ class TaskTest {
     }
 
     @Test
-    void changeDescriptionOfTask() {
+    void descriptionOfTask() {
         Task task = new Task.Builder("Build a chair").description("Build a chair out of wood").build();
         task.changeDescription("Build a chair out of metal");
         assertThat(task.description()).isEqualTo("Build a chair out of metal");
     }
 
     @Test
-    void moveDeadlineOfTask() {
+    void deadlineOfTask() {
         Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
         task.moveDeadline(LocalDate.of(2023,6,1));
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
@@ -68,7 +68,7 @@ class TaskTest {
     }
 
     @Test
-    void changePriority() {
+    void priorityOfTask() {
         Task task = new Task.Builder("Build a chair").priority(TaskPriority.LOW).build();
         task.changePriority(TaskPriority.HIGH);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
