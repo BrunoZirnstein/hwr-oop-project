@@ -33,7 +33,7 @@ public class CSVReader {
                 TaskPriority priority = TaskPriority.valueOf(tokens[tokens.length - 2]);
                 String projectTitle = tokens[tokens.length - 1];
                 Project project = new Project(projectTitle,null);
-                Task task = new Task.Builder(taskTitle).description(taskDescription).tags(tags).deadline(deadline).priority(priority).project(project).build();
+                Task task = new Task.Builder(taskTitle).description(taskDescription).tags(tags).deadline(deadline).priority(priority).projectName(projectTitle).build();
                 ToDo todo = new ToDo(tokens[tokens.length - 5]);
                 todo.addTask(task);
                 todoList.add(todo);
