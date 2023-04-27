@@ -32,6 +32,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | 12      | CSV Read & Write anpassen       |      | Niklas            |
 | 13      | refactor ToDo tests & code      |      | Bruno            |
 | 14      | refactor task tests & code       |       | Jason & Frauke            |
+| 15      | Menü code an neue Classen & Struktur anpassen     |      | Thomas            |
 
 
 
