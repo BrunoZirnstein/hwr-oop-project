@@ -14,11 +14,12 @@ public class ProjectMenu{
 		
 		LocalDate deadline = promptDeadlineInput();
 		
-		Project newProject = new Project(newProjectName, deadline); // TODO: Save project in Application class
+		Project newProject = new Project(newProjectName, deadline);
+		Main.activeTodo.createProject(newProject);
 		
 		System.out.println();
 		System.out.println("Project '" + newProjectName + "' sucessfully created.");
-		MainMenu.returnToMe();
+		TodoMainMenu.returnToMe();
 	}
 	
 	/**

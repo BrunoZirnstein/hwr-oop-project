@@ -9,10 +9,11 @@ public class TaskMenu {
 		String taskName = promptTaskName();
 		
 		Task newTask = new Task.Builder(taskName).build();
+		Main.activeTodo.addTask(newTask);
 		
 		System.out.println();
 		System.out.println("Task '" + taskName + "' sucessfully created.");
-		MainMenu.returnToMe();
+		TodoMainMenu.returnToMe();
 	}
 	
 	private static String promptTaskName()
