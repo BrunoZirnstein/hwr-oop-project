@@ -15,8 +15,7 @@ class CSVCreateTest {
     @Test
     void testWriteToDoFile() throws IOException {
         String filePathTestFile = "Todo_TEST.csv";
-        Project testProject = new Project("university", null);
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).project(testProject).build();
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
         ToDo list = new ToDo("Bernd");
         CSVCreate.writeToDoFile(task, list, filePathTestFile);
         assertTrue(new File(filePathTestFile).exists());
@@ -28,8 +27,7 @@ class CSVCreateTest {
     @Test
     void testWriteToDoFileWithIOException() {
         String filePathTestFile = "NOTPOSSIBLE/NOTPOSSIBLE.csv";
-        Project testProject = new Project("university", null);
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).project(testProject).build();
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
         ToDo list = new ToDo("Bernd");
         assertThrows(IOException.class, () -> {
             CSVCreate.writeToDoFile(task, list, filePathTestFile);

@@ -27,7 +27,9 @@ public class CSVCreate {
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(task.priority().name());
             fileWriter.append(COMMA_DELIMITER);
-            fileWriter.append(task.projectName().toString());
+            if (task.projectName().isPresent()) {
+                fileWriter.append(task.projectName().get());
+            }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.user());
             fileWriter.append(LINE_SEPARATOR);

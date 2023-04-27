@@ -36,7 +36,7 @@ class CSVReaderTest {
         Project project = new Project("TestProject",LocalDate.of(2023,5,30));
         writer.write(project.title());
         writer.write(COMMA_DELIMITER);
-        writer.write(project.getDeadline().toString());
+        writer.write(project.deadline().toString());
         writer.write(LINE_SEPARATOR);
         writer.close();
     }
@@ -60,7 +60,7 @@ class CSVReaderTest {
 
         Project firstProject = projects.get(0);
         assertEquals("TestProject", firstProject.title());
-        assertEquals(LocalDate.of(2023, 5, 30), firstProject.getDeadline());
+        assertEquals(LocalDate.of(2023, 5, 30), firstProject.deadline());
     }
 }
 
