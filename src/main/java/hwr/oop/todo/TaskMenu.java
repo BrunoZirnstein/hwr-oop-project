@@ -2,20 +2,28 @@ package hwr.oop.todo;
 
 public class TaskMenu {
 	
-	public static void openCreateSimple()
+	private TodoMainMenu todoMainMenu = null;
+	
+	public TaskMenu(TodoMainMenu todoMainMenu)
+	{
+		this.todoMainMenu = todoMainMenu;
+	}
+	
+	public void openCreateSimple()
 	{
 		Console.clear();
 		
 		String taskName = promptTaskName();
 		
 		Task newTask = new Task.Builder(taskName).build();
+		Main.activeTodo.addTask(newTask);
 		
 		System.out.println();
 		System.out.println("Task '" + taskName + "' sucessfully created.");
-		MainMenu.returnToMe();
+		todoMainMenu.returnToMe();
 	}
 	
-	private static String promptTaskName()
+	private String promptTaskName()
 	{
 		System.out.println("Enter a name for the task.");
 		
