@@ -34,32 +34,51 @@ class TaskTest {
     }
 
     @Test
-    void changeAttributesOfTask() {
-        List<TaskTag> taglist = new ArrayList<>();
-        taglist.add(new TaskTag("home"));
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(taglist).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
-        task.renameTitle("Rollercoaster City");
-        assertThat(task.title()).isEqualTo("Rollercoaster City");
-        task.addTag(new TaskTag("Building"));
-        TaskTag tag2 = new TaskTag("Metal");
-        task.addTag(tag2);
-        assertThat(task.tags().get(1)).isEqualTo(new TaskTag("Building"));
-        assertThat(task.tags().get(2)).isEqualTo(new TaskTag("Metal"));
+    void tagOfTask() {
+        Task task = new Task.Builder("Build a chair").build();
+        task.addTag(new TaskTag("home"));
+        TaskTag taskGet = task.tags().get(0);
+        assertThat(task.tags().get(0)).isEqualTo(taskGet);
         task.removeTagByName("home");
-        assertThat(task.tags().get(0)).isEqualTo(new TaskTag("Building"));
-        assertThat(task.tags().get(1)).isEqualTo(new TaskTag("Metal"));
-        task.removeTagByObject(tag2);
-        assertThat(task.tags()).hasSize(1);
-        task.changeDescription("Let's build a Rollercoaster");
-        assertThat(task.description()).isEqualTo("Let's build a Rollercoaster");
-        task.moveDeadline(LocalDate.of(2024,2,2));
-        assertThat(task.deadline()).isEqualTo(LocalDate.of(2024,2,2));
+        assertThat(task.tags()).isEmpty();
+        task.addTag(new TaskTag("home"));
+        task.removeTagByObject(taskGet);
+        assertThat(task.tags()).isEmpty();
+    }
+
+    @Test
+    void changeDescriptionOfTask() {
+        Task task = new Task.Builder("Build a chair").description("Build a chair out of wood").build();
+        task.changeDescription("Build a chair out of metal");
+        assertThat(task.description()).isEqualTo("Build a chair out of metal");
+    }
+
+    @Test
+    void moveDeadlineOfTask() {
+        Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
+        task.moveDeadline(LocalDate.of(2023,6,1));
+        assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
+    }
+
+    @Test
+    void statusOfTask() {
+        Task task = new Task.Builder("Build a chair").status(TaskStatus.TODO).build();
         task.updateStatus(TaskStatus.BLOCKED);
         assertThat(task.status()).isEqualTo(TaskStatus.BLOCKED);
-        task.changePriority(TaskPriority.LOW);
-        assertThat(task.priority()).isEqualTo(TaskPriority.LOW);
-        task.changeProject("Themepark");
-        assertThat(task.projectName()).contains("Themepark");
+    }
+
+    @Test
+    void changePriority() {
+        Task task = new Task.Builder("Build a chair").priority(TaskPriority.LOW).build();
+        task.changePriority(TaskPriority.HIGH);
+        assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
+    }
+
+    @Test
+    void projectOfTask() {
+        Task task = new Task.Builder("Build a chair").build();
+        task.changeProject("Renovation");
+        assertThat(task.projectName()).contains("Renovation");
         task.deleteProject();
         assertThat(task.projectName()).isEmpty();
 

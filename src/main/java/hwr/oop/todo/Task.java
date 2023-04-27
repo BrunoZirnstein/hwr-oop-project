@@ -120,6 +120,11 @@ public class Task {
             return this;
         }
 
+        public Builder status(TaskStatus status) {
+            this.status = status;
+            return this;
+        }
+
         public Builder priority(TaskPriority priority) {
             this.priority = priority;
             return this;
