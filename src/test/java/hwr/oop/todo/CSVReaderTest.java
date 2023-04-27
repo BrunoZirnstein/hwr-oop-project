@@ -1,87 +1,68 @@
 package hwr.oop.todo;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CSVReaderTest {
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
-    private static String testFilePath;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import hwr.oop.todo.CSVReader;
+import hwr.oop.todo.Project;
+import hwr.oop.todo.Task;
+import hwr.oop.todo.TaskPriority;
+import hwr.oop.todo.TaskStatus;
+import hwr.oop.todo.TaskTag;
+import hwr.oop.todo.ToDo;
+
+class CSVReaderTest {
+
+    private static final String TEST_TODO_FILE = "test/todo.csv";
+    private static final String TEST_PROJECT_FILE = "testProjectFile.csv";
     private static final String COMMA_DELIMITER = ",";
     private static final String LINE_SEPARATOR = "\n";
-    private static final List<String[]> testProjectDetails = Arrays.asList(
-            new String[][]{
-                    {"Project 1", "Task 1,Task 2,Task 3", "2022-04-23"},
-                    {"Project 2", "Task 2,Task 3,Task 4,Task 5", "2022-04-24"},
-            });
 
     @BeforeAll
     public static void createTestFile() throws IOException {
-        File testFile = new File("test.csv");
+        File testFile = new File("testProjectFile.csv");
         BufferedWriter writer = new BufferedWriter(new FileWriter(testFile));
-        for (String[] projectDetail : testProjectDetails) {
-            writer.write(String.join(COMMA_DELIMITER, projectDetail));
-            writer.write(LINE_SEPARATOR);
-        }
+        Project project = new Project("TestProject",LocalDate.of(2023,5,30));
+        writer.write(project.title());
+        writer.write(COMMA_DELIMITER);
+        writer.write(project.getDeadline().toString());
+        writer.write(LINE_SEPARATOR);
         writer.close();
-        testFilePath = testFile.getAbsolutePath();
     }
 
     @AfterAll
     public static void deleteTestFile() {
-        File testFile = new File(testFilePath);
+        File testFile = new File("testProjectFile.csv");
         testFile.delete();
     }
 
     @Test
-    void testReadCSVFileNotFound() {
-        assertThrows(FileNotFoundException.class, () -> {
-            CSVReader.readCSV("nonexistent_file.csv");
-        });
+    void testReadToDoFile() throws IOException {
+
     }
 
     @Test
-    void testReadCSVEmptyFile() throws IOException {
-        String fileName = "empty_file.csv";
-        File file = new File(fileName);
-        FileWriter writer = new FileWriter(file);
-        writer.close();
-        List<String[]> projectDetails = CSVReader.readCSV("empty_file.csv");
-        assertTrue(projectDetails.isEmpty());
-    }
+    void testReadProject() throws IOException {
+        List<Project> projects = CSVReader.readProject(TEST_PROJECT_FILE);
 
-    @Test
-    void testAddElement() {
-        String[] arr = new String[]{"a", "b", "c"};
-        String[] result = CSVReader.addElement(arr, "d");
-        assertArrayEquals(new String[]{"a", "b", "c", "d"}, result);
-    }
+        assertEquals(1, projects.size());
 
-    @Test
-    @DisplayName("Test readCSV method with valid file path")
-    void testReadCSVWithValidFilePath() throws FileNotFoundException {
-        String filePath = "test.csv";
-        List<String[]> projectDetails = CSVReader.readCSV(filePath);
-        String[][] expectedProjectDetails = new String[][]{
-                {"Project 1", "Task 1, Task 2, Task 3", "2022-04-23"},
-                {"Project 2", "Task 2, Task 3, Task 4, Task 5", "2022-04-24"}
-        };
-        assertArrayEquals(expectedProjectDetails, projectDetails.toArray());
-    }
-
-    @Test
-    @DisplayName("Test readCSV method with invalid file path")
-    void testReadCSVWithInvalidFilePath() {
-        String filePath = "invalid/file/path.csv";
-        assertThrows(FileNotFoundException.class, () -> CSVReader.readCSV(filePath));
+        Project firstProject = projects.get(0);
+        assertEquals("TestProject", firstProject.title());
+        assertEquals(LocalDate.of(2023, 5, 30), firstProject.getDeadline());
     }
 }
+
 
 
