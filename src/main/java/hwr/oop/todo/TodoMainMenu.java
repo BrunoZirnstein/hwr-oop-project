@@ -1,17 +1,20 @@
 package hwr.oop.todo;
 
-public class MainMenu {
+public class TodoMainMenu {
 	
-	public static void open() {
-		System.out.println("Welcome to the ultimate-u-never-forget ToDo List");
+	public static void open()
+	{
+		System.out.println("ToDo List of: " + Main.activeTodo.user());
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println();
-		System.out.println("[MainMenu]");
+		System.out.println("[ToDo MainMenu]");
 		System.out.println("What is it that you want to do? To proceed further, enter the action code given inside the [ ]");
-		System.out.println("[1] Create&Load ToDo List");
-		System.out.println("[2] Load ToDo List from file");
-		System.out.println("[3] Delete ToDO List");
-		System.out.println("[4] Quit");
+		System.out.println("[1] Create Project");
+		System.out.println("[2] Delete Project");
+		System.out.println("[3] Create Tasks (quick create)");
+		System.out.println("[4] Create Task (detailed)");
+		System.out.println("[5] Save ToDo List in file..");
+		System.out.println("[6] Go back");
 		
 		promptInput();
 	}
@@ -51,19 +54,21 @@ public class MainMenu {
 		switch(input)
 		{
 			case 1:
-				ManageToDoMenu.openCreate();
+				ProjectMenu.openCreate();
 				break;
 				
-			case 2:			// load ToDo List from file
-				ManageToDoMenu.openLoad();
+			case 2:
 				break;
 				
 			case 3:
-				
+				TaskMenu.openCreateSimple();
 				break;
 				
-			case 4:
-				System.out.println("Shutting down.");
+			case 5: // Niklas: save current to-do list in file -> Main.activeToDo
+				break;
+				
+			case 6:
+				MainMenu.returnToMe();
 				break;
 				
 			default:
@@ -72,5 +77,4 @@ public class MainMenu {
 				break;
 		}
 	}
-
 }

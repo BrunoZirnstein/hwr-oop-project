@@ -7,7 +7,7 @@ public class Console {
 	
 	public static void clear()
 	{
-		for(int i = 0; i<8; i++)
+		for(int i = 0; i<30; i++)
 		{
 			System.out.print(System.lineSeparator());
 		}
