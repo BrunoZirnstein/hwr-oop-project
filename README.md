@@ -28,8 +28,10 @@ This repository contains a student project created for an ongoing lecture on obj
 | 8      | ToDo Liste Klasse       |   ✔️   | Jason & Frauke            |
 | 9      | Hauptmenü Tasks anlegen      |      | Thomas            |
 | 10      | Todo Klasse mit Projekten      |   ✔️    | Bruno            |
-| 11      | Update task       |      | Jason & Frauke            |
+| 11      | Update task       |     ✔️   | Jason & Frauke            |
 | 12      | CSV Read & Write anpassen       |      | Niklas            |
+| 13      | refactor ToDo tests & code      |      | Bruno            |
+| 14      | refactor task tests & code       |       | Jason & Frauke            |
 
 
 
