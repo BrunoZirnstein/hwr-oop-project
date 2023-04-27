@@ -1,32 +1,39 @@
 package hwr.oop.todo;
 
 public class MainMenu {
-	private final ProjectMenu projectMenu;
 	
-	public MainMenu()
-	{
-		projectMenu = new ProjectMenu();
-	}
-	
-	public void open() {
+	public static void open() {
 		System.out.println("Welcome to the ultimate-u-never-forget ToDo List");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("\n[MainMenu]");
+		System.out.println();
+		System.out.println("[MainMenu]");
 		System.out.println("What is it that you want to do? To proceed further, enter the action code given inside the [ ]");
 		System.out.println("[1] Create Project");
 		System.out.println("[2] Delete Project");
 		System.out.println("[3] Create Tasks (quick create)");
 		System.out.println("[4] Create Task (detailed)");
+		System.out.println("[5] Quit");
 		
 		promptInput();
 	}
 	
 	/**
+	 * Just a little function that lets the user return to the MainMenu (reopen's it) by
+	 * letting the user press any key in order to return to the MainMenu.
+	 */
+	public static void returnToMe()
+	{
+		Console.EnterToContinue();
+		Console.clear();
+		open();
+	}
+	
+	/**
 	 * Prompts and waits for user console input and handles invalid input (= a not integer input).
 	 */
-	private void promptInput()
+	private static void promptInput()
 	{
-		System.out.print("> ");
+		Console.displayInputIndicator();
 		int inputID = 0;
 		while(inputID == 0) {
 			try {
@@ -40,17 +47,23 @@ public class MainMenu {
 		handleInput(inputID);
 	}
 	
-	private void handleInput(int input)
+	private static void handleInput(int input)
 	{
 		switch(input)
 		{
 			case 1:
-				projectMenu.openCreate();
+				ProjectMenu.openCreate();
 				break;
+				
 			case 2:
 				break;
 				
 			case 3:
+				TaskMenu.openCreateSimple();
+				break;
+				
+			case 5:
+				System.out.println("Shutting down.");
 				break;
 				
 			default:
