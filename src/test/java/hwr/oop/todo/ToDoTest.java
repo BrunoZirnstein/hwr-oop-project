@@ -20,6 +20,9 @@ class ToDoTest {
 
         list.removeTaskByObject(task1);
         assertThat(list.tasks()).isEmpty();
+
+        list.changeUser("Thomas");
+        assertThat(list.user()).isEqualTo("Thomas");
     }
 
     @Test
