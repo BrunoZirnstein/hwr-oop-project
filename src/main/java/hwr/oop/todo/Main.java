@@ -4,10 +4,9 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-	// Ich liebe Kommentare
+	// I love comments :P
 	public static void main(String[] args) throws FileNotFoundException {
-		MainMenu mainMenu = new MainMenu();
-		mainMenu.open();
+		MainMenu.open();
 	}
 
 }

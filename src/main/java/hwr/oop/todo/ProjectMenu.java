@@ -2,12 +2,11 @@ package hwr.oop.todo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 
 public class ProjectMenu{
 
 	
-	public void openCreate()
+	public static void openCreate()
 	{
 		Console.clear();
 		
@@ -15,23 +14,25 @@ public class ProjectMenu{
 		
 		LocalDate deadline = promptDeadlineInput();
 		
+		Project newProject = new Project(newProjectName, deadline); // TODO: Save project in Application class
 		
-		Project testproject = new Project(newProjectName, deadline); // TODO: Save project in Application class
-		
+		System.out.println();
+		System.out.println("Project '" + newProjectName + "' sucessfully created.");
+		MainMenu.returnToMe();
 	}
 	
 	/**
 	 * Prompts the user to enter a name for the project and handles if the user enters invalid names (e.g. empty string)
 	 * @return The user entered project name
 	 */
-	private String promptProjectNameInput()
+	private static String promptProjectNameInput()
 	{
 		System.out.println("What's the name of the project?");
 		
 		String projectName;
 		while(true)
 		{
-			System.out.print("> ");
+			Console.displayInputIndicator();
 			projectName = Console.input.nextLine();
 			
 			if(projectName.isEmpty() == false)
@@ -49,7 +50,7 @@ public class ProjectMenu{
 	 * Prompts the user to enter a deadline for the project and handles invalid input (e.g. wrong date input format).
 	 * @return The user entered deadline
 	 */
-	private LocalDate promptDeadlineInput()
+	private static LocalDate promptDeadlineInput()
 	{
 		System.out.println("What's the deadline of the project? Format: YYYY-MM-DD (or leave blank)");
 		
@@ -57,7 +58,7 @@ public class ProjectMenu{
 		LocalDate deadline = null;
 		while(true)
 		{
-			System.out.print("> ");
+			Console.displayInputIndicator();
 			deadlineStr = Console.input.nextLine();
 			
 			if(deadlineStr.isEmpty() == false)

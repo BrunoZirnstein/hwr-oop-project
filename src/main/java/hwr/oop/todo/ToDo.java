@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public class ToDo {
     private String user;
-    private List<Task> tasks;
-    private List<Project> projects;
+    private final List<Task> tasks;
+    private final List<Project> projects;
 
     public ToDo(String user) {
         this.user = user;
@@ -26,6 +26,10 @@ public class ToDo {
 
     public String user() {
         return user;
+    }
+
+    public void changeUser(String name) {
+        user = name;
     }
 
     public void addTask(Task task) {

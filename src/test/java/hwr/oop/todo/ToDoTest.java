@@ -22,6 +22,9 @@ class ToDoTest {
 
         list.removeTaskByObject(task1);
         assertThat(list.tasks()).isEmpty();
+
+        list.changeUser("Thomas");
+        assertThat(list.user()).isEqualTo("Thomas");
     }
 
 
@@ -58,6 +61,7 @@ class ToDoTest {
         list.addTask(task1);
         list.removeTaskByName("Test");
         assertThat(task1).isNotIn(list);
+        assertThat(list.taskByTitle("Test1")).isNull();
     }
 
 
