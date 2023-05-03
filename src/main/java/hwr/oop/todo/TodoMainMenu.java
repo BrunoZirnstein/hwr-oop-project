@@ -1,5 +1,7 @@
 package hwr.oop.todo;
 
+import java.io.IOException;
+
 public class TodoMainMenu {
 	
 	public static void open()
@@ -65,6 +67,14 @@ public class TodoMainMenu {
 				break;
 				
 			case 5: // Niklas: save current to-do list in file -> Main.activeToDo
+				//CSVCreate.writeToDoFile(,Main.activeTodo.user()) (Task task, ToDo todo, String filePathToDo)
+				for (Task element : Main.activeTodo.tasks()){
+					try {
+						CSVCreate.writeToDoFile(element, Main.activeTodo);
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
 				break;
 				
 			case 6:

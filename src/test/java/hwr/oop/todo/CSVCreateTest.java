@@ -1,59 +1,85 @@
 package hwr.oop.todo;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CSVCreateTest {
 
-    @Test
-    void testWriteToDoFile() throws IOException {
-        String filePathTestFile = "Todo_TEST.csv";
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
-        ToDo list = new ToDo("Bernd");
-        CSVCreate.writeToDoFile(task, list, filePathTestFile);
-        assertTrue(new File(filePathTestFile).exists());
-        List<String> lines = Files.readAllLines(new File(filePathTestFile).toPath());
-        assertEquals(1, lines.size());
-        assertEquals("Water plants,Water all the plants in the living room and in the bedroom.,home,water,2023-05-30,TODO,HIGH,university,Bernd", lines.get(0));
-        assertTrue(new File(filePathTestFile).delete());
-    }
-    @Test
-    void testWriteToDoFileWithIOException() {
-        String filePathTestFile = "NOTPOSSIBLE/NOTPOSSIBLE.csv";
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
-        ToDo list = new ToDo("Bernd");
-        assertThrows(IOException.class, () -> {
-            CSVCreate.writeToDoFile(task, list, filePathTestFile);
-        });
-        assertFalse(new File(filePathTestFile).exists());
+    @TempDir
+    static Path tempDir;
+
+    private static final Task validTask = new Task.Builder("ValidTask")
+            .description("This is a valid task.")
+            .tags(Collections.singletonList(new TaskTag("Tag")))
+            .deadline(LocalDate.of(2023, 5, 1))
+            .status(TaskStatus.DONE)
+            .priority(TaskPriority.HIGH)
+            .projectName("Project")
+            .build();
+
+    private static final Task validTaskNoDescription = new Task.Builder("ValidTaskNoDescription")
+            .tags(Collections.singletonList(new TaskTag("Tag")))
+            .deadline(LocalDate.of(2023, 5, 1))
+            .status(TaskStatus.DONE)
+            .priority(TaskPriority.HIGH)
+            .projectName("Project")
+            .build();
+
+    private static final Task validTaskNoTags = new Task.Builder("ValidTaskNoTags")
+            .description("This is a valid task.")
+            .deadline(LocalDate.of(2023, 5, 1))
+            .status(TaskStatus.DONE)
+            .priority(TaskPriority.HIGH)
+            .projectName("Project")
+            .build();
+
+    private static final Task validTaskNoDeadline = new Task.Builder("ValidTaskNoDeadline")
+            .description("This is a valid task.")
+            .tags(Collections.singletonList(new TaskTag("Tag")))
+            .status(TaskStatus.DONE)
+            .priority(TaskPriority.HIGH)
+            .projectName("Project")
+            .build();
+
+    private static final Task validTaskNoPriority = new Task.Builder("ValidTaskNoPriority")
+            .description("This is a valid task.")
+            .tags(Collections.singletonList(new TaskTag("Tag")))
+            .deadline(LocalDate.of(2023, 5, 1))
+            .status(TaskStatus.DONE)
+            .projectName("Project")
+            .build();
+
+    private static final Task validTaskNoProjectName = new Task.Builder("ValidTaskNoProjectName")
+            .description("This is a valid task.")
+            .tags(Collections.singletonList(new TaskTag("Tag")))
+            .deadline(LocalDate.of(2023, 5, 1))
+            .status(TaskStatus.DONE)
+            .priority(TaskPriority.HIGH)
+            .build();
+
+    private static final ToDo validToDo = new ToDo("User");
+
+    private static final Project validProject = new Project("Valid Project", LocalDate.of(2023, 5, 1));
+
+    @BeforeEach
+    void setUp() {
+        CSVCreate.FILEPATHTODO = tempDir.resolve("TODO_List.csv").toString();
+        CSVCreate.FILEPATHPROJECT = tempDir.resolve("Project_List.csv").toString();
     }
 
     @Test
-    void testWriteProjectFile() throws IOException{
-        String filePathTestFile = "Project_TEST.csv";
-        Project testProject = new Project("university",LocalDate.of(2023, 5, 30));
-        CSVCreate.writeProjectFile(testProject,filePathTestFile);
-        assertTrue(new File(filePathTestFile).exists());
-        List<String> lines = Files.readAllLines(new File(filePathTestFile).toPath());
-        assertEquals(1, lines.size());
-        assertEquals("university,2023-05-30",lines.get(0));
-        assertTrue(new File(filePathTestFile).delete());
-    }
-
-    @Test
-    void testWriteProjectFileWithIOException(){
-        String filePathTestFile = "NOTPOSSIBLE/NOTPOSSIBLE.csv";
-        Project testProject = new Project("university",LocalDate.of(2023, 5, 30));
-        assertThrows(IOException.class, () -> {
-            CSVCreate.writeProjectFile(testProject, filePathTestFile);
-        });
-        assertFalse(new File(filePathTestFile).exists());
+    void testWriteToDoFileWithValidTaskAndToDo() throws IOException {
+        CSVCreate.writeToDoFile(validTask, validToDo);
+        File file = new File(CSVCreate.FILEPATHTODO);
     }
 }

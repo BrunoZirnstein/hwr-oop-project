@@ -5,79 +5,91 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CSVReader {
-
     private static final String COMMA_DELIMITER = ",";
+    private String filePathToDo = "TODO_List.csv";
 
-    public static List<ToDo> readToDoFile(String filePathToDo) throws IOException {
-        BufferedReader fileReader = null;
-        List<ToDo> todoList = new ArrayList<>();
+    private String filePathProject = "Project_List.csv";
 
-        try {
-            fileReader = new BufferedReader(new FileReader(filePathToDo));
+    public void setFilePathToDo(String filePathToDo) {
+        this.filePathToDo = filePathToDo;
+    }
 
+    public void setFilePathProject(String filePathProject) {
+        this.filePathProject = filePathProject;
+    }
+
+    public ToDo readToDoFile(String user) {
+        ToDo todo = new ToDo(user);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePathToDo))) {
             String line;
-            while ((line = fileReader.readLine()) != null) {
-                String[] tokens = line.split(COMMA_DELIMITER);
+            while ((line = br.readLine()) != null) {
+                List<String> values = Arrays.asList(line.split(","));
+                String title = values.get(0);
+                // ---
+                System.out.println(title);
 
-                String taskTitle = tokens[0];
-                String taskDescription = tokens[1];
+                String description = values.get(1);
+                /// ---
+                System.out.println(description);
                 List<TaskTag> tags = new ArrayList<>();
-                for (int i = 2; i < tokens.length - 4; i++) {
-                    tags.add(new TaskTag(tokens[i]));
+                if (!values.get(2).isEmpty()) {
+                    String[] tagValues = values.get(2).split(";");
+                    for (String tagValue : tagValues) {
+                        tags.add(new TaskTag(tagValue));
+                    }
                 }
-                LocalDate deadline = LocalDate.parse(tokens[tokens.length - 4]);
-                TaskStatus status = TaskStatus.valueOf(tokens[tokens.length - 3]);
-                TaskPriority priority = TaskPriority.valueOf(tokens[tokens.length - 2]);
-                String projectTitle = tokens[tokens.length - 1];
-                Project project = new Project(projectTitle,null);
-                Task task = new Task.Builder(taskTitle).description(taskDescription).tags(tags).deadline(deadline).priority(priority).projectName(projectTitle).build();
-                ToDo todo = new ToDo(tokens[tokens.length - 5]);
-                todo.addTask(task);
-                todoList.add(todo);
-            }
-            fileReader.close();
-            System.out.println("Successfully read CSV-Task-File!");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException("Error in CSV-Reading!");
-        }
-
-        return todoList;
-    }
-
-    public static List<Project> readProject(String filePathProject) throws IOException {
-        BufferedReader fileReader = null;
-        List<Project> projectList = new ArrayList<>();
-
-        try {
-            fileReader = new BufferedReader(new FileReader(filePathProject));
-
-            String line;
-            while ((line = fileReader.readLine()) != null) {
-                String[] tokens = line.split(COMMA_DELIMITER);
-
-                String projectTitle = tokens[0];
                 LocalDate deadline = null;
-                if (!tokens[1].equals("")) {
-                    deadline = LocalDate.parse(tokens[1]);
+                if (!values.get(3).isEmpty()) {
+                    deadline = LocalDate.parse(values.get(3));
                 }
-                Project project = new Project(projectTitle, deadline);
-                projectList.add(project);
+                TaskStatus status = TaskStatus.valueOf(values.get(4).toUpperCase());
+                // Should be changed if all Tasks have a priority!
+                TaskPriority priority = null;
+                if (values.get(5).isEmpty()) {
+                    priority = TaskPriority.valueOf("HIGH");
+                }else{
+                    priority = TaskPriority.valueOf(values.get(5).toUpperCase());
+                }
+                String projectName = values.get(6);
+
+                if (values.get(7).equals(user)) {
+                    Task task = new Task.Builder(title)
+                            .description(description)
+                            .tags(tags)
+                            .deadline(deadline)
+                            .status(status)
+                            .priority(priority)
+                            //.projectName(Optional.ofNullable(projectName).orElse("untitled"))
+                            .build();
+                    todo.addTask(task);
+                }
             }
-
-            fileReader.close();
-            System.out.println("Successfully read CSV-Project-File!");
-
         } catch (IOException e) {
             e.printStackTrace();
-            throw new IOException("Error in CSV-Reading!");
+        }
+        return todo;
+    }
+
+    public List<Project> readProjectFile() throws IOException {
+        List<Project> projects = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePathProject))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(COMMA_DELIMITER);
+                String title = fields[0];
+                LocalDate deadline = LocalDate.parse(fields[1]);
+
+                Project project = new Project(title, deadline);
+                projects.add(project);
+            }
         }
 
-        return projectList;
+        return projects;
     }
-}
 
+}
