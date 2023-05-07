@@ -70,7 +70,7 @@ public class TodoMainMenu {
 				//CSVCreate.writeToDoFile(,Main.activeTodo.user()) (Task task, ToDo todo, String filePathToDo)
 				for (Task element : Main.activeTodo.tasks()){
 					try {
-						CSVCreate.writeToDoFile(element, Main.activeTodo);
+						CSVCreate.writeToDoFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 					}

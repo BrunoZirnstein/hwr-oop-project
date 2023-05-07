@@ -4,21 +4,23 @@ import java.io.*;
 
 public class CSVCreate {
     private static final String COMMA_DELIMITER = ",";
-    private static final String LINE_SEPARATOR = "\n";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String SEMICOLON_DELIMITER = ";";
-    public static String FILEPATHTODO ="TODO_List.csv";
-    public static String FILEPATHPROJECT  ="Project_List.csv";
 
-    public static void writeToDoFile(Task task, ToDo todo) throws IOException {
-        FileWriter fileWriter = null;
+    private static final String FILEPATHTODO = "ToDo_List.csv";
+    private static final String FILEPATHPROJECT = "Project_List.csv";
+    public static String getFilePathTodo() {
+        return FILEPATHTODO;
+    }
 
-        try {
-            File file = new File(FILEPATHTODO);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            fileWriter = new FileWriter(file, true);
 
+    public String getFilePathProject() {
+        return FILEPATHPROJECT;
+    }
+
+
+    public static void writeToDoFile(Task task, ToDo todo,String filePathTodo) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(filePathTodo, true)) {
             fileWriter.append(task.title());
             fileWriter.append(COMMA_DELIMITER);
             if (task.description() != null){
@@ -54,8 +56,6 @@ public class CSVCreate {
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.user());
             fileWriter.append(LINE_SEPARATOR);
-            fileWriter.flush();
-            fileWriter.close();
             System.out.println("Successfully created CSV-Task-File!");
 
         } catch (IOException e) {
@@ -64,27 +64,17 @@ public class CSVCreate {
         }
     }
 
-    public static void writeProjectFile(Project project) throws IOException {
-        FileWriter fileWriter = null;
-
-        try {
-            File file = new File(FILEPATHPROJECT);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            fileWriter = new FileWriter(file, true);
-
+    public static void writeProjectFile(Project project, String filePathProject) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(new File(filePathProject), true)) {
             fileWriter.append(project.title());
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(project.deadline().toString());
             fileWriter.append(LINE_SEPARATOR);
-            fileWriter.flush();
-            fileWriter.close();
             System.out.println("Successfully created CSV-Project-File!");
-
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("Error in CSV-Creation!");
         }
     }
+
 }

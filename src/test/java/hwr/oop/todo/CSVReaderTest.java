@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CSVReaderTest {
@@ -79,6 +79,19 @@ public class CSVReaderTest {
         //assertEquals("Project 1", todo.tasks().get(0).projectName().toString());
         //assertEquals(null, todo.tasks().get(1).projectName());
         //assertEquals("Project 2", todo.tasks().get(2).projectName());
+    }
+
+    @Test
+    public void testReadToDoFileIOException() {
+        ToDo todo = new ToDo("testuser");
+        String filePathToDo = "nonexistentfile.txt";
+        reader.setFilePathToDo(filePathToDo);
+        try {
+            reader.readToDoFile("testuser");
+        }catch(Exception e){
+            assertThat(e).isInstanceOf(FileNotFoundException.class);
+            e.printStackTrace(System.err);
+        }
     }
 
     @Test
