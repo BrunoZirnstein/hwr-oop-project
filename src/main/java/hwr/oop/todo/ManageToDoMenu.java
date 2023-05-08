@@ -1,7 +1,21 @@
 package hwr.oop.todo;
 
 public class ManageToDoMenu {
-	public static void openCreate()
+	private TodoMainMenu todoMainMenu = null;
+	private MainMenu mainMenu = null;
+	
+	public ManageToDoMenu(MainMenu mainMenu)
+	{
+		if(mainMenu == null)
+		{
+			throw new NullPointerException("The mainMenu parameter was invalid!");
+		}
+		
+		this.mainMenu = mainMenu;
+		todoMainMenu = new TodoMainMenu(mainMenu);
+	}
+	
+	public void openCreate()
 	{
 		Console.clear();
 		
@@ -10,10 +24,10 @@ public class ManageToDoMenu {
 		Main.activeTodo = new ToDo(todoName);
 		System.out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 		
-		TodoMainMenu.returnToMe();
+		todoMainMenu.returnToMe();
 	}
 	
-	private static String promptToDoName()
+	private String promptToDoName()
 	{
 		System.out.println("Enter your name / the name of the desired ToDo List.");
 		
@@ -34,7 +48,7 @@ public class ManageToDoMenu {
 		}
 	}
 	
-	public static void openLoad()
+	public void openLoad()
 	{
 		Console.clear();
 		
@@ -46,7 +60,7 @@ public class ManageToDoMenu {
 		
 	}
 		
-	public static void openRemove()
+	public void openRemove()
 	{
 		
 	}

@@ -5,8 +5,14 @@ import java.time.format.DateTimeParseException;
 
 public class ProjectMenu{
 
+	private TodoMainMenu todoMainMenu = null;
 	
-	public static void openCreate()
+	public ProjectMenu(TodoMainMenu todoMainMenu)
+	{
+		this.todoMainMenu = todoMainMenu;
+	}
+	
+	public void openCreate()
 	{
 		Console.clear();
 		
@@ -19,14 +25,14 @@ public class ProjectMenu{
 		
 		System.out.println();
 		System.out.println("Project '" + newProjectName + "' sucessfully created.");
-		TodoMainMenu.returnToMe();
+		todoMainMenu.returnToMe();
 	}
 	
 	/**
 	 * Prompts the user to enter a name for the project and handles if the user enters invalid names (e.g. empty string)
 	 * @return The user entered project name
 	 */
-	private static String promptProjectNameInput()
+	private String promptProjectNameInput()
 	{
 		System.out.println("What's the name of the project?");
 		
@@ -51,7 +57,7 @@ public class ProjectMenu{
 	 * Prompts the user to enter a deadline for the project and handles invalid input (e.g. wrong date input format).
 	 * @return The user entered deadline
 	 */
-	private static LocalDate promptDeadlineInput()
+	private LocalDate promptDeadlineInput()
 	{
 		System.out.println("What's the deadline of the project? Format: YYYY-MM-DD (or leave blank)");
 		

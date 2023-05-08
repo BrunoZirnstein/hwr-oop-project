@@ -1,76 +1,42 @@
 package hwr.oop.todo;
 
+import java.util.Scanner;
+
 public class MainMenu {
+	private MenuInputHandler inputHandler = null;
+	private ManageToDoMenu manageToDoMenu;
 	
-	public static void open() {
+	
+	public MainMenu()
+	{
+		manageToDoMenu = new ManageToDoMenu(this);
+		
+		inputHandler = new MenuInputHandler(1, System.out, new Scanner(System.in));
+		inputHandler.addAction("Create&Load ToDo List", () -> manageToDoMenu.openCreate());
+		inputHandler.addAction("Load ToDo List from file", () -> manageToDoMenu.openLoad());
+		inputHandler.addAction("Delete ToDO List", null);
+		inputHandler.addAction("Quit", () -> System.out.println("Shutting down."));
+	}
+	
+	public void open() {
 		System.out.println("Welcome to the ultimate-u-never-forget ToDo List");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println();
 		System.out.println("[MainMenu]");
-		System.out.println("What is it that you want to do? To proceed further, enter the action code given inside the [ ]");
-		System.out.println("[1] Create&Load ToDo List");
-		System.out.println("[2] Load ToDo List from file");
-		System.out.println("[3] Delete ToDO List");
-		System.out.println("[4] Quit");
+		inputHandler.printMenu();
 		
-		promptInput();
+		inputHandler.propmtAndHandleInput();
 	}
 	
 	/**
 	 * Just a little function that lets the user return to the MainMenu (reopen's it) by
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
-	public static void returnToMe()
+	public void returnToMe()
 	{
 		Console.EnterToContinue();
 		Console.clear();
 		open();
-	}
-	
-	/**
-	 * Prompts and waits for user console input and handles invalid input (= a not integer input).
-	 */
-	private static void promptInput()
-	{
-		Console.displayInputIndicator();
-		int inputID = 0;
-		while(inputID == 0) {
-			try {
-				inputID = Integer.parseInt(Console.input.nextLine());			
-			}
-			catch(NumberFormatException ex) {
-				System.out.println("Invalid input. Please try again");
-			}			
-		}
-		
-		handleInput(inputID);
-	}
-	
-	private static void handleInput(int input)
-	{
-		switch(input)
-		{
-			case 1:
-				ManageToDoMenu.openCreate();
-				break;
-				
-			case 2:			// load ToDo List from file
-				ManageToDoMenu.openLoad();
-				break;
-				
-			case 3:
-				
-				break;
-				
-			case 4:
-				System.out.println("Shutting down.");
-				break;
-				
-			default:
-				System.out.println("Invalid ID. Please enter a valid ID!");
-				promptInput();
-				break;
-		}
 	}
 
 }
