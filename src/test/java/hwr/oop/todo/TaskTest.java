@@ -78,7 +78,7 @@ class TaskTest {
         assertThat(task.status()).isEqualTo(TaskStatus.BLOCKED);
     }
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Changing Priority of task")
     //@ValueSource(strings = {TaskPriority.LOW,TaskPriority.HIGH})
     void testPriorityOfTask() {
