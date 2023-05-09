@@ -19,7 +19,7 @@ public class CSVCreate {
     }
 
 
-    public static void writeToDoFile(Task task, ToDo todo,String filePathTodo) throws IOException {
+    public static void writeToDoFile(Task task, ToDoList todo, String filePathTodo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(filePathTodo, true)) {
             fileWriter.append(task.title());
             fileWriter.append(COMMA_DELIMITER);

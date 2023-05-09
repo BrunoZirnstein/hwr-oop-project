@@ -7,9 +7,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class CSVReaderTest {
 
     private static final String TODO_CSV_FILENAME = "TodoTest.csv";
     private static final String PROJECT_CSV_FILENAME = "ProjectTest.csv";
-    private ToDo todo;
+    private ToDoList todo;
 
     CSVReader reader = new CSVReader();
     @TempDir
@@ -83,7 +81,7 @@ public class CSVReaderTest {
 
     @Test
     public void testReadToDoFileIOException() {
-        ToDo todo = new ToDo("testuser");
+        ToDoList todo = new ToDoList("testuser");
         String filePathToDo = "nonexistentfile.txt";
         reader.setFilePathToDo(filePathToDo);
         try {

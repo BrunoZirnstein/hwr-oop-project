@@ -47,7 +47,7 @@ public class CSVCreateTest {
                 .priority(TaskPriority.HIGH)
                 .projectName("Test Project")
                 .build();
-        ToDo todo = new ToDo("Test User");
+        ToDoList todo = new ToDoList("Test User");
 
         // Call method under test
         CSVCreate.writeToDoFile(task, todo,tempDir.resolve(TEST_FILEPATH_TODO).toString());

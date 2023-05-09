@@ -22,8 +22,8 @@ public class CSVReader {
         this.filePathProject = filePathProject;
     }
 
-    public ToDo readToDoFile(String user) {
-        ToDo todo = new ToDo(user);
+    public ToDoList readToDoFile(String user) {
+        ToDoList todo = new ToDoList(user);
         try (BufferedReader br = new BufferedReader(new FileReader(filePathToDo))) {
             String line;
             while ((line = br.readLine()) != null) {

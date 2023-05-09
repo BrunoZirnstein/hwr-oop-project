@@ -23,7 +23,7 @@ public class ManageToDoMenu {
 		
 		String todoName = promptToDoName();
 		
-		Main.activeTodo = new ToDo(todoName);
+		Main.activeTodo = new ToDoList(todoName);
 		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 		
 		todoMainMenu.returnToMe();
