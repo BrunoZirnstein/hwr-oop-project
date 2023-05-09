@@ -6,7 +6,7 @@ public class Project {
     private final String title;
     private LocalDate deadline;
 
-    public Project(String title , LocalDate deadline) {
+    public Project(String title, LocalDate deadline) {
         this.title = title;
         this.deadline = deadline;
     }

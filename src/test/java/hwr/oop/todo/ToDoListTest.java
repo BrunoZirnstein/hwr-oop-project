@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -177,7 +178,7 @@ class ToDoListTest {
     void taskByTagName_NoTagNameMatch() {
         ToDoList list = new ToDoList("Jason");
         Task task = new Task.Builder("Call Bruno").tags(
-                Arrays.asList(new TaskTag("Phone"))).build();
+                Collections.singletonList(new TaskTag("Phone"))).build();
         list.addTask(task);
         List<Task> result = list.taskByTagName("Home");
         assertThat(result).isEmpty();
@@ -188,7 +189,7 @@ class ToDoListTest {
     void taskByTagName_OneTask_OneTag() {
         ToDoList list = new ToDoList("Jason");
         Task task = new Task.Builder("Call Bruno").tags(
-                Arrays.asList(new TaskTag("Phone"))).build();
+                Collections.singletonList(new TaskTag("Phone"))).build();
         list.addTask(task);
         assertThat(list.taskByTagName("Phone")).containsExactly(task);
     }
@@ -202,7 +203,7 @@ class ToDoListTest {
         Task task1 = new Task.Builder("Water plants").tags(
                 Arrays.asList(taskTagHome, taskTagFreeTime)).build();
         Task task2 = new Task.Builder("Home office").tags(
-                Arrays.asList(taskTagHome)).build();
+                Collections.singletonList(taskTagHome)).build();
         list.addTask(task1);
         list.addTask(task2);
         assertThat(list.taskByTagName("Home")).containsExactly(task1, task2);

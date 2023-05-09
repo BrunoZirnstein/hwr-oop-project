@@ -48,7 +48,7 @@ public class CSVReaderTest {
         todo = reader.readToDoFile("user1");
     }
     @Test
-    public void testReadToDoFile() {
+    void testReadToDoFile() {
         assertEquals(3, todo.tasks().size());
         assertEquals("Task 1", todo.tasks().get(0).title());
         assertEquals("Task 2", todo.tasks().get(1).title());
@@ -80,7 +80,7 @@ public class CSVReaderTest {
     }
 
     @Test
-    public void testReadToDoFileIOException() {
+    void testReadToDoFileIOException() {
         ToDoList todo = new ToDoList("testuser");
         String filePathToDo = "nonexistentfile.txt";
         reader.setFilePathToDo(filePathToDo);
@@ -93,7 +93,7 @@ public class CSVReaderTest {
     }
 
     @Test
-    public void testReadProjectFile() throws IOException {
+    void testReadProjectFile() throws IOException {
         List<Project> projects = reader.readProjectFile();
         assertNotNull(projects);
         assertEquals(2, projects.size());
