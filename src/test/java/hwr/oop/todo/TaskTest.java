@@ -3,7 +3,7 @@ package hwr.oop.todo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -78,13 +78,13 @@ class TaskTest {
         assertThat(task.status()).isEqualTo(TaskStatus.BLOCKED);
     }
 
-    @Test
     @DisplayName("Changing Priority of task")
-    //@ValueSource(strings = {TaskPriority.LOW,TaskPriority.HIGH})
-    void testPriorityOfTask() {
+    @ParameterizedTest
+    @EnumSource(TaskPriority.class)
+    void testPriorityOfTask(TaskPriority priority) {
         Task task = new Task.Builder("Build a chair").priority(TaskPriority.LOW).build();
-        task.changePriority(TaskPriority.HIGH);
-        assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
+        task.changePriority(priority);
+        assertThat(task.priority()).isEqualTo(priority);
     }
 
     @Test
