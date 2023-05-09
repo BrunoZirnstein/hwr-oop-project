@@ -1,5 +1,6 @@
 package hwr.oop.todo;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -33,7 +34,7 @@ public class TodoMainMenu {
 		inputHandler.addAction("Delete Project", null);
 		inputHandler.addAction("Create Tasks (quick create)", () -> taskMenu.openCreateSimple());
 		inputHandler.addAction("Create Task (detailed)", null);
-		inputHandler.addAction("Save ToDo List in file..", null);	// Execute Niklas function here
+		inputHandler.addAction("Save ToDo List in file..", () -> saveCSV());
 		inputHandler.addAction("Go back", () -> mainMenu.returnToMe());
 	}
 
@@ -56,5 +57,18 @@ public class TodoMainMenu {
 		Console.EnterToContinue();
 		Console.clear();
 		open();
+	}
+	
+	private void saveCSV() {
+		// ToDo: Let the function handle the list itself, just need the ToDo-Obejct.
+		for (Task element : Main.activeTodo.tasks()){
+			try {
+				CSVCreate.writeToDoFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		out.println("Saved ToDo: '" + Main.activeTodo.user() + "' successfully.");
 	}
 }
