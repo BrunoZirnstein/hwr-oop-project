@@ -41,17 +41,38 @@ class TaskTest {
 
     @Test
     @DisplayName("Test adding and removing a task")
-    void testTagOfTask() {
+    void testRemoveTagByTagname() {
         Task task = new Task.Builder("Build a chair").build();
         task.addTag(new TaskTag("home"));
+        TaskTag task2 = new TaskTag("comfort");
+        task.addTag(task2);
+
+        task.removeTagByName("home");
+        assertThat(task.tags()).containsExactly(task2);
+    }
+
+    @Test
+    @DisplayName("Test adding and removing a task")
+    void testRemoveTagByObject() {
+        Task task = new Task.Builder("Build a chair").build();
+        task.addTag(new TaskTag("home"));
+        TaskTag task2 = new TaskTag("comfort");
+        task.addTag(task2);
         TaskTag taskGet = task.tags().get(0);
         assertThat(task.tags().get(0)).isEqualTo(taskGet);
-        task.removeTagByName("home");
 
-        assertThat(task.tags()).isEmpty();
-        task.addTag(new TaskTag("home"));
         task.removeTagByObject(taskGet);
-        assertThat(task.tags()).isEmpty();
+        assertThat(task.tags()).containsExactly(task2);
+    }
+
+    @Test
+    @DisplayName("Renaming a task")
+    void testRenameTask() {
+        Task task = new Task.Builder("Build a chair").build();
+        task.renameTitle("Build a house");
+        String taskTitle = task.title();
+        assertThat(taskTitle).contains("Build a house");
+
     }
 
     @Test
@@ -70,21 +91,25 @@ class TaskTest {
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
     }
 
-    @Test
+    @ParameterizedTest
     @DisplayName("Changing Status of task")
-    void testStatusOfTask() {
-        Task task = new Task.Builder("Build a chair").status(TaskStatus.TODO).build();
-        task.updateStatus(TaskStatus.BLOCKED);
-        assertThat(task.status()).isEqualTo(TaskStatus.BLOCKED);
+    @EnumSource(TaskStatus.class)
+    void testStatusOfTask(TaskStatus status) {
+        Task task = new Task.Builder("Build a chair").build();
+        task.updateStatus(status);
+        TaskStatus statusName = task.status();
+        assertThat(statusName).isEqualTo(status);
     }
 
-    @DisplayName("Changing Priority of task")
+
     @ParameterizedTest
+    @DisplayName("Changing Priority of task")
     @EnumSource(TaskPriority.class)
     void testPriorityOfTask(TaskPriority priority) {
-        Task task = new Task.Builder("Build a chair").priority(TaskPriority.LOW).build();
+        Task task = new Task.Builder("Build a chair").build();
         task.changePriority(priority);
-        assertThat(task.priority()).isEqualTo(priority);
+        TaskPriority prio = task.priority();
+        assertThat(prio).isEqualTo(priority);
     }
 
     @Test
@@ -95,6 +120,5 @@ class TaskTest {
         assertThat(task.projectName()).contains("Renovation");
         task.deleteProject();
         assertThat(task.projectName()).isEmpty();
-
     }
 }
