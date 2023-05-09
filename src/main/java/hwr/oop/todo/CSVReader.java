@@ -24,7 +24,8 @@ public class CSVReader {
 
     public ToDoList readToDoFile(String user) {
         ToDoList todo = new ToDoList(user);
-        try (BufferedReader br = new BufferedReader(new FileReader(filePathToDo))) {
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(filePathToDo))) {
             String line;
             while ((line = br.readLine()) != null) {
                 List<String> values = Arrays.asList(line.split(","));
@@ -41,15 +42,17 @@ public class CSVReader {
                 if (!values.get(3).isEmpty()) {
                     deadline = LocalDate.parse(values.get(3));
                 }
-                TaskStatus status = TaskStatus.valueOf(values.get(4).toUpperCase());
+                TaskStatus status = TaskStatus.valueOf(
+                        values.get(4).toUpperCase());
                 // Should be changed if all Tasks have a priority!
                 TaskPriority priority = null;
                 if (values.get(5).isEmpty()) {
                     priority = TaskPriority.valueOf("HIGH");
-                }else{
-                    priority = TaskPriority.valueOf(values.get(5).toUpperCase());
+                } else {
+                    priority = TaskPriority.valueOf(
+                            values.get(5).toUpperCase());
                 }
-                String projectName = values.get(6);
+                // String projectName = values.get(6);
 
                 if (values.get(7).equals(user)) {
                     Task task = new Task.Builder(title)
@@ -72,7 +75,8 @@ public class CSVReader {
     public List<Project> readProjectFile() throws IOException {
         List<Project> projects = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePathProject))) {
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(filePathProject))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(COMMA_DELIMITER);

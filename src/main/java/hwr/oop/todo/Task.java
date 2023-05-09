@@ -7,14 +7,16 @@ import java.util.Optional;
 
 public class Task {
     private String title;
-    private List<TaskTag> tags;
+    private final List<TaskTag> tags;
     private String description;
     private LocalDate deadline;
     private TaskStatus status;
     private TaskPriority priority;
     private String projectName;
 
-    private Task(String title, List<TaskTag> tags, String description, LocalDate deadline, TaskStatus status, TaskPriority priority, String projectName) {
+    private Task(String title, List<TaskTag> tags, String description,
+                 LocalDate deadline, TaskStatus status, TaskPriority priority,
+                 String projectName) {
         this.title = title;
         this.tags = tags;
         this.description = description;
@@ -93,7 +95,7 @@ public class Task {
     }
 
     public static class Builder {
-        private String title;
+        private final String title;
         private List<TaskTag> tags = new ArrayList<>();
         private String description = null;
         private LocalDate deadline = null;
@@ -136,7 +138,8 @@ public class Task {
         }
 
         public Task build() {
-            return new Task(title, tags, description, deadline, status, priority, projectName);
+            return new Task(title, tags, description, deadline, status,
+                    priority, projectName);
         }
     }
 }

@@ -14,7 +14,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CSVCreateTest {
+class CSVCreateTest {
 
     private static final String TEST_FILEPATH_TODO = "test_todo.csv";
     private static final String TEST_FILEPATH_PROJECT = "test_project.csv";
@@ -23,14 +23,14 @@ public class CSVCreateTest {
     static Path tempDir;
 
     @Test
-    public void testGetFilePathTodo() {
+    void testGetFilePathTodo() {
         String expectedFilePath = "ToDo_List.csv";
         String actualFilePath = CSVCreate.getFilePathTodo();
         assertEquals(expectedFilePath, actualFilePath);
     }
 
     @Test
-    public void testGetFilePathProject() {
+    void testGetFilePathProject() {
         String expectedFilePath = "Project_List.csv";
         CSVCreate csvCreate = new CSVCreate();
         String actualFilePath = csvCreate.getFilePathProject();

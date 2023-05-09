@@ -2,11 +2,12 @@ package hwr.oop.todo;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MenuInputHandler {
-	private HashMap<Integer, Runnable> actionMap;
-	private HashMap<Integer, String> actionDescriptionsMap;
+	private Map<Integer, Runnable> actionMap;
+	private Map<Integer, String> actionDescriptionsMap;
 	private PrintStream out = null;
 	private Scanner in = null;
 	

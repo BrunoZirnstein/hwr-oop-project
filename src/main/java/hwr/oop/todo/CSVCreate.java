@@ -1,6 +1,9 @@
 package hwr.oop.todo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Optional;
 
 public class CSVCreate {
     private static final String COMMA_DELIMITER = ",";
@@ -9,6 +12,7 @@ public class CSVCreate {
 
     private static final String FILEPATHTODO = "ToDo_List.csv";
     private static final String FILEPATHPROJECT = "Project_List.csv";
+
     public static String getFilePathTodo() {
         return FILEPATHTODO;
     }
@@ -19,16 +23,17 @@ public class CSVCreate {
     }
 
 
-    public static void writeToDoFile(Task task, ToDoList todo, String filePathTodo) throws IOException {
+    public static void writeToDoFile(Task task, ToDoList todo,
+                                     String filePathTodo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(filePathTodo, true)) {
             fileWriter.append(task.title());
             fileWriter.append(COMMA_DELIMITER);
-            if (task.description() != null){
+            if (task.description() != null) {
                 fileWriter.append(task.description());
             }
             fileWriter.append(COMMA_DELIMITER);
 
-            if (task.tags() != null){
+            if (task.tags() != null) {
                 int size = task.tags().size();
                 for (int i = 0; i < size; i++) {
                     TaskTag tag = task.tags().get(i);
@@ -40,21 +45,22 @@ public class CSVCreate {
             }
             fileWriter.append(COMMA_DELIMITER);
 
-            if (task.deadline() != null){
+            if (task.deadline() != null) {
                 fileWriter.append(task.deadline().toString());
             }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(task.status().name());
             fileWriter.append(COMMA_DELIMITER);
-            if (task.priority() != null){
+            if (task.priority() != null) {
                 fileWriter.append(task.priority().name());
             }
             fileWriter.append(COMMA_DELIMITER);
-            if (task.projectName().isPresent()) {
-                fileWriter.append(task.projectName().get());
+            Optional<String> projectName = task.projectName();
+            if (projectName.isPresent()) {
+                fileWriter.append(projectName.get());
             }
             fileWriter.append(COMMA_DELIMITER);
-            fileWriter.append(todo.user());
+            fileWriter.append(todo.owner());
             fileWriter.append(LINE_SEPARATOR);
 
         } catch (IOException e) {
@@ -63,8 +69,10 @@ public class CSVCreate {
         }
     }
 
-    public static void writeProjectFile(Project project, String filePathProject) throws IOException {
-        try (FileWriter fileWriter = new FileWriter(new File(filePathProject), true)) {
+    public static void writeProjectFile(Project project,
+                                        String filePathProject) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(new File(filePathProject),
+                true)) {
             fileWriter.append(project.title());
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(project.deadline().toString());
