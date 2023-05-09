@@ -29,12 +29,7 @@ public class CSVReader {
             while ((line = br.readLine()) != null) {
                 List<String> values = Arrays.asList(line.split(","));
                 String title = values.get(0);
-                // ---
-                //System.out.println(title);
-
                 String description = values.get(1);
-                /// ---
-                //System.out.println(description);
                 List<TaskTag> tags = new ArrayList<>();
                 if (!values.get(2).isEmpty()) {
                     String[] tagValues = values.get(2).split(";");
