@@ -51,7 +51,7 @@ class ToDoTest {
     }
 
     @Test
-    void taskByTitle() {
+    void testTaskByTitle() {
         ToDo list = new ToDo("Jason");
         Task task1 = new Task.Builder("Test").build();
         list.addTask(task1);
@@ -66,7 +66,7 @@ class ToDoTest {
 
 
     @Test
-    void taskByTagname() {
+    void testTaskByTagname() {
         ToDo user = new ToDo("Jason");
         ArrayList<TaskTag> taglist = new ArrayList<>();
         ArrayList<TaskTag> taglist2 = new ArrayList<>();
@@ -81,7 +81,7 @@ class ToDoTest {
     }
 
     @Test
-    void taskByProject() {
+    void testTaskByProject() {
         Project project = new Project("TestProject", LocalDate.of(2023, 4, 4));
         ToDo user = new ToDo("Jason");
         user.createProject(project);

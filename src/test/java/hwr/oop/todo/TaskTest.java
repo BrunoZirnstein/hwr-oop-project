@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TaskTest {
     @Test
-    void createTaskWithOnlyTitleTest() {
+    void testCreateTaskWithOnlyTitle() {
         Task task = new Task.Builder("Water plants").build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(new ArrayList<TaskTag>());
@@ -22,7 +22,7 @@ class TaskTest {
     }
 
     @Test
-    void createTaskWithParameters() {
+    void testCreateTaskWithParameters() {
         Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
@@ -34,7 +34,7 @@ class TaskTest {
     }
 
     @Test
-    void tagOfTask() {
+    void testTagOfTask() {
         Task task = new Task.Builder("Build a chair").build();
         task.addTag(new TaskTag("home"));
         TaskTag taskGet = task.tags().get(0);
@@ -47,35 +47,35 @@ class TaskTest {
     }
 
     @Test
-    void descriptionOfTask() {
+    void testDescriptionOfTask() {
         Task task = new Task.Builder("Build a chair").description("Build a chair out of wood").build();
         task.changeDescription("Build a chair out of metal");
         assertThat(task.description()).isEqualTo("Build a chair out of metal");
     }
 
     @Test
-    void deadlineOfTask() {
+    void testDeadlineOfTask() {
         Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
         task.moveDeadline(LocalDate.of(2023,6,1));
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
     }
 
     @Test
-    void statusOfTask() {
+    void testStatusOfTask() {
         Task task = new Task.Builder("Build a chair").status(TaskStatus.TODO).build();
         task.updateStatus(TaskStatus.BLOCKED);
         assertThat(task.status()).isEqualTo(TaskStatus.BLOCKED);
     }
 
     @Test
-    void priorityOfTask() {
+    void testPriorityOfTask() {
         Task task = new Task.Builder("Build a chair").priority(TaskPriority.LOW).build();
         task.changePriority(TaskPriority.HIGH);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
     }
 
     @Test
-    void projectOfTask() {
+    void testProjectOfTask() {
         Task task = new Task.Builder("Build a chair").build();
         task.changeProject("Renovation");
         assertThat(task.projectName()).contains("Renovation");
