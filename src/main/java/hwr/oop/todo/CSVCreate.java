@@ -56,7 +56,6 @@ public class CSVCreate {
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.user());
             fileWriter.append(LINE_SEPARATOR);
-            System.out.println("Successfully created CSV-Task-File!");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +69,6 @@ public class CSVCreate {
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(project.deadline().toString());
             fileWriter.append(LINE_SEPARATOR);
-            System.out.println("Successfully created CSV-Project-File!");
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("Error in CSV-Creation!");
