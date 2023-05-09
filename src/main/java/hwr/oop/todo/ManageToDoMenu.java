@@ -10,11 +10,13 @@ public class ManageToDoMenu {
 	private Scanner in = null;
 	
 	private TodoMainMenu todoMainMenu = null;
+	private MainMenu mainMenu;
 	
 	public ManageToDoMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
 		this.out = new PrintStream(out);
 		this.in = new Scanner(in);
 		
+		this.mainMenu = mainMenu;
 		todoMainMenu = new TodoMainMenu(mainMenu, out, in);
 	}
 	
@@ -56,7 +58,15 @@ public class ManageToDoMenu {
 		String todoName = promptToDoName();
 		
 		// Niklas: load function call with todoName which serves as the 'user' and get a ToDo object to override Main.activeToDo.
-		
+		try {
+			CSVReader reader = new CSVReader();
+			Main.activeTodo = reader.readToDoFile(todoName);
+			todoMainMenu.returnToMe();
+		}
+		catch (Exception e) {
+			out.println("Something horrible happend, the todo list was not found (maybe)");
+			mainMenu.returnToMe();
+		}
 		
 	}
 		
