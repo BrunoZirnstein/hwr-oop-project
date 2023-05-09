@@ -60,7 +60,7 @@ public class CSVCreate {
                 fileWriter.append(projectName.get());
             }
             fileWriter.append(COMMA_DELIMITER);
-            fileWriter.append(todo.user());
+            fileWriter.append(todo.owner());
             fileWriter.append(LINE_SEPARATOR);
 
         } catch (IOException e) {

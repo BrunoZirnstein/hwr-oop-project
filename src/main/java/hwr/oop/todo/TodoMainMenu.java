@@ -41,7 +41,7 @@ public class TodoMainMenu {
     }
 
     public void open() {
-        out.println("ToDo List of: " + Main.activeTodo.user());
+        out.println("ToDo List of: " + Main.activeTodo.owner());
         out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         out.println();
         out.println("[ToDo MainMenu]");
@@ -74,6 +74,6 @@ public class TodoMainMenu {
         }
 
         out.println(
-                "Saved ToDo: '" + Main.activeTodo.user() + "' successfully.");
+                "Saved ToDo: '" + Main.activeTodo.owner() + "' successfully.");
     }
 }

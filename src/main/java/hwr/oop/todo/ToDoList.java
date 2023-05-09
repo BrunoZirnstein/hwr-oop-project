@@ -7,10 +7,10 @@ import java.util.List;
 public class ToDoList {
     private final List<Task> tasks;
     private final List<Project> projects;
-    private String user;
+    private String owner;
 
-    public ToDoList(String user) {
-        this.user = user;
+    public ToDoList(String owner) {
+        this.owner = owner;
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
     }
@@ -23,12 +23,12 @@ public class ToDoList {
         return projects;
     }
 
-    public String user() {
-        return user;
+    public String owner() {
+        return owner;
     }
 
     public void updateOwner(String name) {
-        user = name;
+        owner = name;
     }
 
     public void addTask(Task task) {
@@ -69,14 +69,15 @@ public class ToDoList {
                         "Cannot get task from ToDo list, given task title does not exist."));
     }
 
-    public List<Task> taskByTagName(String tagName) {
+    public List<Task> tasksByTagName(String tagName) {
         return this.tasks.stream().filter(task -> task.tags().stream()
                 .anyMatch(tag -> tag.title().equals(tagName))).toList();
     }
 
-    public List<Task> taskByProject(String projectName) {
+    public List<Task> tasksByProject(String projectName) {
         boolean noProjectWithMatchingTitle = projects.stream()
                 .noneMatch(project -> project.title().equals(projectName));
+
         if (noProjectWithMatchingTitle) {
             throw new InvalidParameterException(
                     "Cannot get tasks from ToDo list, given project name does not exist.");
