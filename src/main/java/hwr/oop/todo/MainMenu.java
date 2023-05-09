@@ -1,17 +1,25 @@
 package hwr.oop.todo;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class MainMenu {
+	private PrintStream out = null;
+	private Scanner in = null;
+	
 	private MenuInputHandler inputHandler = null;
 	private ManageToDoMenu manageToDoMenu;
 	
 	
-	public MainMenu()
-	{
-		manageToDoMenu = new ManageToDoMenu(this);
+	
+	public MainMenu(OutputStream out, InputStream in) {
+		this.out = new PrintStream(out);
+        this.in = new Scanner(in);
+		manageToDoMenu = new ManageToDoMenu(this, out, in);
 		
-		inputHandler = new MenuInputHandler(1, System.out, new Scanner(System.in));
+		inputHandler = new MenuInputHandler(1, this.out, this.in);
 		inputHandler.addAction("Create&Load ToDo List", () -> manageToDoMenu.openCreate());
 		inputHandler.addAction("Load ToDo List from file", () -> manageToDoMenu.openLoad());
 		inputHandler.addAction("Delete ToDO List", null);
@@ -19,10 +27,10 @@ public class MainMenu {
 	}
 	
 	public void open() {
-		System.out.println("Welcome to the ultimate-u-never-forget ToDo List");
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println();
-		System.out.println("[MainMenu]");
+		out.println("Welcome to the ultimate-u-never-forget ToDo List");
+		out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		out.println();
+		out.println("[MainMenu]");
 		inputHandler.printMenu();
 		
 		inputHandler.propmtAndHandleInput();
@@ -32,8 +40,7 @@ public class MainMenu {
 	 * Just a little function that lets the user return to the MainMenu (reopen's it) by
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
-	public void returnToMe()
-	{
+	public void returnToMe() {
 		Console.EnterToContinue();
 		Console.clear();
 		open();

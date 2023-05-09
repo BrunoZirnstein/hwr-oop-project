@@ -13,8 +13,7 @@ public class MenuInputHandler {
 	private int currentIndex = 0;
 	private int actionStartIndex = 0;
 	
-	public MenuInputHandler(int startWithActionIndex, PrintStream out, Scanner in)
-	{
+	public MenuInputHandler(int startWithActionIndex, PrintStream out, Scanner in) {
 		actionMap = new HashMap<Integer, Runnable>();
 		actionDescriptionsMap = new HashMap<Integer, String>();
 		currentIndex = startWithActionIndex;
@@ -24,24 +23,21 @@ public class MenuInputHandler {
 		this.in = in;
 	}
 	
-	public void addAction(String description, Runnable action)
-	{
+	public void addAction(String description, Runnable action) {
 		actionMap.put(currentIndex, action);
 		actionDescriptionsMap.put(currentIndex, description);
 		
 		currentIndex += 1;
 	}
 	
-	public void printMenu()
-	{
+	public void printMenu() {
 		for(int i=actionStartIndex; i<currentIndex; i++)
 		{
 			out.println("[" + i + "] " + actionDescriptionsMap.get(i));
 		}
 	}
 	
-	public void propmtAndHandleInput()
-	{
+	public void propmtAndHandleInput() {
 		int inputID = 0;
 		while(inputID == 0) {
 			Console.displayInputIndicator();
@@ -56,8 +52,7 @@ public class MenuInputHandler {
 		handleInput(inputID);
 	}
 	
-	public void handleInput(int userInput)
-	{
+	public void handleInput(int userInput) {
 		if(actionMap.containsKey(userInput) == false)
 		{
 			out.println("Invalid ID. Please enter a valid ID!");
