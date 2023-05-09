@@ -1,5 +1,7 @@
 package hwr.oop.todo;
 
+import java.io.IOException;
+
 public class ManageToDoMenu {
 	private TodoMainMenu todoMainMenu = null;
 	private MainMenu mainMenu = null;
@@ -51,10 +53,17 @@ public class ManageToDoMenu {
 	public void openLoad()
 	{
 		Console.clear();
-		
-		System.out.println("To load a ToDo list:");
+
 		String todoName = promptToDoName();
-		
+		Main.activeTodo = new ToDo(todoName);
+		System.out.println("To load a ToDo for the current user!");
+		ToDo todo = null;
+		CSVReader reader = new CSVReader();
+		todo = reader.readToDoFile(Main.activeTodo.user());
+		System.out.println("Task names for " + todo.user() + ":");
+		for (Task task : todo.tasks()) {
+			System.out.println(task.title());
+		}
 		// Niklas: load function call with todoName which serves as the 'user' and get a ToDo object to override Main.activeToDo.
 		
 		

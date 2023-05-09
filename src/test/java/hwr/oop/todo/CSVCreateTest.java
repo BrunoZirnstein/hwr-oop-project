@@ -1,59 +1,80 @@
 package hwr.oop.todo;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CSVCreateTest {
+public class CSVCreateTest {
 
+    private static final String TEST_FILEPATH_TODO = "test_todo.csv";
+    private static final String TEST_FILEPATH_PROJECT = "test_project.csv";
+
+    @TempDir
+    static Path tempDir;
+
+    @Test
+    public void testGetFilePathTodo() {
+        String expectedFilePath = "ToDo_List.csv";
+        String actualFilePath = CSVCreate.getFilePathTodo();
+        assertEquals(expectedFilePath, actualFilePath);
+    }
+
+    @Test
+    public void testGetFilePathProject() {
+        String expectedFilePath = "Project_List.csv";
+        CSVCreate csvCreate = new CSVCreate();
+        String actualFilePath = csvCreate.getFilePathProject();
+        assertEquals(expectedFilePath, actualFilePath);
+    }
     @Test
     void testWriteToDoFile() throws IOException {
-        String filePathTestFile = "Todo_TEST.csv";
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
-        ToDo list = new ToDo("Bernd");
-        CSVCreate.writeToDoFile(task, list, filePathTestFile);
-        assertTrue(new File(filePathTestFile).exists());
-        List<String> lines = Files.readAllLines(new File(filePathTestFile).toPath());
-        assertEquals(1, lines.size());
-        assertEquals("Water plants,Water all the plants in the living room and in the bedroom.,home,water,2023-05-30,TODO,HIGH,university,Bernd", lines.get(0));
-        assertTrue(new File(filePathTestFile).delete());
-    }
-    @Test
-    void testWriteToDoFileWithIOException() {
-        String filePathTestFile = "NOTPOSSIBLE/NOTPOSSIBLE.csv";
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"), new TaskTag("water"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
-        ToDo list = new ToDo("Bernd");
-        assertThrows(IOException.class, () -> {
-            CSVCreate.writeToDoFile(task, list, filePathTestFile);
-        });
-        assertFalse(new File(filePathTestFile).exists());
+        // Create test data
+        Task task = new Task.Builder("Test Task")
+                .description("This is a test task")
+                .tags(Collections.singletonList(new TaskTag("test")))
+                .deadline(LocalDate.of(2023, 5, 7))
+                .status(TaskStatus.TODO)
+                .priority(TaskPriority.HIGH)
+                .projectName("Test Project")
+                .build();
+        ToDo todo = new ToDo("Test User");
+
+        // Call method under test
+        CSVCreate.writeToDoFile(task, todo,tempDir.resolve(TEST_FILEPATH_TODO).toString());
+
+        // Verify file was created with correct contents
+        File file = new File(tempDir.resolve(TEST_FILEPATH_TODO).toString());
+        Assertions.assertTrue(file.exists());
+        byte[] bytes = Files.readAllBytes(Paths.get(tempDir.resolve(TEST_FILEPATH_TODO).toString()));
+        String fileContents = new String(bytes);
+        String expectedContents = "Test Task,This is a test task,test,2023-05-07,TODO,HIGH,Test Project,Test User" + System.lineSeparator() ;
+        assertEquals(expectedContents, fileContents);
     }
 
     @Test
-    void testWriteProjectFile() throws IOException{
-        String filePathTestFile = "Project_TEST.csv";
-        Project testProject = new Project("university",LocalDate.of(2023, 5, 30));
-        CSVCreate.writeProjectFile(testProject,filePathTestFile);
-        assertTrue(new File(filePathTestFile).exists());
-        List<String> lines = Files.readAllLines(new File(filePathTestFile).toPath());
-        assertEquals(1, lines.size());
-        assertEquals("university,2023-05-30",lines.get(0));
-        assertTrue(new File(filePathTestFile).delete());
-    }
+    void testWriteProjectFile() throws IOException {
+        // Create test data
+        Project project = new Project("Test Project", LocalDate.of(2023, 5, 7));
 
-    @Test
-    void testWriteProjectFileWithIOException(){
-        String filePathTestFile = "NOTPOSSIBLE/NOTPOSSIBLE.csv";
-        Project testProject = new Project("university",LocalDate.of(2023, 5, 30));
-        assertThrows(IOException.class, () -> {
-            CSVCreate.writeProjectFile(testProject, filePathTestFile);
-        });
-        assertFalse(new File(filePathTestFile).exists());
+        // Call method under test
+        CSVCreate.writeProjectFile(project, tempDir.resolve(TEST_FILEPATH_PROJECT).toString());
+
+        // Verify file was created with correct contents
+        File file = new File(tempDir.resolve(TEST_FILEPATH_PROJECT).toString());
+        Assertions.assertTrue(file.exists());
+        byte[] bytes = Files.readAllBytes(Paths.get(tempDir.resolve(TEST_FILEPATH_PROJECT).toString()));
+        String fileContents = new String(bytes);
+        String expectedContents = "Test Project,2023-05-07" + System.lineSeparator();
+        assertEquals(expectedContents, fileContents);
     }
 }
