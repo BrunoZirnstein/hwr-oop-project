@@ -1,38 +1,39 @@
 package hwr.oop.todo;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
 public class ManageToDoMenu {
-	private TodoMainMenu todoMainMenu = null;
-	private MainMenu mainMenu = null;
+	private PrintStream out = null;
+	private Scanner in = null;
 	
-	public ManageToDoMenu(MainMenu mainMenu)
-	{
-		if(mainMenu == null)
-		{
-			throw new NullPointerException("The mainMenu parameter was invalid!");
-		}
+	private TodoMainMenu todoMainMenu = null;
+	
+	public ManageToDoMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
+		this.out = new PrintStream(out);
+		this.in = new Scanner(in);
 		
-		this.mainMenu = mainMenu;
-		todoMainMenu = new TodoMainMenu(mainMenu);
+		todoMainMenu = new TodoMainMenu(mainMenu, out, in);
 	}
 	
-	public void openCreate()
-	{
+	public void openCreate() {
 		Console.clear();
 		
 		String todoName = promptToDoName();
 		
 		Main.activeTodo = new ToDo(todoName);
-		System.out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
+		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 		
 		todoMainMenu.returnToMe();
 	}
 	
-	private String promptToDoName()
-	{
-		System.out.println("Enter your name / the name of the desired ToDo List.");
+	private String promptToDoName() {
+		out.println("Enter your name / the name of the desired ToDo List.");
 		
 		String todoName;
-		while(true)
+		while(true) 
 		{
 			Console.displayInputIndicator();
 			todoName = Console.input.nextLine();
@@ -43,16 +44,15 @@ public class ManageToDoMenu {
 			}
 			else
 			{
-				System.out.println("Invalid name (empty). Please enter a valid name!");
+				out.println("Invalid name (empty). Please enter a valid name!");
 			}
 		}
 	}
 	
-	public void openLoad()
-	{
+	public void openLoad() {
 		Console.clear();
 		
-		System.out.println("To load a ToDo list:");
+		out.println("To load a ToDo list:");
 		String todoName = promptToDoName();
 		
 		// Niklas: load function call with todoName which serves as the 'user' and get a ToDo object to override Main.activeToDo.
@@ -60,8 +60,7 @@ public class ManageToDoMenu {
 		
 	}
 		
-	public void openRemove()
-	{
+	public void openRemove() {
 		
 	}
 }
