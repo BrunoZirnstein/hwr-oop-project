@@ -1,90 +1,60 @@
 package hwr.oop.todo;
 
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
 
 public class TodoMainMenu {
+	private PrintStream out = null;
+	private Scanner in = null;
 	
-	public static void open()
-	{
-		System.out.println("ToDo List of: " + Main.activeTodo.user());
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println();
-		System.out.println("[ToDo MainMenu]");
-		System.out.println("What is it that you want to do? To proceed further, enter the action code given inside the [ ]");
-		System.out.println("[1] Create Project");
-		System.out.println("[2] Delete Project");
-		System.out.println("[3] Create Tasks (quick create)");
-		System.out.println("[4] Create Task (detailed)");
-		System.out.println("[5] Save ToDo List in file..");
-		System.out.println("[6] Go back");
+	private MainMenu mainMenu = null;
+	private ProjectMenu projectMenu = null;
+	private TaskMenu taskMenu = null;
+	
+	private MenuInputHandler inputHandler = null;
+	
+	public TodoMainMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
+		this.out = new PrintStream(out);
+		this.in = new Scanner(in);
 		
-		promptInput();
+		if(mainMenu == null)
+		{
+			throw new NullPointerException("the mainMenu parameter is invalid!");
+		}
+		this.mainMenu = mainMenu;
+		
+		projectMenu = new ProjectMenu(this, out, in);
+		taskMenu = new TaskMenu(this, out, in);
+		
+		inputHandler = new MenuInputHandler(1, this.out, this.in);
+		inputHandler.addAction("Create Project", () -> projectMenu.openCreate());
+		inputHandler.addAction("Delete Project", null);
+		inputHandler.addAction("Create Tasks (quick create)", () -> taskMenu.openCreateSimple());
+		inputHandler.addAction("Create Task (detailed)", null);
+		inputHandler.addAction("Save ToDo List in file..", null);	// Execute Niklas function here
+		inputHandler.addAction("Go back", () -> mainMenu.returnToMe());
+	}
+
+	public void open() {
+		out.println("ToDo List of: " + Main.activeTodo.user());
+		out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		out.println();
+		out.println("[ToDo MainMenu]");
+		out.println("What is it that you want to do? To proceed further, enter the action code given inside the [ ]");
+		inputHandler.printMenu();
+		
+		inputHandler.propmtAndHandleInput();
 	}
 	
 	/**
 	 * Just a little function that lets the user return to the MainMenu (reopen's it) by
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
-	public static void returnToMe()
-	{
+	public void returnToMe() {
 		Console.EnterToContinue();
 		Console.clear();
 		open();
-	}
-	
-	/**
-	 * Prompts and waits for user console input and handles invalid input (= a not integer input).
-	 */
-	private static void promptInput()
-	{
-		Console.displayInputIndicator();
-		int inputID = 0;
-		while(inputID == 0) {
-			try {
-				inputID = Integer.parseInt(Console.input.nextLine());			
-			}
-			catch(NumberFormatException ex) {
-				System.out.println("Invalid input. Please try again");
-			}			
-		}
-		
-		handleInput(inputID);
-	}
-	
-	private static void handleInput(int input)
-	{
-		switch(input)
-		{
-			case 1:
-				ProjectMenu.openCreate();
-				break;
-				
-			case 2:
-				break;
-				
-			case 3:
-				TaskMenu.openCreateSimple();
-				break;
-				
-			case 5: // Niklas: save current to-do list in file -> Main.activeToDo
-				//CSVCreate.writeToDoFile(,Main.activeTodo.user()) (Task task, ToDo todo, String filePathToDo)
-				for (Task element : Main.activeTodo.tasks()){
-					try {
-						CSVCreate.writeToDoFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
-					} catch (IOException e) {
-						throw new RuntimeException(e);
-					}
-				}
-				break;
-				
-			case 6:
-				MainMenu.returnToMe();
-				break;
-				
-			default:
-				System.out.println("Invalid ID. Please enter a valid ID!");
-				promptInput();
-				break;
-		}
 	}
 }

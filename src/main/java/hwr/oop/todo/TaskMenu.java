@@ -1,9 +1,24 @@
 package hwr.oop.todo;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
 public class TaskMenu {
+	private PrintStream out = null;
+	private Scanner in = null;
 	
-	public static void openCreateSimple()
-	{
+	private TodoMainMenu todoMainMenu = null;
+	
+	public TaskMenu(TodoMainMenu todoMainMenu, OutputStream out, InputStream in) {
+		this.out = new PrintStream(out);
+		this.in = new Scanner(in);
+		
+		this.todoMainMenu = todoMainMenu;
+	}
+	
+	public void openCreateSimple() {
 		Console.clear();
 		
 		String taskName = promptTaskName();
@@ -11,14 +26,13 @@ public class TaskMenu {
 		Task newTask = new Task.Builder(taskName).build();
 		Main.activeTodo.addTask(newTask);
 		
-		System.out.println();
-		System.out.println("Task '" + taskName + "' sucessfully created.");
-		TodoMainMenu.returnToMe();
+		out.println();
+		out.println("Task '" + taskName + "' sucessfully created.");
+		todoMainMenu.returnToMe();
 	}
 	
-	private static String promptTaskName()
-	{
-		System.out.println("Enter a name for the task.");
+	private String promptTaskName() {
+		out.println("Enter a name for the task.");
 		
 		String userInput = null;
 		while(true)
@@ -32,7 +46,7 @@ public class TaskMenu {
 			}
 			else
 			{
-				System.out.println();
+				out.println();
 			}
 		}
 	}
