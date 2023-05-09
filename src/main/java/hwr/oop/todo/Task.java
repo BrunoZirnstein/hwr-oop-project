@@ -65,7 +65,9 @@ public class Task {
     }
 
     public void removeTagByName(String tagname) {
-        this.tags.removeIf(tag -> tag.title().equals(tagname));
+        this.tags.removeIf(tag -> {
+            return tag.title().equals(tagname);
+        });
     }
 
     public void changeDescription(String description) {
