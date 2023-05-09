@@ -19,7 +19,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | Number | Feature | Done | Responsible |
 |--------|---------|-------|-------------|
 | 1      | Tag Klasse       |   ✔️   | Niklas            |
-| 2      | Hauptmenü Projekt anlegen      |      | Thomas            |
+| 2      | Hauptmenü Task anlegen      |       | Thomas            |
 | 3      | Task Klasse       |   ✔️   | Bruno            |
 | 4      | Projekt Klasse       |   ✔️   | Jason & Frauke            |
 | 5      | CSV Read & Write       |   ✔️   | Niklas            |
