@@ -204,7 +204,7 @@ class ToDoListTest {
 
     @Test
     @DisplayName("Get tasks by tag name, no matched task")
-    void taskByTagName_NoTagNameMatch() {
+    void tasksByTagName_NoTagNameMatch() {
         ToDoList list = new ToDoList("Jason");
 
         Task task = new Task.Builder("Call Bruno").tags(
@@ -217,7 +217,7 @@ class ToDoListTest {
 
     @Test
     @DisplayName("Get tasks by tag name, one task with one tag")
-    void taskByTagName_OneTask_OneTag() {
+    void tasksByTagName_OneTask_OneTag() {
         ToDoList list = new ToDoList("Jason");
 
         TaskTag taskTag = new TaskTag("Phone");
@@ -231,7 +231,7 @@ class ToDoListTest {
 
     @Test
     @DisplayName("Get tasks by tag name, two tasks with one and two tags")
-    void taskByTagName_TwoTasks_TwoTags() {
+    void tasksByTagName_TwoTasks_TwoTags() {
         ToDoList list = new ToDoList("Jason");
 
         TaskTag taskTagHome = new TaskTag("Home");
@@ -255,7 +255,7 @@ class ToDoListTest {
 
     @Test
     @DisplayName("Get tasks by project name, no projects in list")
-    void taskByProject_EmptyProjects_ThrowException() {
+    void tasksByProject_EmptyProjects_ThrowException() {
         ToDoList list = new ToDoList("Jason");
         assertThatThrownBy(
                 () -> list.tasksByProject("university")).isInstanceOf(
@@ -264,8 +264,23 @@ class ToDoListTest {
     }
 
     @Test
+    @DisplayName("Get tasks by project name, invalid project name")
+    void tasksByProject_InvalidProjects_ThrowException() {
+        ToDoList list = new ToDoList("Jason");
+
+        LocalDate projectDeadline = LocalDate.of(2023, 4, 4);
+        Project project = new Project("university", projectDeadline);
+        list.addProject(project);
+
+        assertThatThrownBy(
+                () -> list.tasksByProject("work")).isInstanceOf(
+                InvalidParameterException.class).hasMessage(
+                "Cannot get tasks from ToDo list, given project name does not exist.");
+    }
+
+    @Test
     @DisplayName("Get tasks by project name, deleted project in list")
-    void taskByProject_WithDeletedProject_ThrowException() {
+    void tasksByProject_WithDeletedProject_ThrowException() {
         ToDoList list = new ToDoList("Jason");
 
         LocalDate projectDeadline = LocalDate.of(2023, 4, 4);
@@ -286,7 +301,7 @@ class ToDoListTest {
 
     @Test
     @DisplayName("Get tasks by project name, valid project, no task found")
-    void taskByProject_ValidProject_NoTask() {
+    void tasksByProject_ValidProject_NoTask() {
         ToDoList list = new ToDoList("Jason");
 
         LocalDate date = LocalDate.of(2023, 4, 4);
@@ -298,17 +313,23 @@ class ToDoListTest {
     }
 
     @Test
-    @DisplayName("Get tasks by project name, valid project")
-    void taskByProject_ValidProject_OneTask() {
+    @DisplayName("Get tasks by project name, valid project, multiple projects available)")
+    void tasksByProject_ValidProject_MultipleAvailableProjects_OneTask() {
         ToDoList list = new ToDoList("Jason");
 
         LocalDate projectDate = LocalDate.of(2023, 4, 4);
         Project project = new Project("university", projectDate);
         list.addProject(project);
 
+        Project otherProject = new Project("home", projectDate);
+        list.addProject(otherProject);
+
         Task universityTask = new Task.Builder("Study OOP").projectName(
                 "university").build();
         list.addTask(universityTask);
+
+        Task homeTask = new Task.Builder("Clean floor").projectName("home").build();
+        list.addTask(homeTask);
 
         List<Task> filteredTasks = list.tasksByProject("university");
         assertThat(filteredTasks).containsExactly(universityTask);
@@ -316,20 +337,20 @@ class ToDoListTest {
 
     @Test
     @DisplayName("Get project object by name, valid project")
-    void getProjectByName_ValidProject() {
+    void projectByName_ValidProject() {
         ToDoList list = new ToDoList("Bruno");
 
         LocalDate projectDate = LocalDate.of(2023, 4, 4);
         Project project = new Project("university", projectDate);
         list.addProject(project);
 
-        Project filteredProject = list.getProjectByName("university");
+        Project filteredProject = list.projectByName("university");
         assertThat(filteredProject).isEqualTo(project);
     }
 
     @Test
     @DisplayName("Get project object by name, invalid project")
-    void getProjectByName_InvalidProject_ThrowException() {
+    void projectByName_InvalidProject_ThrowException() {
         ToDoList list = new ToDoList("Bruno");
 
         LocalDate projectDate = LocalDate.of(2023, 4, 4);
@@ -337,18 +358,18 @@ class ToDoListTest {
         list.addProject(project);
 
         assertThatThrownBy(
-                () -> list.getProjectByName("university")).isInstanceOf(
+                () -> list.projectByName("university")).isInstanceOf(
                 InvalidParameterException.class).hasMessage(
                 "Cannot get project object from ToDo list, given project name does not exist.");
     }
 
     @Test
     @DisplayName("Get project object by name, empty projects")
-    void getProjectByName_EmptyProjects_ThrowException() {
+    void projectByName_EmptyProjects_ThrowException() {
         ToDoList list = new ToDoList("Bruno");
         
         assertThatThrownBy(
-                () -> list.getProjectByName("university")).isInstanceOf(
+                () -> list.projectByName("university")).isInstanceOf(
                 InvalidParameterException.class).hasMessage(
                 "Cannot get project object from ToDo list, given project name does not exist.");
     }

@@ -33,7 +33,7 @@ public class ToDoList {
 
     public void addTask(Task task) {
         try {
-            task.projectName().ifPresent(this::getProjectByName);
+            task.projectName().ifPresent(this::projectByName);
 
             tasks.add(task);
         } catch (InvalidParameterException e) {
@@ -55,7 +55,7 @@ public class ToDoList {
     }
 
     public void removeProject(String projectName) {
-        Project projectObject = getProjectByName(projectName);
+        Project projectObject = projectByName(projectName);
         removeProjectByObject(projectObject);
     }
 
@@ -75,7 +75,7 @@ public class ToDoList {
     }
 
     public List<Task> tasksByProject(String projectName) {
-        boolean noProjectWithMatchingTitle = projects.stream()
+        boolean noProjectWithMatchingTitle = projects.isEmpty() || projects.stream()
                 .noneMatch(project -> project.title().equals(projectName));
 
         if (noProjectWithMatchingTitle) {
@@ -84,11 +84,11 @@ public class ToDoList {
         }
 
         return tasks.stream().filter(task -> task.projectName()
-                        .isPresent() && projectName.equals(task.projectName().get()))
+                        .isPresent() && task.projectName().get().equals(projectName))
                 .toList();
     }
 
-    public Project getProjectByName(String projectName) {
+    public Project projectByName(String projectName) {
         if (projects.isEmpty()) {
             throw new InvalidParameterException(
                     "Cannot get project object from ToDo list, given project name does not exist.");
