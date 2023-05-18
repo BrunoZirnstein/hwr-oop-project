@@ -1,9 +1,6 @@
 package hwr.oop.todo;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
@@ -11,6 +8,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
+import static hwr.oop.todo.TaskPriority.HIGH;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,36 +18,45 @@ public class CSVReaderTest {
     private static final String TODO_CSV_FILENAME = "TodoTest.csv";
     private static final String PROJECT_CSV_FILENAME = "ProjectTest.csv";
     private ToDoList todo;
-
-    CSVReader reader = new CSVReader();
     @TempDir
     static Path tempDir;
     @BeforeAll
     public static void createTestCSVFiles() throws IOException {
-        // Create TodoTest.csv file
-        BufferedWriter todoWriter = new BufferedWriter(new FileWriter(tempDir.resolve(TODO_CSV_FILENAME).toString()));
-        todoWriter.write("Task 1,Description 1,tag1;tag2,2023-06-01,DONE,HIGH,Project 1,user1\n");
-        todoWriter.write("Task 2,Description 2,tag3,2023-06-02,BLOCKED,LOW,,user1\n");
-        todoWriter.write("Task 3,Description 3,,,TODO,HIGH,Project 2,user1\n");
-        todoWriter.flush();
-        todoWriter.close();
-
-        // Create ProjectTest.csv file
-        BufferedWriter projectWriter = new BufferedWriter(new FileWriter(tempDir.resolve(PROJECT_CSV_FILENAME).toString()));
-        projectWriter.write("Project 1,2023-06-01\n");
-        projectWriter.write("Project 2,2023-06-02\n");
-        projectWriter.flush();
-        projectWriter.close();
+        try (BufferedWriter todoWriter = new BufferedWriter(new FileWriter(tempDir.resolve(TODO_CSV_FILENAME).toString()))) {
+            todoWriter.write("Task 1,Description 1,tag1;tag2,2023-06-01,DONE,HIGH,Project 1,user1\n");
+            todoWriter.write("Task 2,Description 2,tag3,2023-06-02,BLOCKED,LOW,,user1\n");
+            todoWriter.write("Task 3,Description 3,,,TODO,HIGH,Project 2,user1\n");
+            todoWriter.write("Task 4,Description 4,,,TODO,,,user1\n");
+        }
+        try (BufferedWriter projectWriter = new BufferedWriter(new FileWriter(tempDir.resolve(PROJECT_CSV_FILENAME).toString()))) {
+            projectWriter.write("Project 1,2023-06-01\n");
+            projectWriter.write("Project 2,2023-06-02\n");
+        }
     }
     @BeforeEach
-    void setUp() {
-        reader.setFilePathToDo(tempDir.resolve(TODO_CSV_FILENAME).toString());
-        reader.setFilePathProject(tempDir.resolve(PROJECT_CSV_FILENAME).toString());
-        todo = reader.readToDoFile("user1");
+    void setUp() throws IOException {
+        String tempPathList = tempDir.resolve(TODO_CSV_FILENAME).toString();
+        //String tempPathProject = tempDir.resolve(PROJECT_CSV_FILENAME).toString();
+        todo = CSVReader.readToDoFile("user1", tempPathList);
     }
+
     @Test
-    void testReadToDoFile() {
-        assertEquals(3, todo.tasks().size());
+    void testGetFilePathTodo() {
+        String expectedFilePath = "ToDo_List.csv";
+        String actualFilePath = CSVReader.getFilePathTodo();
+        Assertions.assertEquals(expectedFilePath, actualFilePath);
+    }
+
+    @Test
+    void testGetFilePathProject() {
+        String expectedFilePath = "Project_List.csv";
+        String actualFilePath = CSVReader.getFilePathProject();
+        Assertions.assertEquals(expectedFilePath, actualFilePath);
+    }
+
+    @Test
+    void testReadToDoFile() throws IOException {
+        assertEquals(4, todo.tasks().size());
         assertEquals("Task 1", todo.tasks().get(0).title());
         assertEquals("Task 2", todo.tasks().get(1).title());
         assertEquals("Task 3", todo.tasks().get(2).title());
@@ -64,15 +71,19 @@ public class CSVReaderTest {
 
         assertEquals(LocalDate.of(2023, 6, 1), todo.tasks().get(0).deadline());
         assertEquals(LocalDate.of(2023, 6, 2), todo.tasks().get(1).deadline());
-        assertEquals(null, todo.tasks().get(2).deadline());
+        assertNull(todo.tasks().get(2).deadline());
 
         assertEquals(TaskStatus.DONE, todo.tasks().get(0).status());
         assertEquals(TaskStatus.BLOCKED, todo.tasks().get(1).status());
         assertEquals(TaskStatus.TODO, todo.tasks().get(2).status());
 
-        assertEquals(TaskPriority.HIGH, todo.tasks().get(0).priority());
+        assertEquals(HIGH, todo.tasks().get(0).priority());
         assertEquals(TaskPriority.LOW, todo.tasks().get(1).priority());
-        assertEquals(TaskPriority.HIGH, todo.tasks().get(2).priority());
+        assertEquals(HIGH, todo.tasks().get(2).priority());
+
+        ToDoList todoEmptyPriority = CSVReader.readToDoFile("user1", tempDir.resolve(TODO_CSV_FILENAME).toString());
+        assertEquals(4, todoEmptyPriority.tasks().size());
+        assertEquals(HIGH, todoEmptyPriority.tasks().get(0).priority());
 
         //assertEquals("Project 1", todo.tasks().get(0).projectName().toString());
         //assertEquals(null, todo.tasks().get(1).projectName());
@@ -80,21 +91,23 @@ public class CSVReaderTest {
     }
 
     @Test
-    void testReadToDoFileIOException() {
+    void testReadToDoFileIOExceptionFileNotFound() {
         ToDoList todo = new ToDoList("testuser");
-        String filePathToDo = "nonexistentfile.txt";
-        reader.setFilePathToDo(filePathToDo);
+        String filePathToDo = "nonexistentfile.csv";
+
         try {
-            reader.readToDoFile("testuser");
-        }catch(Exception e){
-            assertThat(e).isInstanceOf(FileNotFoundException.class);
-            e.printStackTrace(System.err);
+            CSVReader.readToDoFile("testuser", filePathToDo);
+            fail("Expected an IOException to be thrown");
+        } catch (IOException e) {
+            // Exception successfully caught
+            // You can perform any necessary assertions or logging here
         }
     }
 
     @Test
     void testReadProjectFile() throws IOException {
-        List<Project> projects = reader.readProjectFile();
+        String tempPathProject = tempDir.resolve(PROJECT_CSV_FILENAME).toString();
+        List<Project> projects = CSVReader.readProjectFile(tempPathProject);
         assertNotNull(projects);
         assertEquals(2, projects.size());
         assertEquals("Project 1", projects.get(0).title());

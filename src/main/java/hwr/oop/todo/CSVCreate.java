@@ -13,6 +13,7 @@ public class CSVCreate {
     private static final String FILEPATHTODO = "ToDo_List.csv";
     private static final String FILEPATHPROJECT = "Project_List.csv";
 
+    private static final String ERROR_CSV = "Error in CSV-Creation!";
     public static String getFilePathTodo() {
         return FILEPATHTODO;
     }
@@ -22,6 +23,23 @@ public class CSVCreate {
         return FILEPATHPROJECT;
     }
 
+    public static void writeQuickToDoFile(Task task, ToDoList todo, String filePathTodo) throws IOException{
+        try (FileWriter fileWriter = new FileWriter(filePathTodo, true)) {
+            fileWriter.append(task.title());
+            for (int i = 0; i < 4; i++) {
+                fileWriter.append(COMMA_DELIMITER);
+            }
+            fileWriter.append(task.status().name());
+            for (int i = 0; i < 3; i++) {
+                fileWriter.append(COMMA_DELIMITER);
+            }
+            fileWriter.append(todo.owner());
+            fileWriter.append(LINE_SEPARATOR);
+
+        } catch (IOException e) {
+            throw new IOException(ERROR_CSV, e);
+        }
+    }
 
     public static void writeToDoFile(Task task, ToDoList todo,
                                      String filePathTodo) throws IOException {
@@ -64,8 +82,7 @@ public class CSVCreate {
             fileWriter.append(LINE_SEPARATOR);
 
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException("Error in CSV-Creation!");
+            throw new IOException(ERROR_CSV, e);
         }
     }
 
@@ -78,8 +95,7 @@ public class CSVCreate {
             fileWriter.append(project.deadline().toString());
             fileWriter.append(LINE_SEPARATOR);
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException("Error in CSV-Creation!");
+            throw new IOException(ERROR_CSV, e);
         }
     }
 

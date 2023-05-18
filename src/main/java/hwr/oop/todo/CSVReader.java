@@ -1,6 +1,7 @@
 package hwr.oop.todo;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -10,19 +11,20 @@ import java.util.List;
 
 public class CSVReader {
     private static final String COMMA_DELIMITER = ",";
-    private String filePathToDo = "TODO_List.csv";
 
-    private String filePathProject = "Project_List.csv";
+    private static final String FILEPATHTODO = "ToDo_List.csv";
+    private static final String FILEPATHPROJECT = "Project_List.csv";
 
-    public void setFilePathToDo(String filePathToDo) {
-        this.filePathToDo = filePathToDo;
+    public static String getFilePathTodo() {
+        return FILEPATHTODO;
     }
 
-    public void setFilePathProject(String filePathProject) {
-        this.filePathProject = filePathProject;
+
+    public static String getFilePathProject() {
+        return FILEPATHPROJECT;
     }
 
-    public ToDoList readToDoFile(String user) {
+    public static ToDoList readToDoFile(String user, String filePathToDo) throws IOException {
         ToDoList todo = new ToDoList(user);
         try (BufferedReader br = new BufferedReader(
                 new FileReader(filePathToDo))) {
@@ -66,13 +68,13 @@ public class CSVReader {
                     todo.addTask(task);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new IOException("File not found: " + filePathToDo, e);
         }
         return todo;
     }
 
-    public List<Project> readProjectFile() throws IOException {
+    public static List<Project> readProjectFile(String filePathProject) throws IOException {
         List<Project> projects = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(

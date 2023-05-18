@@ -55,8 +55,7 @@ public class ManageToDoMenu {
 
         // Niklas: load function call with todoName which serves as the 'user' and get a ToDo object to override Main.activeToDo.
         try {
-            CSVReader reader = new CSVReader();
-            Main.activeTodo = reader.readToDoFile(todoName);
+            Main.activeTodo = CSVReader.readToDoFile(todoName, CSVReader.getFilePathTodo());
             todoMainMenu.returnToMe();
         } catch (Exception e) {
             out.println(
