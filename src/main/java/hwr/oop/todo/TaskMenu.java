@@ -19,7 +19,7 @@ public class TaskMenu {
 	}
 	
 	public void openCreateSimple() {
-		Console.clear();
+		Console.clear(out);
 		
 		String taskName = promptTaskName();
 		
@@ -37,8 +37,8 @@ public class TaskMenu {
 		String userInput = null;
 		while(true)
 		{
-			Console.displayInputIndicator();
-			userInput = Console.input.nextLine();
+			Console.displayInputIndicator(out);
+			userInput = in.nextLine();
 			
 			if(userInput.isEmpty() == false)
 			{

@@ -12,6 +12,11 @@ public class MainMenu {
 	private MenuInputHandler inputHandler = null;
 	private ManageToDoMenu manageToDoMenu;
 	
+	public final String[] menuHeadline = {"Welcome to the ultimate-u-never-forget ToDo List", 
+									 	  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 
+									 	  "",
+									 	  "[MainMenu]"};
+	
 	
 	
 	public MainMenu(OutputStream out, InputStream in) {
@@ -23,14 +28,12 @@ public class MainMenu {
 		inputHandler.addAction("Create&Load ToDo List", () -> manageToDoMenu.openCreate());
 		inputHandler.addAction("Load ToDo List from file", () -> manageToDoMenu.openLoad());
 		inputHandler.addAction("Delete ToDO List", null);
-		inputHandler.addAction("Quit", () -> System.out.println("Shutting down."));
+		inputHandler.addAction("Quit", () -> this.out.println("Shutting down."));
 	}
 	
 	public void open() {
-		out.println("Welcome to the ultimate-u-never-forget ToDo List");
-		out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		out.println();
-		out.println("[MainMenu]");
+		out.println(String.join(System.lineSeparator(), menuHeadline));
+		
 		inputHandler.printMenu();
 		
 		inputHandler.propmtAndHandleInput();
@@ -41,8 +44,8 @@ public class MainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		Console.EnterToContinue();
-		Console.clear();
+		Console.EnterToContinue(out, in);
+		Console.clear(out);
 		open();
 	}
 

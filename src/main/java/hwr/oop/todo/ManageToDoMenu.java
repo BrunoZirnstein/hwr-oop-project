@@ -21,7 +21,7 @@ public class ManageToDoMenu {
 	}
 	
 	public void openCreate() {
-		Console.clear();
+		Console.clear(out);
 		
 		String todoName = promptToDoName();
 		
@@ -37,8 +37,8 @@ public class ManageToDoMenu {
 		String todoName;
 		while(true) 
 		{
-			Console.displayInputIndicator();
-			todoName = Console.input.nextLine();
+			Console.displayInputIndicator(out);
+			todoName = in.nextLine();
 			
 			if(todoName.isEmpty() == false)
 			{
@@ -52,7 +52,7 @@ public class ManageToDoMenu {
 	}
 	
 	public void openLoad() {
-		Console.clear();
+		Console.clear(out);
 		
 		out.println("To load a ToDo list:");
 		String todoName = promptToDoName();

@@ -21,7 +21,7 @@ public class ProjectMenu{
 	}
 	
 	public void openCreate() {
-		Console.clear();
+		Console.clear(out);
 		
 		String newProjectName = promptProjectNameInput();
 		
@@ -45,8 +45,8 @@ public class ProjectMenu{
 		String projectName;
 		while(true)
 		{
-			Console.displayInputIndicator();
-			projectName = Console.input.nextLine();
+			Console.displayInputIndicator(out);
+			projectName = in.nextLine();
 			
 			if(projectName.isEmpty() == false)
 			{
@@ -70,8 +70,8 @@ public class ProjectMenu{
 		LocalDate deadline = null;
 		while(true)
 		{
-			Console.displayInputIndicator();
-			deadlineStr = Console.input.nextLine();
+			Console.displayInputIndicator(out);
+			deadlineStr = in.nextLine();
 			
 			if(deadlineStr.isEmpty() == false)
 			{

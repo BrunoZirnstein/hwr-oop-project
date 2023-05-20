@@ -2,9 +2,13 @@ package hwr.oop.todo;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MenuInputHandler {
+	public final String invalidInputMessage = "Invalid input. Please try again";
+	public final String wrongInputIDMessage = "Invalid ID. Please enter a valid ID!";
+	
 	private HashMap<Integer, Runnable> actionMap;
 	private HashMap<Integer, String> actionDescriptionsMap;
 	private PrintStream out = null;
@@ -31,21 +35,20 @@ public class MenuInputHandler {
 	}
 	
 	public void printMenu() {
-		for(int i=actionStartIndex; i<currentIndex; i++)
-		{
-			out.println("[" + i + "] " + actionDescriptionsMap.get(i));
+		for(Map.Entry<Integer, String> entry : actionDescriptionsMap.entrySet()) {
+			out.println("[" + entry.getKey() + "] " + entry.getValue());
 		}
 	}
 	
 	public void propmtAndHandleInput() {
-		int inputID = 0;
-		while(inputID == 0) {
-			Console.displayInputIndicator();
+		int inputID = -1;
+		while(inputID == -1) {
+			Console.displayInputIndicator(out);
 			try {
 				inputID = Integer.parseInt(in.nextLine());			
 			}
 			catch(NumberFormatException ex) {
-				out.println("Invalid input. Please try again");
+				out.println(invalidInputMessage);
 			}
 		}
 		
@@ -55,7 +58,7 @@ public class MenuInputHandler {
 	public void handleInput(int userInput) {
 		if(actionMap.containsKey(userInput) == false)
 		{
-			out.println("Invalid ID. Please enter a valid ID!");
+			out.println(wrongInputIDMessage);
 			propmtAndHandleInput();
 			return;
 		}

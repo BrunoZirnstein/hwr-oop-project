@@ -54,8 +54,8 @@ public class TodoMainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		Console.EnterToContinue();
-		Console.clear();
+		Console.EnterToContinue(out, in);
+		Console.clear(out);
 		open();
 	}
 	
