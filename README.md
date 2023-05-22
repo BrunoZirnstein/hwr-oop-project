@@ -37,6 +37,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | 17      | Input Handler & Print Stream implementieren     |    ✔️    | Thomas            |
 | 18      | Menü Tests erstellen     |       | Thomas            |
 | 19      | CSV Klassen bzgl. mutation coverage überarbeiten       |         | Niklas            |
+| 20      | Klassen & Package Struktur überarbeiten: Input / Application / Persistence       |         | Bruno            |
 
 
 ## Additional Dependencies
