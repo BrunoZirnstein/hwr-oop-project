@@ -36,6 +36,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | 16      | refactor CSV Read & Write tests       |    ✔️     | Niklas            |
 | 17      | Input Handler & Print Stream implementieren     |    ✔️    | Thomas            |
 | 18      | Menü Tests erstellen     |       | Thomas            |
+| 19      | CSV Klassen bzgl. mutation coverage überarbeiten       |         | Niklas            |
 
 
 ## Additional Dependencies
