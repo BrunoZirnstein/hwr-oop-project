@@ -35,7 +35,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | 15      | Menü code an neue Classen & Struktur anpassen     |    ✔️    | Thomas            |
 | 16      | refactor CSV Read & Write tests       |    ✔️     | Niklas            |
 | 17      | Input Handler & Print Stream implementieren     |    ✔️    | Thomas            |
-
+| 18      | Menü Tests erstellen     |       | Thomas            |
 
 
 ## Additional Dependencies
