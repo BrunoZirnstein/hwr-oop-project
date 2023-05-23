@@ -18,8 +18,8 @@ public class CSVCreate {
     public static String getFilePathTodo() {
         return FILEPATHTODO;
     }
-    public static String getFilepathTask() { return FILEPATHTASK; }
-    public String getFilePathProject() {
+    public static String getFilePathTask() { return FILEPATHTASK; }
+    public static String getFilePathProject() {
         return FILEPATHPROJECT;
     }
 

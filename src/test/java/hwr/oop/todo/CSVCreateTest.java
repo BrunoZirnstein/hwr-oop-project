@@ -42,8 +42,13 @@ class CSVCreateTest {
     @Test
     void testGetFilePathProject() {
         String expectedFilePath = "Project_List.csv";
-        CSVCreate csvCreate = new CSVCreate();
-        String actualFilePath = csvCreate.getFilePathProject();
+        String actualFilePath = CSVCreate.getFilePathProject();
+        assertEquals(expectedFilePath, actualFilePath);
+    }
+    @Test
+    void testGetFilePathTask() {
+        String expectedFilePath = "Task_List.csv";
+        String actualFilePath = CSVCreate.getFilePathTask();
         assertEquals(expectedFilePath, actualFilePath);
     }
 
