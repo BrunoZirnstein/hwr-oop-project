@@ -70,7 +70,7 @@ class ToDoListTest {
 
         assertThatThrownBy(() -> list.addTask(task)).isInstanceOf(
                 InvalidParameterException.class).hasMessage(
-                "Cannot add project to ToDo list, given project name does not exist.");
+                "Cannot add task to ToDo list, given project name does not exist.");
     }
 
     @Test

@@ -25,7 +25,7 @@ public class ManageToDoMenu {
 		
 		String todoName = promptToDoName();
 		
-		Main.activeTodo = new ToDo(todoName);
+		Main.activeTodo = new ToDoList(todoName);
 		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 		
 		todoMainMenu.returnToMe();
@@ -60,7 +60,7 @@ public class ManageToDoMenu {
 		// Niklas: load function call with todoName which serves as the 'user' and get a ToDo object to override Main.activeToDo.
 		try {
 			CSVReader reader = new CSVReader();
-			Main.activeTodo = reader.readToDoFile(todoName);
+			Main.activeTodo = reader.readToDoFile(todoName, null);
 			todoMainMenu.returnToMe();
 		}
 		catch (Exception e) {

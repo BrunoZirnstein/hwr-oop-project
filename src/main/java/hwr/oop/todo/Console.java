@@ -1,5 +1,6 @@
 package hwr.oop.todo;
 
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Console {

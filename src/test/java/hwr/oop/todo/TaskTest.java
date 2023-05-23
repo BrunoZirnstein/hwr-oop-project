@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TaskTest {
     @Test
     @DisplayName("New Task created with Title")
-    void testCreateTaskWithOnlyTitle() {
+    void newTask_WithOnlyTitle() {
         Task task = new Task.Builder("Water plants").build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(new ArrayList<TaskTag>());
@@ -28,7 +29,7 @@ class TaskTest {
 
     @Test
     @DisplayName("New Task with all parameters")
-    void testCreateTaskWithParameters() {
+    void newTask_WithAllParameters() {
         Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
@@ -40,8 +41,21 @@ class TaskTest {
     }
 
     @Test
-    @DisplayName("Test adding and removing a task")
-    void testRemoveTagByTagname() {
+    @DisplayName("New Task contains multiple tags")
+    void newTask_WithMultipleTags() {
+        Task task = new Task.Builder("Water plants").build();
+        TaskTag tag1 = new TaskTag("1");
+        task.addTag(tag1);
+
+        TaskTag tag2 = new TaskTag("2");
+        task.addTag(tag2);
+
+        assertThat(task.tags()).containsAll(Arrays.asList(tag1,tag2));
+    }
+
+    @Test
+    @DisplayName("Adding and removing a task by Tagname")
+    void removeTagByTagname() {
         Task task = new Task.Builder("Build a chair").build();
         task.addTag(new TaskTag("home"));
         TaskTag task2 = new TaskTag("comfort");
@@ -52,8 +66,8 @@ class TaskTest {
     }
 
     @Test
-    @DisplayName("Test adding and removing a task")
-    void testRemoveTagByObject() {
+    @DisplayName("Adding and removing a task by Object")
+    void removeTagByObject() {
         Task task = new Task.Builder("Build a chair").build();
         task.addTag(new TaskTag("home"));
         TaskTag task2 = new TaskTag("comfort");
@@ -67,7 +81,7 @@ class TaskTest {
 
     @Test
     @DisplayName("Renaming a task")
-    void testRenameTask() {
+    void renameTask() {
         Task task = new Task.Builder("Build a chair").build();
         task.renameTitle("Build a house");
         String taskTitle = task.title();
@@ -77,24 +91,24 @@ class TaskTest {
 
     @Test
     @DisplayName("Changing description of task")
-    void testDescriptionOfTask() {
+    void descriptionOfTask() {
         Task task = new Task.Builder("Build a chair").description("Build a chair out of wood").build();
         task.changeDescription("Build a chair out of metal");
         assertThat(task.description()).isEqualTo("Build a chair out of metal");
     }
 
     @Test
-    @DisplayName("Changing Deadline of task")
-    void testDeadlineOfTask() {
+    @DisplayName("Changing deadline of task")
+    void deadlineOfTask() {
         Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
         task.moveDeadline(LocalDate.of(2023,6,1));
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
     }
 
     @ParameterizedTest
-    @DisplayName("Changing Status of task")
+    @DisplayName("Changing status of task")
     @EnumSource(TaskStatus.class)
-    void testStatusOfTask(TaskStatus status) {
+    void statusOfTask(TaskStatus status) {
         Task task = new Task.Builder("Build a chair").build();
         task.updateStatus(status);
         TaskStatus statusName = task.status();
@@ -103,9 +117,9 @@ class TaskTest {
 
 
     @ParameterizedTest
-    @DisplayName("Changing Priority of task")
+    @DisplayName("Changing priority of task")
     @EnumSource(TaskPriority.class)
-    void testPriorityOfTask(TaskPriority priority) {
+    void priorityOfTask(TaskPriority priority) {
         Task task = new Task.Builder("Build a chair").build();
         task.changePriority(priority);
         TaskPriority prio = task.priority();
@@ -114,7 +128,7 @@ class TaskTest {
 
     @Test
     @DisplayName("Adding and removing a project")
-    void testProjectOfTask() {
+    void projectOfTask() {
         Task task = new Task.Builder("Build a chair").build();
         task.changeProject("Renovation");
         assertThat(task.projectName()).contains("Renovation");

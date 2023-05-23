@@ -38,7 +38,7 @@ public class ToDoList {
             tasks.add(task);
         } catch (InvalidParameterException e) {
             throw new InvalidParameterException(
-                    "Cannot add project to ToDo list, given project name does not exist.");
+                    "Cannot add task to ToDo list, given project name does not exist.");
         }
     }
 
