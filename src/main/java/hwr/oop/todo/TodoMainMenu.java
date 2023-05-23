@@ -63,7 +63,7 @@ public class TodoMainMenu {
 		// ToDo: Let the function handle the list itself, just need the ToDo-Obejct.
 		for (Task element : Main.activeTodo.tasks()){
 			try {
-				CSVCreate.writeToDoFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
+				CSVCreate.writeTaskFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}

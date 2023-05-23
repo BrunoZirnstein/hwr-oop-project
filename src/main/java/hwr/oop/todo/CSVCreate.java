@@ -12,19 +12,19 @@ public class CSVCreate {
 
     private static final String FILEPATHTODO = "ToDo_List.csv";
     private static final String FILEPATHPROJECT = "Project_List.csv";
+    private static final String FILEPATHTASK = "Task_List.csv";
 
     private static final String ERROR_CSV = "Error in CSV-Creation!";
     public static String getFilePathTodo() {
         return FILEPATHTODO;
     }
-
-
+    public static String getFilepathTask() { return FILEPATHTASK; }
     public String getFilePathProject() {
         return FILEPATHPROJECT;
     }
 
-    public static void writeQuickToDoFile(Task task, ToDoList todo, String filePathTodo) throws IOException{
-        try (FileWriter fileWriter = new FileWriter(filePathTodo, true)) {
+    public static void writeQuickTaskFile(Task task, ToDoList todo, String filePathTask) throws IOException{
+        try (FileWriter fileWriter = new FileWriter(filePathTask, true)) {
             fileWriter.append(task.title());
             for (int i = 0; i < 4; i++) {
                 fileWriter.append(COMMA_DELIMITER);
@@ -41,9 +41,9 @@ public class CSVCreate {
         }
     }
 
-    public static void writeToDoFile(Task task, ToDoList todo,
-                                     String filePathTodo) throws IOException {
-        try (FileWriter fileWriter = new FileWriter(filePathTodo, true)) {
+    public static void writeTaskFile(Task task, ToDoList todo,
+                                     String filePathTask) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(filePathTask, true)) {
             fileWriter.append(task.title());
             fileWriter.append(COMMA_DELIMITER);
             if (task.description() != null) {
@@ -81,6 +81,16 @@ public class CSVCreate {
             fileWriter.append(todo.owner());
             fileWriter.append(LINE_SEPARATOR);
 
+        } catch (IOException e) {
+            throw new IOException(ERROR_CSV, e);
+        }
+    }
+
+    public static void writeToDoListFile(ToDoList toDoList, String filePathToDo) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(new File(filePathToDo),
+                true)) {
+            fileWriter.append(toDoList.owner());
+            fileWriter.append(LINE_SEPARATOR);
         } catch (IOException e) {
             throw new IOException(ERROR_CSV, e);
         }
