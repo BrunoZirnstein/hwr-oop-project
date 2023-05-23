@@ -62,8 +62,8 @@ public class CSVUpdate {
             throw e;
         }
     }
-    public static void updateProject(Project project, String oldProjectTitle, String filePath) throws IOException {
+    public static void updateProject(Project project, String oldProjectTitle, ToDoList todo, String filePath) throws IOException {
         removeProject(oldProjectTitle, filePath);
-        CSVCreate.writeProjectFile(project, filePath);
+        CSVCreate.writeProjectFile(project,todo,filePath);
     }
 }

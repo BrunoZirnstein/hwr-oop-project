@@ -96,13 +96,15 @@ public class CSVCreate {
         }
     }
 
-    public static void writeProjectFile(Project project,
+    public static void writeProjectFile(Project project, ToDoList todo,
                                         String filePathProject) throws IOException {
         try (FileWriter fileWriter = new FileWriter(new File(filePathProject),
                 true)) {
             fileWriter.append(project.title());
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(project.deadline().toString());
+            fileWriter.append(COMMA_DELIMITER);
+            fileWriter.append(todo.owner());
             fileWriter.append(LINE_SEPARATOR);
         } catch (IOException e) {
             throw new IOException(ERROR_CSV, e);

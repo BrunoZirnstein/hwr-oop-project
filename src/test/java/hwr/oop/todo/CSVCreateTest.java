@@ -76,7 +76,6 @@ class CSVCreateTest {
 
     @Test
     void testWriteTaskFile_ExceptionHandling() {
-        // Set up test data
         Task task = new Task.Builder("Test Task")
                 .description("This is a test task")
                 .tags(Collections.singletonList(new TaskTag("test")))
@@ -94,14 +93,15 @@ class CSVCreateTest {
 
     @Test
     void testWriteProjectFile() throws IOException {
+        ToDoList todo = new ToDoList("Test User");
         Project project = new Project("Test Project", LocalDate.of(2023, 5, 7));
         String filePathProject = tempDir.resolve(TEST_FILEPATH_PROJECT).toString();
-        CSVCreate.writeProjectFile(project, filePathProject);
+        CSVCreate.writeProjectFile(project,todo,filePathProject);
         File file = new File(filePathProject);
         Assertions.assertTrue(file.exists());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = br.readLine();
-            String expectedLine = "Test Project,2023-05-07";
+            String expectedLine = "Test Project,2023-05-07,Test User";
             assertEquals(expectedLine, line);
         }
     }
@@ -109,9 +109,10 @@ class CSVCreateTest {
     @Test
     void testWriteProjectFile_ExceptionHandling() {
         Project project = new Project("Test Project", null);
+        ToDoList todo = new ToDoList("Test User");
         String filePathProject = "nonexistent_directory/test_project.csv";
         assertThrows(IOException.class, () ->
-                CSVCreate.writeProjectFile(project, filePathProject));
+                CSVCreate.writeProjectFile(project, todo, filePathProject));
     }
 
     @Test
@@ -133,12 +134,9 @@ class CSVCreateTest {
 
     @Test
     void testWriteQuickTaskFile_ExceptionHandling() {
-        // Set up test data
         Task task = new Task.Builder("Test Task").status(TaskStatus.TODO).build();
         ToDoList todo = new ToDoList("Test User");
-        String filePathTodo = "nonexistent_directory/test_todo.csv";  // Invalid file path
-
-        // Perform the test
+        String filePathTodo = "nonexistent_directory/test_todo.csv";
         assertThrows(IOException.class, () ->
                 CSVCreate.writeQuickTaskFile(task, todo, filePathTodo));
     }
@@ -179,9 +177,9 @@ class CSVCreateTest {
     void testWriteProjectFileIOException() {
         Project project = new Project("Project 1", LocalDate.of(2023, 6, 1));
         String filePathProject = "invalidpath/project.csv";
-
+        ToDoList todo = new ToDoList("Test User");
         try {
-            CSVCreate.writeProjectFile(project, filePathProject);
+            CSVCreate.writeProjectFile(project,todo,filePathProject);
             fail("Expected an IOException to be thrown");
         } catch (IOException e) {
             assertEquals("Error in CSV-Creation!", e.getMessage());
