@@ -1,4 +1,4 @@
-package hwr.oop.todo;
+package hwr.oop.todo.ui.cli;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -9,8 +9,6 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.JUnitBDDSoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

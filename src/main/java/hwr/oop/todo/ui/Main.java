@@ -1,4 +1,7 @@
-package hwr.oop.todo;
+package hwr.oop.todo.ui;
+
+import hwr.oop.todo.application.ToDoList;
+import hwr.oop.todo.ui.cli.MainMenu;
 
 import java.io.FileNotFoundException;
 
