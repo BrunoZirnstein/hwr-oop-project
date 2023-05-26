@@ -1,5 +1,9 @@
-package hwr.oop.todo;
+package hwr.oop.todo.persistence.csv;
 
+import hwr.oop.todo.application.Project;
+import hwr.oop.todo.application.TaskPriority;
+import hwr.oop.todo.application.TaskStatus;
+import hwr.oop.todo.application.ToDoList;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -8,7 +12,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
-import static hwr.oop.todo.TaskPriority.HIGH;
+import static hwr.oop.todo.application.TaskPriority.HIGH;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -73,12 +77,12 @@ public class CSVReaderTest {
         assertEquals(LocalDate.of(2023, 6, 2), todo.tasks().get(1).deadline());
         assertNull(todo.tasks().get(2).deadline());
 
-        assertEquals(TaskStatus.DONE, todo.tasks().get(0).status());
+        Assertions.assertEquals(TaskStatus.DONE, todo.tasks().get(0).status());
         assertEquals(TaskStatus.BLOCKED, todo.tasks().get(1).status());
         assertEquals(TaskStatus.TODO, todo.tasks().get(2).status());
 
         assertEquals(HIGH, todo.tasks().get(0).priority());
-        assertEquals(TaskPriority.LOW, todo.tasks().get(1).priority());
+        Assertions.assertEquals(TaskPriority.LOW, todo.tasks().get(1).priority());
         assertEquals(HIGH, todo.tasks().get(2).priority());
 
         ToDoList todoEmptyPriority = CSVReader.readToDoFile("user1", tempDir.resolve(TODO_CSV_FILENAME).toString());

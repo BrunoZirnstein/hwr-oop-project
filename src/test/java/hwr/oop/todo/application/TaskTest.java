@@ -1,4 +1,4 @@
-package hwr.oop.todo;
+package hwr.oop.todo.application;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,8 @@ class TaskTest {
     @Test
     @DisplayName("New Task with all parameters")
     void newTask_WithAllParameters() {
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH).projectName("university").build();
+        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(
+                TaskPriority.HIGH).projectName("university").build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
         assertThat(task.description()).isEqualTo("Water all the plants in the living room and in the bedroom.");

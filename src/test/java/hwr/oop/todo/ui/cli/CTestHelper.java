@@ -1,4 +1,4 @@
-package hwr.oop.todo;
+package hwr.oop.todo.ui.cli;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

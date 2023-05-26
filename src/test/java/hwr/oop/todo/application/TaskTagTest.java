@@ -1,4 +1,4 @@
-package hwr.oop.todo;
+package hwr.oop.todo.application;
 
 import org.junit.jupiter.api.Test;
 
