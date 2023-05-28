@@ -2,7 +2,6 @@ package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.application.Task;
-import hwr.oop.todo.persistence.csv.CSVCreate;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,6 +64,7 @@ public class TodoMainMenu {
 	
 	private void saveCSV() {
 		// ToDo: Let the function handle the list itself, just need the ToDo-Obejct.
+		/*
 		for (Task element : Main.activeTodo.tasks()){
 			try {
 				CSVCreate.writeTaskFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
@@ -72,7 +72,7 @@ public class TodoMainMenu {
 				throw new RuntimeException(e);
 			}
 		}
-		
+		 */
 		out.println("Saved ToDo: '" + Main.activeTodo.owner() + "' successfully.");
 	}
 }
