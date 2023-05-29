@@ -39,7 +39,7 @@ public class TodoMainMenu {
 	}
 
 	public void open() {
-		out.println("ToDo List of: " + Main.activeTodo.user());
+		out.println("ToDo List of: " + Main.activeTodoList.user());
 		out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		out.println();
 		out.println("[ToDo MainMenu]");
@@ -61,14 +61,14 @@ public class TodoMainMenu {
 	
 	private void saveCSV() {
 		// ToDo: Let the function handle the list itself, just need the ToDo-Obejct.
-		for (Task element : Main.activeTodo.tasks()){
+		for (Task element : Main.activeTodoList.tasks()){
 			try {
-				CSVCreate.writeToDoFile(element, Main.activeTodo, CSVCreate.getFilePathTodo());
+				CSVCreate.writeToDoFile(element, Main.activeTodoList, CSVCreate.getFilePathTodo());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}
 		
-		out.println("Saved ToDo: '" + Main.activeTodo.user() + "' successfully.");
+		out.println("Saved ToDo: '" + Main.activeTodoList.user() + "' successfully.");
 	}
 }

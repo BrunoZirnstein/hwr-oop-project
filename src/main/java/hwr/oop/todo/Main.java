@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-	public static ToDo activeTodo = null;
+	public static ToDo activeTodoList = null;
 	public static MainMenu mainMenu = new MainMenu(System.out, System.in);
 	
 	// I love comments :P

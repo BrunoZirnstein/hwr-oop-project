@@ -19,7 +19,6 @@ public class MainMenuTest {
 		OutputStream output = new ByteArrayOutputStream();
 		
 		MainMenu mainMenu = new MainMenu(output, input);
-		input.close();
 		mainMenu.open();
 		
 		Assertions.assertThat(output.toString()).contains(String.join(System.lineSeparator(), mainMenu.menuHeadline));

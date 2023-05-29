@@ -10,7 +10,7 @@ public class MainMenu {
 	private Scanner in = null;
 	
 	private MenuInputHandler inputHandler = null;
-	private ManageToDoMenu manageToDoMenu;
+	private ListMenu manageToDoMenu;
 	
 	public final String[] menuHeadline = {"Welcome to the ultimate-u-never-forget ToDo List", 
 									 	  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 
@@ -22,7 +22,7 @@ public class MainMenu {
 	public MainMenu(OutputStream out, InputStream in) {
 		this.out = new PrintStream(out);
         this.in = new Scanner(in);
-		manageToDoMenu = new ManageToDoMenu(this, out, in);
+		manageToDoMenu = new ListMenu(this, out, in);
 		
 		inputHandler = new MenuInputHandler(1, this.out, this.in);
 		inputHandler.addAction("Create&Load ToDo List", () -> manageToDoMenu.openCreate());

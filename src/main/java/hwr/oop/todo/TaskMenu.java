@@ -24,7 +24,7 @@ public class TaskMenu {
 		String taskName = promptTaskName();
 		
 		Task newTask = new Task.Builder(taskName).build();
-		Main.activeTodo.addTask(newTask);
+		Main.activeTodoList.addTask(newTask);
 		
 		out.println();
 		out.println("Task '" + taskName + "' sucessfully created.");

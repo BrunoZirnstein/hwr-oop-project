@@ -28,7 +28,7 @@ public class ProjectMenu{
 		LocalDate deadline = promptDeadlineInput();
 		
 		Project newProject = new Project(newProjectName, deadline);
-		Main.activeTodo.createProject(newProject);
+		Main.activeTodoList.createProject(newProject);
 		
 		out.println();
 		out.println("Project '" + newProjectName + "' sucessfully created.");

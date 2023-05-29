@@ -5,14 +5,14 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class ManageToDoMenu {
+public class ListMenu {
 	private PrintStream out = null;
 	private Scanner in = null;
 	
 	private TodoMainMenu todoMainMenu = null;
 	private MainMenu mainMenu;
 	
-	public ManageToDoMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
+	public ListMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
 		this.out = new PrintStream(out);
 		this.in = new Scanner(in);
 		
@@ -25,7 +25,7 @@ public class ManageToDoMenu {
 		
 		String todoName = promptToDoName();
 		
-		Main.activeTodo = new ToDo(todoName);
+		Main.activeTodoList = new ToDo(todoName);
 		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 		
 		todoMainMenu.returnToMe();
@@ -60,7 +60,7 @@ public class ManageToDoMenu {
 		// Niklas: load function call with todoName which serves as the 'user' and get a ToDo object to override Main.activeToDo.
 		try {
 			CSVReader reader = new CSVReader();
-			Main.activeTodo = reader.readToDoFile(todoName);
+			Main.activeTodoList = reader.readToDoFile(todoName);
 			todoMainMenu.returnToMe();
 		}
 		catch (Exception e) {
