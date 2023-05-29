@@ -1,6 +1,6 @@
 package hwr.oop.todo.persistence.csv;
 
-import hwr.oop.todo.application.*;
+import hwr.oop.todo.core.*;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class CSVHandler implements PersistenceAdapter{
+public class CSVHandler {
     private static final String COMMA_DELIMITER = ",";
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String SEMICOLON_DELIMITER = ";";
@@ -30,11 +30,20 @@ public class CSVHandler implements PersistenceAdapter{
     public void setFilePathTask(String filePathTask) {
         this.filePathTask = filePathTask;
     }
-    public String getFilePathTodo() { return filePathToDoUser;}
-    public String getFilePathTask() { return filePathTask;}
-    public String getFilePathProject() {return filePathProject;}
 
-    public void saveNewQuickTask(Task task, ToDoList todo) throws IOException{
+    public String getFilePathTodo() {
+        return filePathToDoUser;
+    }
+
+    public String getFilePathTask() {
+        return filePathTask;
+    }
+
+    public String getFilePathProject() {
+        return filePathProject;
+    }
+
+    public void saveNewQuickTask(Task task, ToDoList todo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(getFilePathTask(), true)) {
             fileWriter.append(task.title());
             for (int i = 0; i < 4; i++) {
@@ -51,7 +60,7 @@ public class CSVHandler implements PersistenceAdapter{
             throw new IOException(ERROR_CSV, e);
         }
     }
-    
+
     public void saveNewTask(Task task, ToDoList todo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(getFilePathTask(), true)) {
             fileWriter.append(task.title());
@@ -95,6 +104,7 @@ public class CSVHandler implements PersistenceAdapter{
             throw new IOException(ERROR_CSV, e);
         }
     }
+
     public void saveNewToDoList(ToDoList toDoList) throws IOException {
         try (FileWriter fileWriter = new FileWriter(new File(getFilePathTodo()),
                 true)) {
@@ -104,6 +114,7 @@ public class CSVHandler implements PersistenceAdapter{
             throw new IOException(ERROR_CSV, e);
         }
     }
+
     public void saveNewProject(Project project, ToDoList todo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(new File(getFilePathProject()),
                 true)) {
@@ -117,6 +128,7 @@ public class CSVHandler implements PersistenceAdapter{
             throw new IOException(ERROR_CSV, e);
         }
     }
+
     public List<Task> loadAllTasksFromFile() throws IOException {
         List<Task> tasks = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(
@@ -168,7 +180,7 @@ public class CSVHandler implements PersistenceAdapter{
         return tasks;
     }
 
-    public ToDoList loadAToDoListFromUserWithAllTasks(ToDoList todo) throws IOException{
+    public ToDoList loadAToDoListFromUserWithAllTasks(ToDoList todo) throws IOException {
         try (BufferedReader br = new BufferedReader(
                 new FileReader(getFilePathTask()))) {
             String line;
@@ -238,7 +250,8 @@ public class CSVHandler implements PersistenceAdapter{
 
         return projects;
     }
-    public List<ToDoList> loadAllToDoListUsersFromFile() throws IOException{
+
+    public List<ToDoList> loadAllToDoListUsersFromFile() throws IOException {
         List<ToDoList> todos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(getFilePathTodo()))) {
@@ -252,11 +265,12 @@ public class CSVHandler implements PersistenceAdapter{
 
         return todos;
     }
+
     public void removeTask(String taskID) throws IOException {
         File inputFile = new File(getFilePathTask());
         File tempFile = new File(getFilePathTask() + "tasktemp.csv");
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));

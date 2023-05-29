@@ -1,4 +1,4 @@
-package hwr.oop.todo.application;
+package hwr.oop.todo.core;
 
 public enum TaskStatus {
     TODO,
