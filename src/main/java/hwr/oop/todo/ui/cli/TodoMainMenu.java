@@ -2,7 +2,6 @@ package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.core.Task;
-import hwr.oop.todo.persistence.csv.CSVCreate;
 
 import java.io.IOException;
 import java.io.InputStream;
