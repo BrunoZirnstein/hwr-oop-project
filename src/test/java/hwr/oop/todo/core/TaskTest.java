@@ -1,4 +1,4 @@
-package hwr.oop.todo.application;
+package hwr.oop.todo.core;
 
 import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.TaskPriority;
