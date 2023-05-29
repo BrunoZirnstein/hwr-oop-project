@@ -19,7 +19,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | Number | Feature | Done | Responsible |
 |--------|---------|-------|-------------|
 | 1      | Tag Klasse       |   ✔️   | Niklas            |
-| 2      | Hauptmenü Projekt anlegen      |      | Thomas            |
+| 2      | Hauptmenü Task anlegen      |    ✔️      | Thomas            |
 | 3      | Task Klasse       |   ✔️   | Bruno            |
 | 4      | Projekt Klasse       |   ✔️   | Jason & Frauke            |
 | 5      | CSV Read & Write       |   ✔️   | Niklas            |
@@ -30,11 +30,17 @@ This repository contains a student project created for an ongoing lecture on obj
 | 10      | Todo Klasse mit Projekten      |   ✔️    | Bruno            |
 | 11      | Update task       |     ✔️   | Jason & Frauke            |
 | 12      | CSV Read & Write anpassen       |   ✔️      | Niklas            |
-| 13      | refactor ToDo tests & code      |      | Bruno            |
+| 13      | refactor ToDo tests & code      |    ✔️    | Bruno            |
 | 14      | refactor task tests & code       |       | Jason & Frauke            |
-| 15      | Menü code an neue Classen & Struktur anpassen     |      | Thomas            |
+| 15      | Menü code an neue Classen & Struktur anpassen     |    ✔️    | Thomas            |
 | 16      | refactor CSV Read & Write tests       |    ✔️     | Niklas            |
-
+| 17      | Input Handler & Print Stream implementieren     |    ✔️    | Thomas            |
+| 18      | Menü Tests erstellen     |     ✔️    | Thomas            |
+| 19      | CSV Klassen bzgl. mutation coverage überarbeiten       |     ✔️      | Niklas            |
+| 20      | UML Diagramm mit Ziel-Architektur erstellen: Klassen & Package Struktur überarbeiten (IO / Application / Persistence)        |    ✔️      | Bruno            |
+| 21      |    CSV Logik an neue Architektur anpassen     |         | Niklas            |
+| 22      |    neue Architektur umsetzen: Aufteilung in Packages, Erstellen Ports und UseCases     |         | Bruno            |
+| 23      |    Ausbauen der Menü-Funktionalität und Verbesserung der bestehenden Menü-Tests    |         | Thomas            |
 
 
 ## Additional Dependencies
