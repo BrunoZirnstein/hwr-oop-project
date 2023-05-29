@@ -1,6 +1,6 @@
 package hwr.oop.todo.persistence.csv;
 
-import hwr.oop.todo.application.*;
+import hwr.oop.todo.core.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

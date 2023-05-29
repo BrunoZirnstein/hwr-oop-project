@@ -1,7 +1,7 @@
 package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
-import hwr.oop.todo.application.Task;
+import hwr.oop.todo.core.Task;
 
 import java.io.InputStream;
 import java.io.OutputStream;

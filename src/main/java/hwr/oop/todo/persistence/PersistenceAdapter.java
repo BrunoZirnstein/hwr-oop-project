@@ -1,7 +1,6 @@
 package hwr.oop.todo.persistence;
 
-import hwr.oop.todo.application.Task;
-import hwr.oop.todo.application.ToDoList;
+import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.application.ports.out.LoadListByIdOutPort;
 import hwr.oop.todo.application.ports.out.OverwriteListOutPort;
 

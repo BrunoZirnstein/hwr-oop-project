@@ -1,8 +1,8 @@
 package hwr.oop.todo.persistence.csv;
 
-import hwr.oop.todo.application.Project;
-import hwr.oop.todo.application.Task;
-import hwr.oop.todo.application.ToDoList;
+import hwr.oop.todo.core.Project;
+import hwr.oop.todo.core.Task;
+import hwr.oop.todo.core.ToDoList;
 
 import java.io.*;
 

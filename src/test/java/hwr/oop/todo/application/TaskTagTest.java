@@ -1,5 +1,6 @@
 package hwr.oop.todo.application;
 
+import hwr.oop.todo.core.TaskTag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Objects;

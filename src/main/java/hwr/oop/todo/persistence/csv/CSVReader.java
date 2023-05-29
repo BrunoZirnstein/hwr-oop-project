@@ -1,6 +1,6 @@
 package hwr.oop.todo.persistence.csv;
 
-import hwr.oop.todo.application.*;
+import hwr.oop.todo.core.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

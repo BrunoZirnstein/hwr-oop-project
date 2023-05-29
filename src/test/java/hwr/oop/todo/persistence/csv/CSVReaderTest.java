@@ -1,9 +1,9 @@
 package hwr.oop.todo.persistence.csv;
 
-import hwr.oop.todo.application.Project;
-import hwr.oop.todo.application.TaskPriority;
-import hwr.oop.todo.application.TaskStatus;
-import hwr.oop.todo.application.ToDoList;
+import hwr.oop.todo.core.Project;
+import hwr.oop.todo.core.TaskPriority;
+import hwr.oop.todo.core.TaskStatus;
+import hwr.oop.todo.core.ToDoList;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
-import static hwr.oop.todo.application.TaskPriority.HIGH;
+import static hwr.oop.todo.core.TaskPriority.HIGH;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 

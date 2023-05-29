@@ -1,5 +1,6 @@
 package hwr.oop.todo.application;
 
+import hwr.oop.todo.core.Project;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

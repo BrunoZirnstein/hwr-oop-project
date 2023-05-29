@@ -1,5 +1,9 @@
 package hwr.oop.todo.application;
 
+import hwr.oop.todo.core.Project;
+import hwr.oop.todo.core.Task;
+import hwr.oop.todo.core.TaskTag;
+import hwr.oop.todo.core.ToDoList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
