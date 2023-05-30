@@ -37,8 +37,10 @@ This repository contains a student project created for an ongoing lecture on obj
 | 19      | CSV Klassen bzgl. mutation coverage überarbeiten       |     ✔️      | Niklas            |
 | 20      | UML Diagramm mit Ziel-Architektur erstellen: Klassen & Package Struktur überarbeiten (IO / Application / Persistence)        |    ✔️      | Bruno            |
 | 21      |    CSV Logik an neue Architektur anpassen     |         | Niklas            |
-| 22      |    neue Architektur umsetzen: Aufteilung in Packages, Erstellen Ports und UseCases     |         | Bruno            |
+| 22      |    neue Architektur umsetzen: Aufteilung in Packages, Erstellen Ports     |       ✔️     | Bruno            |
 | 23      |    Ausbauen der Menü-Funktionalität und Verbesserung der bestehenden Menü-Tests    |         | Thomas            |
+| 24      |    Anpassen des Menüs an neue Architetktur (Ports)    |         | Thomas            |
+| 25      |    neue Architektur umsetzen: UseCase tests & SUT     |            | Bruno            |
 
 
 ## Additional Dependencies
