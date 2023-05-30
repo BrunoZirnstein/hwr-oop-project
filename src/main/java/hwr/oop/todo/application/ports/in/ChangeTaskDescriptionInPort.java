@@ -4,19 +4,9 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface ChangeTaskDescriptionInPort {
-    public void changeTaskDescription(
-            ChangeTaskDescriptionInPort.ChangeTaskDescriptionCommand changeTaskDescriptionCommand);
+    void changeTaskDescription(
+            ChangeTaskDescriptionCommand changeTaskDescriptionCommand);
 
-    public class ChangeTaskDescriptionCommand {
-        public ToDoList list;
-        public Task task;
-        public String newDescription;
-
-        private ChangeTaskDescriptionCommand(ToDoList list, Task task,
-                                             String newDescription) {
-            this.list = list;
-            this.task = task;
-            this.newDescription = newDescription;
-        }
-    }
+    record ChangeTaskDescriptionCommand(ToDoList list, Task task,
+                                        String newDescription) {}
 }

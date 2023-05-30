@@ -7,16 +7,7 @@ import hwr.oop.todo.core.ToDoList;
 import java.util.List;
 
 public interface TasksByTagInPort {
-    public List<Task> tasksByTag(
-            TasksByTagInPort.TasksByTagCommand tasksByTagCommand);
+    List<Task> tasksByTag(TasksByTagCommand tasksByTagCommand);
 
-    public class TasksByTagCommand {
-        public ToDoList list;
-        public TaskTag taskTag;
-
-        private TasksByTagCommand(ToDoList list, TaskTag taskTag) {
-            this.list = list;
-            this.taskTag = taskTag;
-        }
-    }
+    record TasksByTagCommand(ToDoList list, TaskTag taskTag) {}
 }
