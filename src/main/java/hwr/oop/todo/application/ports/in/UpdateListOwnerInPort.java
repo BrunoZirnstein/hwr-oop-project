@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface UpdateListOwnerInPort {
-    public Task updateListOwnerInPort(
+    public Task updateListOwner(
             UpdateListOwnerInPort.UpdateListOwnerCommand updateListOwnerCommand);
 
     public class UpdateListOwnerCommand {

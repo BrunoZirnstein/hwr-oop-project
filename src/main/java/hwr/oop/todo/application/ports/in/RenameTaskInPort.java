@@ -5,7 +5,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface RenameTaskInPort {
-    public void renameTaskInPort(
+    public void renameTask(
             RenameTaskInPort.RenameTaskCommand renameTaskCommand);
 
     public class RenameTaskCommand {

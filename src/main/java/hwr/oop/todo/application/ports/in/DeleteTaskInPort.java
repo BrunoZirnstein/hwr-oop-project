@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface DeleteTaskInPort {
-    public void deleteTaskInPort(
+    public void deleteTask(
             DeleteTaskInPort.DeleteTaskCommand deleteTaskCommand);
 
     public class DeleteTaskCommand {

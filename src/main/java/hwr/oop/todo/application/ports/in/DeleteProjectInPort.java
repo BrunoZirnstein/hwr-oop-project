@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.ToDoList;
 
 public interface DeleteProjectInPort {
-    public void deleteProjectInPort(
+    public void deleteProject(
             DeleteProjectInPort.DeleteProjectCommand deleteProjectCommand);
 
     public class DeleteProjectCommand {

@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.ToDoList;
 
 public interface ProjectByNameInPort {
-    public Project projectByNameInPort(
+    public Project projectByName(
             ProjectByNameInPort.ProjectByNameCommand projectByNameCommand);
 
     public class ProjectByNameCommand {

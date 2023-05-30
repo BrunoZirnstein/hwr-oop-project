@@ -5,7 +5,7 @@ import hwr.oop.todo.core.TaskPriority;
 import hwr.oop.todo.core.ToDoList;
 
 public interface ChangeTaskPriorityInPort {
-    public void changeTaskPriorityInPort(
+    public void changeTaskPriority(
             ChangeTaskPriorityInPort.ChangeTaskPriorityCommand changeTaskPriorityCommand);
 
     public class ChangeTaskPriorityCommand {

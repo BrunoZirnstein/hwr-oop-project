@@ -5,7 +5,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface RemoveTaskProjectInPort {
-    public void removeTaskProjectInPort(
+    public void removeTaskProject(
             RemoveTaskProjectInPort.RemoveTaskProjectCommand removeTaskProjectCommand);
 
     public class RemoveTaskProjectCommand {

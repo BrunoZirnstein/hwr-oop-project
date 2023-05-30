@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface AddTaskToListInPort {
-    public void addTaskToListInPort(AddTaskToListCommand addTaskToListCommand);
+    public void addTaskToList(AddTaskToListCommand addTaskToListCommand);
 
     public class AddTaskToListCommand {
         private ToDoList list;

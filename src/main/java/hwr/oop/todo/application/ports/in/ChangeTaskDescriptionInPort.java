@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface ChangeTaskDescriptionInPort {
-    public void changeTaskDescriptionInPort(
+    public void changeTaskDescription(
             ChangeTaskDescriptionInPort.ChangeTaskDescriptionCommand changeTaskDescriptionCommand);
 
     public class ChangeTaskDescriptionCommand {
