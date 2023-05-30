@@ -12,13 +12,13 @@ import java.util.Scanner;
 
 public class ProjectMenu{
 	private PrintStream out = null;
-	private Scanner in = null;
+	private InputHandler in = null;
 	
 	private TodoMainMenu todoMainMenu = null;
 	
-	public ProjectMenu(TodoMainMenu todoMainMenu, OutputStream out, InputStream in) {
+	public ProjectMenu(TodoMainMenu todoMainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
-		this.in = new Scanner(in);
+		this.in = in;
 		
 		this.todoMainMenu = todoMainMenu;
 	}
@@ -29,6 +29,10 @@ public class ProjectMenu{
 		String newProjectName = promptProjectNameInput();
 		
 		LocalDate deadline = promptDeadlineInput();
+		
+		if(deadline == null && newProjectName == null) {
+			return;
+		}
 		
 		Project newProject = new Project(newProjectName, deadline);
 		Main.activeTodo.addProject(newProject);
@@ -51,12 +55,13 @@ public class ProjectMenu{
 			Console.displayInputIndicator(out);
 			projectName = in.nextLine();
 			
-			if(projectName.isEmpty() == false)
-			{
+			if(projectName == null) {
+				return null;
+			} 
+			else if(projectName.isEmpty() == false) {
 				return projectName;
-			}
-			else
-			{
+			} 
+			else {
 				out.println("Invalid project name (empty). Please enter a valid project name!");
 			}
 		}
@@ -75,6 +80,10 @@ public class ProjectMenu{
 		{
 			Console.displayInputIndicator(out);
 			deadlineStr = in.nextLine();
+			
+			if(deadlineStr == null) {
+				return null;
+			}
 			
 			if(deadlineStr.isEmpty() == false)
 			{

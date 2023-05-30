@@ -16,8 +16,20 @@ public class Console {
 		out.print(displayInputIndicatorStr);
 	}
 	
-	public static void EnterToContinue(PrintStream out, Scanner in)  {
+	/**
+	 * Let's the user press ENTER and tells the user that ENTER should be pressed
+	 * @param out 
+	 * @param in
+	 * @return [true] if everything worked or [false] if no Input could be handled, because the maximum amount of inputs was reached
+	 */
+	public static boolean EnterToContinue(PrintStream out, InputHandler in)  {
 		out.print(enterToContinueMessage);
-		in.nextLine();
+		String input = in.nextLine();
+		
+		if(input == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

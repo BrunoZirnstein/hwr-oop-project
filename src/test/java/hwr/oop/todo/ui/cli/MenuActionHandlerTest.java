@@ -1,7 +1,5 @@
 package hwr.oop.todo.ui.cli;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class MenuInputHandlerTest {
+public class MenuActionHandlerTest {
 	
 	@ParameterizedTest
 	@ValueSource(ints = {0, 1, 2})
@@ -22,7 +20,7 @@ public class MenuInputHandlerTest {
 	void Test_DisplayInputOptions(int startIndex) {
 		OutputStream out = new ByteArrayOutputStream();
 		
-		MenuInputHandler menuInputHandler = new MenuInputHandler(startIndex, new PrintStream(out), null);
+		MenuActionHandler menuInputHandler = new MenuActionHandler(startIndex, new PrintStream(out), null);
 		
 		String[] actions = {"Act1", "Act2"};
 		
@@ -44,11 +42,12 @@ public class MenuInputHandlerTest {
 	void Test_InputCorrectlyResolved(int inputNum) {
 		OutputStream out = new ByteArrayOutputStream();								 // last input to quit test for wrong-input test
 		InputStream in = CTestHelper.createInputStreamForInput(inputNum + "\n" + "0\n");
+		InputHandler inputHandler = new InputHandler(new Scanner(in), -1);
 		
 		String expectedResult[] = { "0 input executed!", "1 input executed", "2 input executed" };
 		
 		// execute what is being tested
-		MenuInputHandler menuInputHandler = new MenuInputHandler(0, new PrintStream(out), new Scanner(in));
+		MenuActionHandler menuInputHandler = new MenuActionHandler(0, new PrintStream(out), inputHandler);
 		menuInputHandler.addAction("bla-0", () -> actionResult = expectedResult[0]);
 		menuInputHandler.addAction("bla-1", () -> actionResult = expectedResult[1]);
 		menuInputHandler.addAction("bla-2", () -> actionResult = expectedResult[2]);
@@ -74,8 +73,9 @@ public class MenuInputHandlerTest {
 	{
 		OutputStream out = new ByteArrayOutputStream();								 // last input to quit test for wrong-input test
 		InputStream in = CTestHelper.createInputStreamForInput("arsch\n0\n");
+		InputHandler inputHandler = new InputHandler(new Scanner(in), -1);
 		
-		MenuInputHandler menuInputHandler = new MenuInputHandler(0, new PrintStream(out), new Scanner(in));
+		MenuActionHandler menuInputHandler = new MenuActionHandler(0, new PrintStream(out), inputHandler);
 		menuInputHandler.addAction("bla", () -> actionResult = "bla");
 		menuInputHandler.propmtAndHandleInput();
 		

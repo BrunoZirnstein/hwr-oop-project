@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,10 +16,11 @@ public class MainMenuTest {
 	@DisplayName("Open Main Menu Test")
 	void testMenuOpen() throws IOException
 	{
-		InputStream input = CTestHelper.createInputStreamForInput("4\n");	// the open method already expects an input, but we want the function to quit immediately
+		InputStream input = CTestHelper.createInputStreamForInput("");	// the open method already expects an input, but we want the function to quit immediately
+		InputHandler inputHandler = new InputHandler(new Scanner(input), 0);
 		OutputStream output = new ByteArrayOutputStream();
 		
-		MainMenu mainMenu = new MainMenu(output, input);
+		MainMenu mainMenu = new MainMenu(output, inputHandler);
 		mainMenu.open();
 		
 		Assertions.assertThat(output.toString()).contains(String.join(System.lineSeparator(), mainMenu.menuHeadline));

@@ -9,14 +9,14 @@ import java.util.Scanner;
 
 public class ListMenu {
 	private PrintStream out = null;
-	private Scanner in = null;
+	private InputHandler in = null;
 
 	private TodoMainMenu todoMainMenu = null;
 	private MainMenu mainMenu;
 	
-	public ListMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
+	public ListMenu(MainMenu mainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
-		this.in = new Scanner(in);
+		this.in = in;
 
 		this.mainMenu = mainMenu;
 		todoMainMenu = new TodoMainMenu(mainMenu, out, in);
@@ -42,7 +42,9 @@ public class ListMenu {
 			Console.displayInputIndicator(out);
 			todoName = in.nextLine();
 
-			if (todoName.isEmpty() == false) {
+			if (todoName == null) {
+				return null;
+			} else if (todoName.isEmpty() == false) {
 				return todoName;
 			} else {
 				out.println("Invalid name (empty). Please enter a valid name!");

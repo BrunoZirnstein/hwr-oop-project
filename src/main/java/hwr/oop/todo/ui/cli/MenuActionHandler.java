@@ -5,19 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class MenuInputHandler {
+public class MenuActionHandler {
 	public final String invalidInputMessage = "Invalid input. Please try again";
 	public final String wrongInputIDMessage = "Invalid ID. Please enter a valid ID!";
 	
 	private HashMap<Integer, Runnable> actionMap;
 	private HashMap<Integer, String> actionDescriptionsMap;
 	private PrintStream out = null;
-	private Scanner in = null;
+	private InputHandler in = null;
 	
 	private int currentIndex = 0;
 	private int actionStartIndex = 0;
 	
-	public MenuInputHandler(int startWithActionIndex, PrintStream out, Scanner in) {
+	public MenuActionHandler(int startWithActionIndex, PrintStream out, InputHandler in) {
 		actionMap = new HashMap<Integer, Runnable>();
 		actionDescriptionsMap = new HashMap<Integer, String>();
 		currentIndex = startWithActionIndex;
@@ -45,7 +45,12 @@ public class MenuInputHandler {
 		while(inputID == -1) {
 			Console.displayInputIndicator(out);
 			try {
-				inputID = Integer.parseInt(in.nextLine());			
+				String result = in.nextLine();
+				if(result == null) {
+					return;
+				}
+				
+				inputID = Integer.parseInt(result);			
 			}
 			catch(NumberFormatException ex) {
 				out.println(invalidInputMessage);

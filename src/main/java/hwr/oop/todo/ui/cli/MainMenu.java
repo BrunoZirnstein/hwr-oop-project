@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class MainMenu {
 	private PrintStream out = null;
-	private Scanner in = null;
+	private InputHandler in = null;
 	
-	private MenuInputHandler inputHandler = null;
+	private MenuActionHandler inputHandler = null;
 	private ListMenu manageToDoMenu;
 	
 	public final String[] menuHeadline = {"Welcome to the ultimate-u-never-forget ToDo List", 
@@ -19,12 +19,12 @@ public class MainMenu {
 	
 	
 	
-	public MainMenu(OutputStream out, InputStream in) {
+	public MainMenu(OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
-        this.in = new Scanner(in);
+        this.in = in;
 		manageToDoMenu = new ListMenu(this, out, in);
 		
-		inputHandler = new MenuInputHandler(1, this.out, this.in);
+		inputHandler = new MenuActionHandler(1, this.out, this.in);
 		inputHandler.addAction("Create&Load ToDo List", () -> manageToDoMenu.openCreate());
 		inputHandler.addAction("Load ToDo List from file", () -> manageToDoMenu.openLoad());
 		inputHandler.addAction("Delete ToDO List", null);
@@ -44,7 +44,10 @@ public class MainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		Console.EnterToContinue(out, in);
+		if(Console.EnterToContinue(out, in) == false) {
+			return;
+		}
+		
 		Console.clear(out);
 		open();
 	}

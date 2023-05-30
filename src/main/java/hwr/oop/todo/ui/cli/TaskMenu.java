@@ -10,13 +10,13 @@ import java.util.Scanner;
 
 public class TaskMenu {
 	private PrintStream out = null;
-	private Scanner in = null;
+	private InputHandler in = null;
 	
 	private TodoMainMenu todoMainMenu = null;
 	
-	public TaskMenu(TodoMainMenu todoMainMenu, OutputStream out, InputStream in) {
+	public TaskMenu(TodoMainMenu todoMainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
-		this.in = new Scanner(in);
+		this.in = in;
 		
 		this.todoMainMenu = todoMainMenu;
 	}
@@ -25,6 +25,10 @@ public class TaskMenu {
 		Console.clear(out);
 		
 		String taskName = promptTaskName();
+		
+		if(taskName == null) {
+			return;
+		}
 		
 		Task newTask = new Task.Builder(taskName).build();
 		Main.activeTodo.addTask(newTask);
@@ -43,12 +47,13 @@ public class TaskMenu {
 			Console.displayInputIndicator(out);
 			userInput = in.nextLine();
 			
-			if(userInput.isEmpty() == false)
-			{
+			if(userInput == null) {
+				return null;
+			}
+			else if(userInput.isEmpty() == false) {
 				return userInput;
 			}
-			else
-			{
+			else {
 				out.println();
 			}
 		}

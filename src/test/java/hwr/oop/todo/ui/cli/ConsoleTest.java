@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -27,10 +28,25 @@ public class ConsoleTest {
 	void Test_EnterToContinue() {
 		OutputStream out = new ByteArrayOutputStream();
 		InputStream in = CTestHelper.createInputStreamForInput("\n");
+		InputHandler inputHandler = new InputHandler(new Scanner(in), -1);
 		
-		Console.EnterToContinue(new PrintStream(out), new Scanner(in));
+		boolean fncResult = Console.EnterToContinue(new PrintStream(out), inputHandler);
 		
 		Assertions.assertThat(out.toString()).isEqualTo(Console.enterToContinueMessage);
+		Assertions.assertThat(fncResult).isEqualTo(true);
+	}
+	
+	@Test
+	void Test_EnterToContinue_Fails() {
+		OutputStream out = new ByteArrayOutputStream();
+		InputStream inputStream = CTestHelper.createInputStreamForInput("");
+		Scanner in = new Scanner(inputStream);
+		InputHandler inputHandler = new InputHandler(in, 0);	//no input is allowed
+		
+		
+		boolean fncResult = Console.EnterToContinue(new PrintStream(out), inputHandler);	// not allowed input, should return false
+		
+		Assertions.assertThat(fncResult).isEqualTo(false);
 	}
 	
 	@Test
@@ -43,7 +59,7 @@ public class ConsoleTest {
 	}
 	
 	@Test
-	void Test_ConsoleInstantiate_To_CalmDown_MutationTester()
+	void Test_ConsoleInstantiate_ToCalmDown_MutationTester()
 	{
 		Console c = new Console();
 	}

@@ -11,17 +11,17 @@ import java.util.Scanner;
 
 public class TodoMainMenu {
 	private PrintStream out = null;
-	private Scanner in = null;
+	private InputHandler in = null;
 
 	private MainMenu mainMenu = null;
 	private ProjectMenu projectMenu = null;
 	private TaskMenu taskMenu = null;
 
-	private MenuInputHandler inputHandler = null;
+	private MenuActionHandler inputHandler = null;
 
-	public TodoMainMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
+	public TodoMainMenu(MainMenu mainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
-		this.in = new Scanner(in);
+		this.in = in;
 
 		if (mainMenu == null) {
 			throw new NullPointerException("the mainMenu parameter is invalid!");
@@ -31,7 +31,7 @@ public class TodoMainMenu {
 		projectMenu = new ProjectMenu(this, out, in);
 		taskMenu = new TaskMenu(this, out, in);
 
-		inputHandler = new MenuInputHandler(1, this.out, this.in);
+		inputHandler = new MenuActionHandler(1, this.out, this.in);
 		inputHandler.addAction("Create Project", () -> projectMenu.openCreate());
 		inputHandler.addAction("Delete Project", null);
 		inputHandler.addAction("Create Tasks (quick create)", () -> taskMenu.openCreateSimple());
@@ -57,7 +57,10 @@ public class TodoMainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		Console.EnterToContinue(out, in);
+		if(Console.EnterToContinue(out, in) == false) {
+			return;
+		}
+			
 		Console.clear(out);
 		open();
 	}
