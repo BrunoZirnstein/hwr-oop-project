@@ -1,6 +1,7 @@
 package hwr.oop.todo.persistence.csv;
 
 import hwr.oop.todo.core.*;
+import hwr.oop.todo.persistence.PersistenceAdapter;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class CSVHandler {
+public class CSVHandler implements PersistenceAdapter {
     private static final String COMMA_DELIMITER = ",";
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String SEMICOLON_DELIMITER = ";";
@@ -43,7 +44,7 @@ public class CSVHandler {
         return filePathProject;
     }
 
-    public void saveNewQuickTask(Task task, ToDoList todo) throws IOException {
+    void saveNewQuickTask(Task task, ToDoList todo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(getFilePathTask(), true)) {
             fileWriter.append(task.title());
             for (int i = 0; i < 4; i++) {
@@ -61,7 +62,7 @@ public class CSVHandler {
         }
     }
 
-    public void saveNewTask(Task task, ToDoList todo) throws IOException {
+    void saveNewTask(Task task, ToDoList todo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(getFilePathTask(), true)) {
             fileWriter.append(task.title());
             fileWriter.append(COMMA_DELIMITER);
@@ -105,7 +106,7 @@ public class CSVHandler {
         }
     }
 
-    public void saveNewToDoList(ToDoList toDoList) throws IOException {
+    void saveNewToDoList(ToDoList toDoList) throws IOException {
         try (FileWriter fileWriter = new FileWriter(new File(getFilePathTodo()),
                 true)) {
             fileWriter.append(toDoList.owner());
@@ -115,7 +116,7 @@ public class CSVHandler {
         }
     }
 
-    public void saveNewProject(Project project, ToDoList todo) throws IOException {
+    void saveNewProject(Project project, ToDoList todo) throws IOException {
         try (FileWriter fileWriter = new FileWriter(new File(getFilePathProject()),
                 true)) {
             fileWriter.append(project.title());
@@ -129,7 +130,7 @@ public class CSVHandler {
         }
     }
 
-    public List<Task> loadAllTasksFromFile() throws IOException {
+    List<Task> loadAllTasksFromFile() throws IOException {
         List<Task> tasks = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(
                 new FileReader(getFilePathTask()))) {
@@ -180,7 +181,8 @@ public class CSVHandler {
         return tasks;
     }
 
-    public ToDoList loadAToDoListFromUserWithAllTasks(ToDoList todo) throws IOException {
+
+    ToDoList loadAToDoListFromUserWithAllTasks(ToDoList todo) throws IOException {
         try (BufferedReader br = new BufferedReader(
                 new FileReader(getFilePathTask()))) {
             String line;
@@ -232,7 +234,24 @@ public class CSVHandler {
         return todo;
     }
 
-    public List<Project> loadAllProjectFromFile() throws IOException {
+    ToDoList loadAllProjectsFromUser(ToDoList toDoList) throws IOException {
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(getFilePathProject()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<String> values = Arrays.asList(line.split(","));
+                String title = values.get(0);
+                LocalDate deadline = LocalDate.parse(values.get(1));
+                if (values.get(2).equals(toDoList.owner())) {
+                    Project project = new Project(title, deadline);
+                    toDoList.addProject(project);
+                }
+            }
+        }
+        return toDoList;
+    }
+
+    List<Project> loadAllProjectFromFile() throws IOException {
         List<Project> projects = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(
@@ -251,7 +270,7 @@ public class CSVHandler {
         return projects;
     }
 
-    public List<ToDoList> loadAllToDoListUsersFromFile() throws IOException {
+    List<ToDoList> loadAllToDoListUsersFromFile() throws IOException {
         List<ToDoList> todos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(getFilePathTodo()))) {
@@ -266,7 +285,7 @@ public class CSVHandler {
         return todos;
     }
 
-    public void removeTask(String taskID) throws IOException {
+    void removeTask(String ID) throws IOException {
         File inputFile = new File(getFilePathTask());
         File tempFile = new File(getFilePathTask() + "tasktemp.csv");
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -275,7 +294,7 @@ public class CSVHandler {
             while ((line = reader.readLine()) != null) {
                 List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
 
-                if (!fields.isEmpty() && fields.get(0) != null && !fields.get(0).equals(taskID)) {
+                if (!fields.isEmpty() && fields.get(0) != null && !fields.get(7).equals(ID)) {
                     writer.write(line);
                     writer.write(LINE_SEPARATOR);
                 }
@@ -285,7 +304,29 @@ public class CSVHandler {
         tempFile.renameTo(inputFile);
     }
 
-    public void removeProject(String projectTitle) throws IOException {
+    void removeTaskByID(String ID) throws IOException {
+        File inputFile = new File(getFilePathTask());
+        File tempFile = new File(getFilePathTask() + "tasktemp.csv");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
+
+                if (!fields.isEmpty() && fields.size() >= 8 && !fields.get(7).equals(ID)) {
+                    writer.write(line);
+                    writer.write(LINE_SEPARATOR);
+                }
+            }
+        }
+
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
+    }
+
+
+    void removeProject(String projectTitle) throws IOException {
         File inputFile = new File(getFilePathProject());
         File tempFile = new File(getFilePathProject() + "projecttemp.csv");
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
@@ -308,6 +349,75 @@ public class CSVHandler {
         }
         inputFile.delete();
         tempFile.renameTo(inputFile);
+    }
+
+    void removeProjectByOwner(String ID) throws IOException {
+        File inputFile = new File(getFilePathProject());
+        File tempFile = new File(getFilePathProject() + "projecttemp.csv");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                String line;
+                boolean firstLine = true;
+
+                while ((line = reader.readLine()) != null) {
+                    List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
+
+                    if (!fields.isEmpty() && fields.size() >= 3 && !fields.get(2).equals(ID)) {
+                        if (!firstLine) {
+                            writer.write(LINE_SEPARATOR);
+                        } else {
+                            firstLine = false;
+                        }
+                        writer.write(line);
+                    }
+                }
+            }
+        }
+
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
+    }
+
+
+    public void overwriteList(ToDoList toDoList){
+        try {
+            removeProjectByOwner(toDoList.owner());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < toDoList.projects().size(); i++) {
+            Project element = toDoList.projects().get(i);
+            try {
+                saveNewProject(element, toDoList);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try {
+            removeTaskByID(toDoList.owner());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < toDoList.tasks().size(); i++){
+            Task element = toDoList.tasks().get(i);
+            try {
+                saveNewTask(element, toDoList);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public ToDoList loadListById(String id){
+        ToDoList todo = new ToDoList(id);
+        try {
+            loadAToDoListFromUserWithAllTasks(todo);
+            loadAllProjectsFromUser(todo);
+            return todo;
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading the file",e);
+        }
     }
 
 }
