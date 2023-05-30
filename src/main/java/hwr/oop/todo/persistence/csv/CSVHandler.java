@@ -3,7 +3,6 @@ package hwr.oop.todo.persistence.csv;
 import hwr.oop.todo.core.*;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -243,7 +242,7 @@ public class CSVHandler {
                 String title = fields[0];
                 LocalDate deadline = LocalDate.parse(fields[1]);
 
-                Project project = new Project(title, deadline);
+                Project project = new Project.Builder(title).deadline(deadline).build();
                 projects.add(project);
             }
         }
