@@ -1,9 +1,6 @@
 package hwr.oop.todo.core;
 
-import hwr.oop.todo.core.TaskTag;
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,11 +11,15 @@ class TaskTagTest {
         String title = myTag.title();
         assertThat(title).isEqualTo("sample-tag");
     }
+
     @Test
     void testHashCode() {
-        TaskTag myTag = new TaskTag("sample-tag");
-        int hash = myTag.hashCode();
-        assertThat(hash).isEqualTo(Objects.hash("sample-tag"));
+        TaskTag tag1 = new TaskTag("sample-tag");
+        TaskTag tag2 = new TaskTag("sample-tag");
+        int hash1 = tag1.hashCode();
+        int hash2 = tag2.hashCode();
+
+        assertThat(hash1).isEqualTo(hash2);
     }
 
     @Test
