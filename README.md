@@ -1,6 +1,4 @@
-# HWR OOP Lecture Project Template
-
-[TODO]: # (Change README.md Headline to better fit to your project!)
+# HWR OOP ToDo-List project | Group 1
 
 This repository contains a student project created for an ongoing lecture on object-oriented programming with Java at HWR Berlin (summer term 2023).
 
@@ -31,7 +29,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | 11      | Update task       |     ✔️   | Jason & Frauke            |
 | 12      | CSV Read & Write anpassen       |   ✔️      | Niklas            |
 | 13      | refactor ToDo tests & code      |    ✔️    | Bruno            |
-| 14      | refactor task tests & code       |       | Jason & Frauke            |
+| 14      | refactor task tests & code       |     ✔️    | Jason & Frauke            |
 | 15      | Menü code an neue Classen & Struktur anpassen     |    ✔️    | Thomas            |
 | 16      | refactor CSV Read & Write tests       |    ✔️     | Niklas            |
 | 17      | Input Handler & Print Stream implementieren     |    ✔️    | Thomas            |
@@ -39,8 +37,10 @@ This repository contains a student project created for an ongoing lecture on obj
 | 19      | CSV Klassen bzgl. mutation coverage überarbeiten       |     ✔️      | Niklas            |
 | 20      | UML Diagramm mit Ziel-Architektur erstellen: Klassen & Package Struktur überarbeiten (IO / Application / Persistence)        |    ✔️      | Bruno            |
 | 21      |    CSV Logik an neue Architektur anpassen     |         | Niklas            |
-| 22      |    neue Architektur umsetzen: Aufteilung in Packages, Erstellen Ports und UseCases     |         | Bruno            |
+| 22      |    neue Architektur umsetzen: Aufteilung in Packages, Erstellen Ports     |       ✔️     | Bruno            |
 | 23      |    Ausbauen der Menü-Funktionalität und Verbesserung der bestehenden Menü-Tests    |         | Thomas            |
+| 24      |    Anpassen des Menüs an neue Architetktur (Ports)    |         | Thomas            |
+| 25      |    neue Architektur umsetzen: UseCase tests & SUT     |            | Bruno            |
 
 
 ## Additional Dependencies
