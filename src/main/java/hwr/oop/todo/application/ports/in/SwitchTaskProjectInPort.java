@@ -9,9 +9,9 @@ public interface SwitchTaskProjectInPort {
             SwitchTaskProjectInPort.SwitchTaskProjectCommand switchTaskProjectCommand);
 
     public class SwitchTaskProjectCommand {
-        private ToDoList list;
-        private Task task;
-        private Project newProject;
+        public ToDoList list;
+        public Task task;
+        public Project newProject;
 
         private SwitchTaskProjectCommand(ToDoList list, Task task,
                                          Project newProject) {

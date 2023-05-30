@@ -9,9 +9,9 @@ public interface UpdateTaskStatusInPort {
             UpdateTaskStatusInPort.UpdateTaskStatusCommand updateTaskStatusCommand);
 
     public class UpdateTaskStatusCommand {
-        private ToDoList list;
-        private Task task;
-        private TaskStatus newStatus;
+        public ToDoList list;
+        public Task task;
+        public TaskStatus newStatus;
 
         private UpdateTaskStatusCommand(ToDoList list, Task task,
                                         TaskStatus newStatus) {

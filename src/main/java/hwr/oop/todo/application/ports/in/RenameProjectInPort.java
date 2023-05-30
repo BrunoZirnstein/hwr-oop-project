@@ -8,9 +8,9 @@ public interface RenameProjectInPort {
             RenameProjectInPort.RenameProjectCommand renameProjectCommand);
 
     public class RenameProjectCommand {
-        private ToDoList list;
-        private Project project;
-        private String newName;
+        public ToDoList list;
+        public Project project;
+        public String newName;
 
         private RenameProjectCommand(ToDoList list, Project project,
                                      String newName) {

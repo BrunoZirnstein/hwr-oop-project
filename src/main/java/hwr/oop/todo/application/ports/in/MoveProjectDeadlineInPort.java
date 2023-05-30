@@ -10,9 +10,9 @@ public interface MoveProjectDeadlineInPort {
             MoveProjectDeadlineInPort.MoveProjectDeadlineCommand moveProjectDeadlineCommand);
 
     public class MoveProjectDeadlineCommand {
-        private ToDoList list;
-        private Project project;
-        private LocalDate newDeadline;
+        public ToDoList list;
+        public Project project;
+        public LocalDate newDeadline;
 
         private MoveProjectDeadlineCommand(ToDoList list, Project project,
                                            LocalDate newDeadline) {

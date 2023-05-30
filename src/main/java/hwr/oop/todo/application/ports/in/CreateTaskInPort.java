@@ -8,8 +8,8 @@ public interface CreateTaskInPort {
             CreateTaskInPort.CreateTaskCommand createTaskCommand);
 
     public class CreateTaskCommand {
-        private ToDoList list;
-        private Task newTask;
+        public ToDoList list;
+        public Task newTask;
 
         private CreateTaskCommand(ToDoList list, Task newTask) {
             this.list = list;

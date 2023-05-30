@@ -8,8 +8,8 @@ public interface DeleteTaskInPort {
             DeleteTaskInPort.DeleteTaskCommand deleteTaskCommand);
 
     public class DeleteTaskCommand {
-        private ToDoList list;
-        private Task task;
+        public ToDoList list;
+        public Task task;
 
         private DeleteTaskCommand(ToDoList list, Task task) {
             this.list = list;

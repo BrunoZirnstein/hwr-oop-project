@@ -11,8 +11,8 @@ public interface TasksByProjectInPort {
             TasksByProjectInPort.TasksByProjectCommand tasksByProjectCommand);
 
     public class TasksByProjectCommand {
-        private ToDoList list;
-        private Project project;
+        public ToDoList list;
+        public Project project;
 
         private TasksByProjectCommand(ToDoList list, Project project) {
             this.list = list;

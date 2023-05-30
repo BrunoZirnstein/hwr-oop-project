@@ -9,9 +9,9 @@ public interface ChangeTaskPriorityInPort {
             ChangeTaskPriorityInPort.ChangeTaskPriorityCommand changeTaskPriorityCommand);
 
     public class ChangeTaskPriorityCommand {
-        private ToDoList list;
-        private Task task;
-        private TaskPriority newPriority;
+        public ToDoList list;
+        public Task task;
+        public TaskPriority newPriority;
 
         private ChangeTaskPriorityCommand(ToDoList list, Task task,
                                           TaskPriority newPriority) {

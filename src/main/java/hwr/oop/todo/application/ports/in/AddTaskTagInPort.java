@@ -8,9 +8,9 @@ public interface AddTaskTagInPort {
     public void addTaskTag(AddTaskTagCommand addTaskTagCommand);
 
     public class AddTaskTagCommand {
-        private ToDoList list;
-        private Task task;
-        private TaskTag newTaskTag;
+        public ToDoList list;
+        public Task task;
+        public TaskTag newTaskTag;
 
         private AddTaskTagCommand(ToDoList list, Task task,
                                   TaskTag newTaskTag) {
