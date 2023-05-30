@@ -242,7 +242,7 @@ public class CSVHandler implements PersistenceAdapter {
                 String title = values.get(0);
                 LocalDate deadline = LocalDate.parse(values.get(1));
                 if (values.get(2).equals(toDoList.owner())) {
-                    Project project = new Project(title, deadline);
+                    Project project = new Project.Builder(title).deadline(deadline).build();
                     toDoList.addProject(project);
                 }
             }
