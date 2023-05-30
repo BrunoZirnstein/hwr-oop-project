@@ -5,7 +5,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface SwitchTaskProjectInPort {
-    public void switchTaskProjectInPort(
+    public void switchTaskProject(
             SwitchTaskProjectInPort.SwitchTaskProjectCommand switchTaskProjectCommand);
 
     public class SwitchTaskProjectCommand {

@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface TaskByTitleInPort {
-    public Task taskByTitleInPort(
+    public Task taskByTitle(
             TaskByTitleInPort.TaskByTitleCommand taskByTitleCommand);
 
     public class TaskByTitleCommand {

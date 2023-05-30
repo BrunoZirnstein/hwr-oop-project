@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.ToDoList;
 
 public interface RenameProjectInPort {
-    public void renameProjectInPort(
+    public void renameProject(
             RenameProjectInPort.RenameProjectCommand renameProjectCommand);
 
     public class RenameProjectCommand {

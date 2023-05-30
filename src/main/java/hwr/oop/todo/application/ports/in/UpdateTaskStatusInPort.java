@@ -5,7 +5,7 @@ import hwr.oop.todo.core.TaskStatus;
 import hwr.oop.todo.core.ToDoList;
 
 public interface UpdateTaskStatusInPort {
-    public Task updateTaskStatusInPort(
+    public Task updateTaskStatus(
             UpdateTaskStatusInPort.UpdateTaskStatusCommand updateTaskStatusCommand);
 
     public class UpdateTaskStatusCommand {

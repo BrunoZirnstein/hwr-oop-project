@@ -6,7 +6,7 @@ import hwr.oop.todo.core.TaskTag;
 import hwr.oop.todo.core.ToDoList;
 
 public interface RemoveTaskTagInPort {
-    public void removeTaskTagInPort(
+    public void removeTaskTag(
             RemoveTaskTagInPort.RemoveTaskTagCommand removeTaskTagCommand);
 
     public class RemoveTaskTagCommand {

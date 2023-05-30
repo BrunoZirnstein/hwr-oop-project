@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.ToDoList;
 
 public interface CreateProjectInPort {
-    public void createProjectInPort(
+    public void createProject(
             CreateProjectInPort.CreateProjectCommand createProjectCommand);
 
     public class CreateProjectCommand {

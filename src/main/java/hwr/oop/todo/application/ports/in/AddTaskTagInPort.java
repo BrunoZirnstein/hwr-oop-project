@@ -5,7 +5,7 @@ import hwr.oop.todo.core.TaskTag;
 import hwr.oop.todo.core.ToDoList;
 
 public interface AddTaskTagInPort {
-    public void addTaskTagInPort(AddTaskTagCommand addTaskTagCommand);
+    public void addTaskTag(AddTaskTagCommand addTaskTagCommand);
 
     public class AddTaskTagCommand {
         private ToDoList list;

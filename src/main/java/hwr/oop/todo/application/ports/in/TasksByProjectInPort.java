@@ -7,7 +7,7 @@ import hwr.oop.todo.core.ToDoList;
 import java.util.List;
 
 public interface TasksByProjectInPort {
-    public List<Task> tasksByProjectInPort(
+    public List<Task> tasksByProject(
             TasksByProjectInPort.TasksByProjectCommand tasksByProjectCommand);
 
     public class TasksByProjectCommand {

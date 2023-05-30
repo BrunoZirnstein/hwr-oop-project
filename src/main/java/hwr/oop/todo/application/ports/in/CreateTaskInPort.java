@@ -4,7 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface CreateTaskInPort {
-    public void createTaskInPort(
+    public void createTask(
             CreateTaskInPort.CreateTaskCommand createTaskCommand);
 
     public class CreateTaskCommand {

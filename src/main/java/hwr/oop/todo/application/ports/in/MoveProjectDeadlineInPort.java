@@ -6,7 +6,7 @@ import hwr.oop.todo.core.ToDoList;
 import java.time.LocalDate;
 
 public interface MoveProjectDeadlineInPort {
-    public void moveProjectDeadlineInPort(
+    public void moveProjectDeadline(
             MoveProjectDeadlineInPort.MoveProjectDeadlineCommand moveProjectDeadlineCommand);
 
     public class MoveProjectDeadlineCommand {
