@@ -9,8 +9,8 @@ public interface RemoveTaskProjectInPort {
             RemoveTaskProjectInPort.RemoveTaskProjectCommand removeTaskProjectCommand);
 
     public class RemoveTaskProjectCommand {
-        private ToDoList list;
-        private Task task;
+        public ToDoList list;
+        public Task task;
 
         private RemoveTaskProjectCommand(ToDoList list, Task task) {
             this.list = list;

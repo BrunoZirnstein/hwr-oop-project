@@ -8,8 +8,8 @@ public interface TaskByTitleInPort {
             TaskByTitleInPort.TaskByTitleCommand taskByTitleCommand);
 
     public class TaskByTitleCommand {
-        private ToDoList list;
-        private String title;
+        public ToDoList list;
+        public String title;
 
         private TaskByTitleCommand(ToDoList list, String title) {
             this.list = list;

@@ -11,8 +11,8 @@ public interface TasksByTagInPort {
             TasksByTagInPort.TasksByTagCommand tasksByTagCommand);
 
     public class TasksByTagCommand {
-        private ToDoList list;
-        private TaskTag taskTag;
+        public ToDoList list;
+        public TaskTag taskTag;
 
         private TasksByTagCommand(ToDoList list, TaskTag taskTag) {
             this.list = list;

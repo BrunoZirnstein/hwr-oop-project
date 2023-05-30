@@ -7,8 +7,8 @@ public interface AddTaskToListInPort {
     public void addTaskToList(AddTaskToListCommand addTaskToListCommand);
 
     public class AddTaskToListCommand {
-        private ToDoList list;
-        private Task newTask;
+        public ToDoList list;
+        public Task newTask;
 
         private AddTaskToListCommand(ToDoList list, Task newTask) {
             this.list = list;

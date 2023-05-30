@@ -8,8 +8,8 @@ public interface DeleteProjectInPort {
             DeleteProjectInPort.DeleteProjectCommand deleteProjectCommand);
 
     public class DeleteProjectCommand {
-        private ToDoList list;
-        private Project project;
+        public ToDoList list;
+        public Project project;
 
         private DeleteProjectCommand(ToDoList list, Project project) {
             this.list = list;

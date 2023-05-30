@@ -8,8 +8,8 @@ public interface ProjectByNameInPort {
             ProjectByNameInPort.ProjectByNameCommand projectByNameCommand);
 
     public class ProjectByNameCommand {
-        private ToDoList list;
-        private String projectName;
+        public ToDoList list;
+        public String projectName;
 
         private ProjectByNameCommand(ToDoList list, String projectName) {
             this.list = list;

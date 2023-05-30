@@ -9,9 +9,9 @@ public interface RenameTaskInPort {
             RenameTaskInPort.RenameTaskCommand renameTaskCommand);
 
     public class RenameTaskCommand {
-        private ToDoList list;
-        private Task task;
-        private String newName;
+        public ToDoList list;
+        public Task task;
+        public String newName;
 
         private RenameTaskCommand(ToDoList list, Task task, String newName) {
             this.list = list;

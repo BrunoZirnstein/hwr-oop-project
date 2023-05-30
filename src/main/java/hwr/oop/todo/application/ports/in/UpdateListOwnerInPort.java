@@ -8,8 +8,8 @@ public interface UpdateListOwnerInPort {
             UpdateListOwnerInPort.UpdateListOwnerCommand updateListOwnerCommand);
 
     public class UpdateListOwnerCommand {
-        private ToDoList list;
-        private String newOwner;
+        public ToDoList list;
+        public String newOwner;
 
         private UpdateListOwnerCommand(ToDoList list, String newOwner) {
             this.list = list;

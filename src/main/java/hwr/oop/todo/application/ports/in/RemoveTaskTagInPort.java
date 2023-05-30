@@ -10,9 +10,9 @@ public interface RemoveTaskTagInPort {
             RemoveTaskTagInPort.RemoveTaskTagCommand removeTaskTagCommand);
 
     public class RemoveTaskTagCommand {
-        private ToDoList list;
-        private Task task;
-        private TaskTag taskTag;
+        public ToDoList list;
+        public Task task;
+        public TaskTag taskTag;
 
         private RemoveTaskTagCommand(ToDoList list, Task task,
                                      TaskTag taskTag) {

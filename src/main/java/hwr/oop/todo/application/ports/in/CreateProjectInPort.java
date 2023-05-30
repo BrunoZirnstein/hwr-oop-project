@@ -8,8 +8,8 @@ public interface CreateProjectInPort {
             CreateProjectInPort.CreateProjectCommand createProjectCommand);
 
     public class CreateProjectCommand {
-        private ToDoList list;
-        private Project newProject;
+        public ToDoList list;
+        public Project newProject;
 
         private CreateProjectCommand(ToDoList list, Project newProject) {
             this.list = list;

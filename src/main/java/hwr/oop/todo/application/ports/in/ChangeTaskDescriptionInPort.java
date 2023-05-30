@@ -8,9 +8,9 @@ public interface ChangeTaskDescriptionInPort {
             ChangeTaskDescriptionInPort.ChangeTaskDescriptionCommand changeTaskDescriptionCommand);
 
     public class ChangeTaskDescriptionCommand {
-        private ToDoList list;
-        private Task task;
-        private String newDescription;
+        public ToDoList list;
+        public Task task;
+        public String newDescription;
 
         private ChangeTaskDescriptionCommand(ToDoList list, Task task,
                                              String newDescription) {
