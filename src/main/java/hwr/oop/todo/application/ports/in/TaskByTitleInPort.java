@@ -4,16 +4,7 @@ import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface TaskByTitleInPort {
-    public Task taskByTitle(
-            TaskByTitleInPort.TaskByTitleCommand taskByTitleCommand);
+    Task taskByTitle(TaskByTitleCommand taskByTitleCommand);
 
-    public class TaskByTitleCommand {
-        public ToDoList list;
-        public String title;
-
-        private TaskByTitleCommand(ToDoList list, String title) {
-            this.list = list;
-            this.title = title;
-        }
-    }
+    record TaskByTitleCommand(ToDoList list, String title) {}
 }

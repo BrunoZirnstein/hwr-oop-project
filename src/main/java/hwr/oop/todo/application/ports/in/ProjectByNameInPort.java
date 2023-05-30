@@ -4,16 +4,7 @@ import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.ToDoList;
 
 public interface ProjectByNameInPort {
-    public Project projectByName(
-            ProjectByNameInPort.ProjectByNameCommand projectByNameCommand);
+    Project projectByName(ProjectByNameCommand projectByNameCommand);
 
-    public class ProjectByNameCommand {
-        public ToDoList list;
-        public String projectName;
-
-        private ProjectByNameCommand(ToDoList list, String projectName) {
-            this.list = list;
-            this.projectName = projectName;
-        }
-    }
+    record ProjectByNameCommand(ToDoList list, String projectName) {}
 }

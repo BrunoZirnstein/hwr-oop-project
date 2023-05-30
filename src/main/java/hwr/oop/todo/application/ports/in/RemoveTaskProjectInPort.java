@@ -1,20 +1,10 @@
 package hwr.oop.todo.application.ports.in;
 
-import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 
 public interface RemoveTaskProjectInPort {
-    public void removeTaskProject(
-            RemoveTaskProjectInPort.RemoveTaskProjectCommand removeTaskProjectCommand);
+    void removeTaskProject(RemoveTaskProjectCommand removeTaskProjectCommand);
 
-    public class RemoveTaskProjectCommand {
-        public ToDoList list;
-        public Task task;
-
-        private RemoveTaskProjectCommand(ToDoList list, Task task) {
-            this.list = list;
-            this.task = task;
-        }
-    }
+    record RemoveTaskProjectCommand(ToDoList list, Task task) {}
 }

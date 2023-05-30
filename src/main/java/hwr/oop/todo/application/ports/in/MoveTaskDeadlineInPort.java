@@ -6,19 +6,8 @@ import hwr.oop.todo.core.ToDoList;
 import java.time.LocalDate;
 
 public interface MoveTaskDeadlineInPort {
-    public void moveTaskDeadline(
-            MoveTaskDeadlineInPort.MoveTaskDeadlineCommand moveTaskDeadlineCommand);
+    void moveTaskDeadline(MoveTaskDeadlineCommand moveTaskDeadlineCommand);
 
-    public class MoveTaskDeadlineCommand {
-        public ToDoList list;
-        public Task task;
-        public LocalDate newDeadline;
-
-        private MoveTaskDeadlineCommand(ToDoList list, Task task,
-                                        LocalDate newDeadline) {
-            this.list = list;
-            this.task = task;
-            this.newDeadline = newDeadline;
-        }
-    }
+    record MoveTaskDeadlineCommand(ToDoList list, Task task,
+                                   LocalDate newDeadline) {}
 }
