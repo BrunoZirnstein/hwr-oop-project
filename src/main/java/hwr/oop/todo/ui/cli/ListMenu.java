@@ -2,21 +2,19 @@ package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.core.ToDoList;
-import hwr.oop.todo.persistence.csv.CSVReader;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class ManageToDoMenu {
+public class ListMenu {
 	private PrintStream out = null;
 	private Scanner in = null;
 
 	private TodoMainMenu todoMainMenu = null;
 	private MainMenu mainMenu;
-
-	public ManageToDoMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
+	
+	public ListMenu(MainMenu mainMenu, OutputStream out, InputStream in) {
 		this.out = new PrintStream(out);
 		this.in = new Scanner(in);
 
@@ -30,6 +28,7 @@ public class ManageToDoMenu {
 		String todoName = promptToDoName();
 
 		Main.activeTodo = new ToDoList(todoName);
+		
 		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 
 		todoMainMenu.returnToMe();
@@ -72,7 +71,6 @@ public class ManageToDoMenu {
 		 * }
 		 * 
 		 */
-
 	}
 
 	public void openRemove() {

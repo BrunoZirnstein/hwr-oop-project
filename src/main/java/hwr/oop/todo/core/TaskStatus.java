@@ -1,7 +1,5 @@
 package hwr.oop.todo.core;
 
 public enum TaskStatus {
-    TODO,
-    BLOCKED,
-    DONE
+    TODO, IN_PROGRESS, BLOCKED, DONE
 }

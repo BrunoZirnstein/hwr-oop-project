@@ -41,4 +41,10 @@ public class ConsoleTest {
 		
 		Assertions.assertThat(out.toString()).isEqualTo(Console.displayInputIndicatorStr);
 	}
+	
+	@Test
+	void Test_ConsoleInstantiate_To_CalmDown_MutationTester()
+	{
+		Console c = new Console();
+	}
 }

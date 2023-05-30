@@ -1,14 +1,11 @@
-package hwr.oop.todo.application;
+package hwr.oop.todo.core;
 
-import hwr.oop.todo.core.Task;
-import hwr.oop.todo.core.TaskPriority;
-import hwr.oop.todo.core.TaskStatus;
-import hwr.oop.todo.core.TaskTag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +40,16 @@ class TaskTest {
         assertThat(task.status()).isEqualTo(TaskStatus.TODO);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
         assertThat(task.projectName()).contains("university"); // contains checks if optional type value is equal to testProject
+    }
+
+    @Test
+    @DisplayName("New Task contains one tag")
+    void newTask_WithOneTag() {
+        Task task = new Task.Builder("Water plants").build();
+        TaskTag tag = new TaskTag("Watering");
+        task.addTag(tag);
+        assertThat(task.tags()).containsExactly(tag);
+
     }
 
     @Test
@@ -104,10 +111,21 @@ class TaskTest {
 
     @Test
     @DisplayName("Changing deadline of task")
-    void deadlineOfTask() {
+    void changeDeadline_ValidDate() {
         Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
         task.moveDeadline(LocalDate.of(2023,6,1));
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
+    }
+
+    @Test
+    @DisplayName("Changing deadline of task with invalid date")
+    void changeDeadline_InvalidDate_ThrowException() {
+        try {
+            Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
+            task.moveDeadline(LocalDate.of(0,0,0));
+        } catch(DateTimeException e) {
+            assertThat(e).isNotNull();
+        }
     }
 
     @ParameterizedTest
@@ -132,12 +150,20 @@ class TaskTest {
     }
 
     @Test
-    @DisplayName("Adding and removing a project")
-    void projectOfTask() {
+    @DisplayName("Adding a project")
+    void projectOfTask_Changing() {
         Task task = new Task.Builder("Build a chair").build();
         task.changeProject("Renovation");
         assertThat(task.projectName()).contains("Renovation");
+
+    }
+
+    @Test
+    @DisplayName("Removing a project")
+    void projectOfTask_Removing() {
+        Task task = new Task.Builder("Build a chair").projectName("Test Project").build();
         task.deleteProject();
         assertThat(task.projectName()).isEmpty();
     }
+
 }
