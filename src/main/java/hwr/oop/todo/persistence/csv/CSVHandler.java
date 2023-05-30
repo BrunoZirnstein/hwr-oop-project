@@ -4,7 +4,6 @@ import hwr.oop.todo.core.*;
 import hwr.oop.todo.persistence.PersistenceAdapter;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -243,7 +242,7 @@ public class CSVHandler implements PersistenceAdapter {
                 String title = values.get(0);
                 LocalDate deadline = LocalDate.parse(values.get(1));
                 if (values.get(2).equals(toDoList.owner())) {
-                    Project project = new Project(title, deadline);
+                    Project project = new Project.Builder(title).deadline(deadline).build();
                     toDoList.addProject(project);
                 }
             }
@@ -262,7 +261,7 @@ public class CSVHandler implements PersistenceAdapter {
                 String title = fields[0];
                 LocalDate deadline = LocalDate.parse(fields[1]);
 
-                Project project = new Project(title, deadline);
+                Project project = new Project.Builder(title).deadline(deadline).build();
                 projects.add(project);
             }
         }

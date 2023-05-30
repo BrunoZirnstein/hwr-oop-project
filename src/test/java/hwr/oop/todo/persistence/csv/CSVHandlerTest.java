@@ -2,7 +2,6 @@ package hwr.oop.todo.persistence.csv;
 
 import hwr.oop.todo.core.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -11,7 +10,6 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -252,7 +250,7 @@ class CSVHandlerTest {
     @Test
     void testSaveNewProject() throws IOException {
         ToDoList todo = new ToDoList("Test User");
-        Project project = new Project("Test Project", LocalDate.of(2023, 5, 7));
+        Project project = new Project.Builder("Test Project").deadline(LocalDate.of(2023, 5, 7)).build();
         String filePathProject = tempDir.resolve(TEST_FILEPATH_PROJECT).toString();
         csvHandler.setFilePathProject(filePathProject);
         csvHandler.saveNewProject(project, todo);
@@ -267,7 +265,7 @@ class CSVHandlerTest {
 
     @Test
     void testSaveNewProject_ExceptionHandling() {
-        Project project = new Project("Test Project", null);
+        Project project = new Project.Builder("Test Project").build();
         ToDoList todo = new ToDoList("Test User");
         String filePathProject = "nonexistent_directory/test_project.csv";
         csvHandler.setFilePathProject(filePathProject);
@@ -276,7 +274,7 @@ class CSVHandlerTest {
 
     @Test
     void testSaveNewProjectIOException() {
-        Project project = new Project("Project 1", LocalDate.of(2023, 6, 1));
+        Project project = new Project.Builder("Test Project").deadline(LocalDate.of(2023, 6, 1)).build();
         String filePathProject = "invalidpath/test_project.csv";
         csvHandler.setFilePathProject(filePathProject);
         ToDoList todo = new ToDoList("Test User");
@@ -325,9 +323,10 @@ class CSVHandlerTest {
         csvHandler.setFilePathTask(filePath);
         createTaskTestData(filePath);
         ToDoList todo = new ToDoList("Test_User_1");
-        Project project1 = new Project("Project 1", LocalDate.of(2023, 6, 1));
+        Project project1 = new Project.Builder("Project 1").deadline(LocalDate.of(2023, 6, 1)).build();
+
         todo.addProject(project1);
-        Project project2 = new Project("Project 2", LocalDate.of(2023, 6, 2));
+        Project project2 = new Project.Builder("Project 2").deadline(LocalDate.of(2023, 6, 2)).build();
         todo.addProject(project2);
         todo = csvHandler.loadAToDoListFromUserWithAllTasks(todo);
         assertEquals(3, todo.tasks().size());

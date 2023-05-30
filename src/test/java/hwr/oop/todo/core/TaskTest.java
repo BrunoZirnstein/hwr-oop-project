@@ -10,15 +10,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Test task")
 class TaskTest {
     @Test
-    @DisplayName("New Task created with Title")
+    @DisplayName("New Task created with Title and UUID")
     void newTask_WithOnlyTitle() {
         Task task = new Task.Builder("Water plants").build();
+        UUID id = task.id();
+        assertThat(id).isInstanceOf(UUID.class);
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(new ArrayList<TaskTag>());
         assertThat(task.description()).isNull();
