@@ -5,9 +5,9 @@ This repository contains a student project created for an ongoing lecture on obj
 > :warning: This code is for educational purposes only. Do not rely on it!
 
 ## Feature List
-| Number | Feature | Test | Responsible |
-|--------|---------|-------|-------------|
-| 1      |       |      |             |
+| Number | Feature | Test | Responsible | Status |
+|--------|---------|-------|-------------|-----------|
+| 1      |       |      |             |    ToDo    |
 
 ## ToDo List
 
