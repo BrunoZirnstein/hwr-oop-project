@@ -4,13 +4,12 @@ This repository contains a student project created for an ongoing lecture on obj
 
 > :warning: This code is for educational purposes only. Do not rely on it!
 
-## Abstract
-
-[TODO]: # (Write a short description of your project.)
-[TODO]: # (State most important features.)
-[TODO]: # (State the most interesting problems you encountered during the project.)
-
 ## Feature List
+| Number | Feature | Test | Responsible | Status |
+|--------|---------|-------|-------------|-----------|
+| 1      |       |      |             |    ToDo    |
+
+## ToDo List
 
 [TODO]: # (For each feature implemented, add a row to the table!)
 
@@ -42,6 +41,8 @@ This repository contains a student project created for an ongoing lecture on obj
 | 24      |    Anpassen des Menüs an neue Architetktur (Ports)    |         | Thomas            |
 | 25      |    neue Architektur umsetzen: UseCase tests & SUT     |            | Bruno            |
 | 26      |    Id (UUID) zu Projekt, Task & ToDoList hinzufügen + benötigte Mehtoden     |       ✔️       | Jason            |
+| 26      |    Ids in eigene Klassen auslagern     |       ✔️       | Bruno            |
+| 28      |    SonarLint Issues beheben, Kommentare entfernen, allgemeines Aufräumen     |             | Jason & Frauke           |
 
 
 ## Additional Dependencies
