@@ -4,13 +4,12 @@ This repository contains a student project created for an ongoing lecture on obj
 
 > :warning: This code is for educational purposes only. Do not rely on it!
 
-## Abstract
-
-[TODO]: # (Write a short description of your project.)
-[TODO]: # (State most important features.)
-[TODO]: # (State the most interesting problems you encountered during the project.)
-
 ## Feature List
+| Number | Feature | Test | Responsible |
+|--------|---------|-------|-------------|
+| 1      |       |      |             |
+
+## ToDo List
 
 [TODO]: # (For each feature implemented, add a row to the table!)
 
