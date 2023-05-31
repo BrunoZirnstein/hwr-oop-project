@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TaskTagTest {
     @Test
     void testGetTitle() {
-        TaskTag myTag = new TaskTag("sample-tag");
-        String title = myTag.title();
+        TaskTag tag = new TaskTag("sample-tag");
+        String title = tag.title();
         assertThat(title).isEqualTo("sample-tag");
     }
 
@@ -24,15 +24,13 @@ class TaskTagTest {
 
     @Test
     void testEqualObject() {
-        TaskTag myTag = new TaskTag("sample-tag");
-        TaskTag yourTag = new TaskTag("sample-tag");
-        boolean c1 = myTag.equals(yourTag);
-        assertThat(c1).isTrue();
-        TaskTag thirdTag = new TaskTag("other-tag");
-        boolean c2 = myTag.equals(thirdTag);
-        assertThat(c2).isFalse();
-        boolean c3 = myTag.equals(null);
-        assertThat(c3).isFalse();
+        TaskTag tag = new TaskTag("sample-tag");
+        TaskTag sameTag = new TaskTag("sample-tag");
+
+        assertThat(tag).isEqualTo(sameTag);
+
+        TaskTag differentTag = new TaskTag("other-tag");
+        assertThat(tag).isNotEqualTo(differentTag);
 
     }
 }
