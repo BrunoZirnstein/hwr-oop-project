@@ -3,24 +3,25 @@ package hwr.oop.todo.core;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ToDoList {
-    private final UUID id;
-    private final List<Task> tasks;
-    private final List<Project> projects;
+    private final ToDoListId id;
     private String owner;
 
+    private final List<Task> tasks;
+    private final List<Project> projects;
+
     public ToDoList(String owner) {
-        this.id = UUID.randomUUID();
+        this.id = new ToDoListId();
         this.owner = owner;
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
     }
 
-    public UUID id() {
+    public ToDoListId id() {
         return id;
     }
+
     public List<Task> tasks() {
         return tasks;
     }
@@ -69,9 +70,9 @@ public class ToDoList {
         this.projects.remove(project);
     }
 
-    public Task taskByID(UUID id) {
-        return tasks.stream().filter(task -> task.id().equals(id))
-                .findFirst().orElseThrow(() -> new InvalidParameterException(
+    public Task taskById(TaskId id) {
+        return tasks.stream().filter(task -> task.id().equals(id)).findFirst()
+                .orElseThrow(() -> new InvalidParameterException(
                         "Cannot get task from ToDo list, given id does not exist."));
     }
 
