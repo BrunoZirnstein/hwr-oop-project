@@ -4,12 +4,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public class Task {
-    private final UUID id;
-    private String title;
+    private final TaskId id;
     private final List<TaskTag> tags;
+    private String title;
     private String description;
     private LocalDate deadline;
     private TaskStatus status;
@@ -19,7 +18,7 @@ public class Task {
     private Task(String title, List<TaskTag> tags, String description,
                  LocalDate deadline, TaskStatus status, TaskPriority priority,
                  String projectName) {
-        this.id = UUID.randomUUID();
+        this.id = new TaskId();
         this.title = title;
         this.tags = tags;
         this.description = description;
@@ -29,9 +28,7 @@ public class Task {
         this.projectName = projectName;
     }
 
-    public UUID id() {
-        return id;
-    }
+    public TaskId id() {return id;}
 
     public String title() {
         return title;

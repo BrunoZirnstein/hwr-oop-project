@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,8 +19,8 @@ class TaskTest {
     @DisplayName("New Task created with Title and UUID")
     void newTask_WithOnlyTitle() {
         Task task = new Task.Builder("Water plants").build();
-        UUID id = task.id();
-        assertThat(id).isInstanceOf(UUID.class);
+        TaskId id = task.id();
+        assertThat(id).isInstanceOf(TaskId.class);
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(new ArrayList<TaskTag>());
         assertThat(task.description()).isNull();
@@ -34,15 +33,21 @@ class TaskTest {
     @Test
     @DisplayName("New Task with all parameters")
     void newTask_WithAllParameters() {
-        Task task = new Task.Builder("Water plants").description("Water all the plants in the living room and in the bedroom.").tags(List.of(new TaskTag("home"))).deadline(LocalDate.of(2023, 5, 30)).priority(
-                TaskPriority.HIGH).projectName("university").build();
+        Task task = new Task.Builder("Water plants").description(
+                        "Water all the plants in the living room and in the bedroom.")
+                .tags(List.of(new TaskTag("home")))
+                .deadline(LocalDate.of(2023, 5, 30)).priority(TaskPriority.HIGH)
+                .projectName("university").status(TaskStatus.IN_PROGRESS)
+                .build();
         assertThat(task.title()).isEqualTo("Water plants");
         assertThat(task.tags()).isEqualTo(List.of(new TaskTag("home")));
-        assertThat(task.description()).isEqualTo("Water all the plants in the living room and in the bedroom.");
+        assertThat(task.description()).isEqualTo(
+                "Water all the plants in the living room and in the bedroom.");
         assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 5, 30));
-        assertThat(task.status()).isEqualTo(TaskStatus.TODO);
+        assertThat(task.status()).isEqualTo(TaskStatus.IN_PROGRESS);
         assertThat(task.priority()).isEqualTo(TaskPriority.HIGH);
-        assertThat(task.projectName()).contains("university"); // contains checks if optional type value is equal to testProject
+        assertThat(task.projectName()).contains(
+                "university"); // contains checks if optional type value is equal to testProject
     }
 
     @Test
@@ -65,7 +70,7 @@ class TaskTest {
         TaskTag tag2 = new TaskTag("2");
         task.addTag(tag2);
 
-        assertThat(task.tags()).containsAll(Arrays.asList(tag1,tag2));
+        assertThat(task.tags()).containsAll(Arrays.asList(tag1, tag2));
     }
 
     @Test
@@ -107,7 +112,8 @@ class TaskTest {
     @Test
     @DisplayName("Changing description of task")
     void descriptionOfTask() {
-        Task task = new Task.Builder("Build a chair").description("Build a chair out of wood").build();
+        Task task = new Task.Builder("Build a chair").description(
+                "Build a chair out of wood").build();
         task.changeDescription("Build a chair out of metal");
         assertThat(task.description()).isEqualTo("Build a chair out of metal");
     }
@@ -115,18 +121,20 @@ class TaskTest {
     @Test
     @DisplayName("Changing deadline of task")
     void changeDeadline_ValidDate() {
-        Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
-        task.moveDeadline(LocalDate.of(2023,6,1));
-        assertThat(task.deadline()).isEqualTo(LocalDate.of(2023,6,1));
+        Task task = new Task.Builder("Build a chair").deadline(
+                LocalDate.of(2023, 5, 1)).build();
+        task.moveDeadline(LocalDate.of(2023, 6, 1));
+        assertThat(task.deadline()).isEqualTo(LocalDate.of(2023, 6, 1));
     }
 
     @Test
     @DisplayName("Changing deadline of task with invalid date")
     void changeDeadline_InvalidDate_ThrowException() {
         try {
-            Task task = new Task.Builder("Build a chair").deadline(LocalDate.of(2023,5,1)).build();
-            task.moveDeadline(LocalDate.of(0,0,0));
-        } catch(DateTimeException e) {
+            Task task = new Task.Builder("Build a chair").deadline(
+                    LocalDate.of(2023, 5, 1)).build();
+            task.moveDeadline(LocalDate.of(0, 0, 0));
+        } catch (DateTimeException e) {
             assertThat(e).isNotNull();
         }
     }
@@ -164,7 +172,8 @@ class TaskTest {
     @Test
     @DisplayName("Removing a project")
     void projectOfTask_Removing() {
-        Task task = new Task.Builder("Build a chair").projectName("Test Project").build();
+        Task task = new Task.Builder("Build a chair").projectName(
+                "Test Project").build();
         task.deleteProject();
         assertThat(task.projectName()).isEmpty();
     }
