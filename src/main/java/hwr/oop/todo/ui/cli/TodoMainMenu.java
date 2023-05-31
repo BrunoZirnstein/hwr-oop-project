@@ -1,9 +1,7 @@
 package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
-import hwr.oop.todo.core.Task;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -36,8 +34,8 @@ public class TodoMainMenu {
 		inputHandler.addAction("Delete Project", null);
 		inputHandler.addAction("Create Tasks (quick create)", () -> taskMenu.openCreateSimple());
 		inputHandler.addAction("Create Task (detailed)", null);
-		inputHandler.addAction("Save ToDo List in file..", () -> saveCSV());
-		inputHandler.addAction("Go back", () -> mainMenu.returnToMe());
+		inputHandler.addAction("Save ToDo List in file..", this::saveCSV);
+		inputHandler.addAction("Go back", mainMenu::returnToMe);
 	}
 
 	public void open() {
@@ -57,7 +55,7 @@ public class TodoMainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		Console.EnterToContinue(out, in);
+		Console.enterToContinue(out, in);
 		Console.clear(out);
 		open();
 	}

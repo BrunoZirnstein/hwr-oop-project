@@ -10,6 +10,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class ConsoleTest {
 	
 	@Test
@@ -20,7 +22,7 @@ public class ConsoleTest {
 		Console.clear(new PrintStream(out));
 		
 		int linebreakCount = CTestHelper.countOccurrences(out.toString(), System.lineSeparator());
-		Assertions.assertThat(linebreakCount).isEqualTo(Console.clearScreenLinebreakCount);
+		assertThat(linebreakCount).isEqualTo(Console.CLEARSCREENLINEBREAKCOUNT);
 	}
 	
 	@Test
@@ -28,9 +30,9 @@ public class ConsoleTest {
 		OutputStream out = new ByteArrayOutputStream();
 		InputStream in = CTestHelper.createInputStreamForInput("\n");
 		
-		Console.EnterToContinue(new PrintStream(out), new Scanner(in));
+		Console.enterToContinue(new PrintStream(out), new Scanner(in));
 		
-		Assertions.assertThat(out.toString()).isEqualTo(Console.enterToContinueMessage);
+		assertThat(out.toString()).isEqualTo(Console.ENTERTOCONTINUEMESSAGE);
 	}
 	
 	@Test
@@ -39,12 +41,13 @@ public class ConsoleTest {
 		
 		Console.displayInputIndicator(new PrintStream(out));
 		
-		Assertions.assertThat(out.toString()).isEqualTo(Console.displayInputIndicatorStr);
+		assertThat(out.toString()).isEqualTo(Console.DISPLAYINPUTINDICATORSTR);
 	}
 	
 	@Test
 	void Test_ConsoleInstantiate_To_CalmDown_MutationTester()
 	{
 		Console c = new Console();
+		assertThat(c).isNotNull();
 	}
 }

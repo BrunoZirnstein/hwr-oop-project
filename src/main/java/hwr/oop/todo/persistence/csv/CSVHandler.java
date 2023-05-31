@@ -350,7 +350,7 @@ public class CSVHandler implements PersistenceAdapter {
         tempFile.renameTo(inputFile);
     }
 
-    void removeProjectByOwner(String ID) throws IOException {
+    void removeProjectByOwner(String id) throws IOException {
         File inputFile = new File(getFilePathProject());
         File tempFile = new File(getFilePathProject() + "projecttemp.csv");
 
@@ -362,7 +362,7 @@ public class CSVHandler implements PersistenceAdapter {
                 while ((line = reader.readLine()) != null) {
                     List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
 
-                    if (!fields.isEmpty() && fields.size() >= 3 && !fields.get(2).equals(ID)) {
+                    if (!fields.isEmpty() && fields.size() >= 3 && !fields.get(2).equals(id)) {
                         if (!firstLine) {
                             writer.write(LINE_SEPARATOR);
                         } else {

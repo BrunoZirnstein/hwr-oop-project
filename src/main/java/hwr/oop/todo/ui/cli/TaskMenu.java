@@ -43,7 +43,7 @@ public class TaskMenu {
 			Console.displayInputIndicator(out);
 			userInput = in.nextLine();
 			
-			if(userInput.isEmpty() == false)
+			if(!userInput.isEmpty())
 			{
 				return userInput;
 			}

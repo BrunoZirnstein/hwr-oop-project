@@ -51,7 +51,7 @@ public class ProjectMenu{
 			Console.displayInputIndicator(out);
 			projectName = in.nextLine();
 			
-			if(projectName.isEmpty() == false)
+			if(!projectName.isEmpty())
 			{
 				return projectName;
 			}
@@ -76,7 +76,7 @@ public class ProjectMenu{
 			Console.displayInputIndicator(out);
 			deadlineStr = in.nextLine();
 			
-			if(deadlineStr.isEmpty() == false)
+			if(!deadlineStr.isEmpty())
 			{
 				try {
 					deadline = LocalDate.parse(deadlineStr);
