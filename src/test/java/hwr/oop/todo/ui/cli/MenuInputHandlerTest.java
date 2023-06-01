@@ -57,13 +57,13 @@ public class MenuInputHandlerTest {
 		if(inputNum >= 0 && inputNum <= 2) {
 			// valid InputID must result in given action!
 			Assertions.assertThat(actionResult.toString()).isEqualTo(expectedResult[inputNum]);
-			Assertions.assertThat(out.toString()).containsOnlyOnce(Console.displayInputIndicatorStr);
+			Assertions.assertThat(out.toString()).containsOnlyOnce(Console.DISPLAYINPUTINDICATORSTR);
 		} else {
 			// invalid InputID must result in error message and prompt to try again!
-			Assertions.assertThat(out.toString()).contains(menuInputHandler.wrongInputIDMessage);
+			Assertions.assertThat(out.toString()).contains(menuInputHandler.WRONG_INPUT_ID_MESSAGE);
 
 			// the user input Indicator must be there twice, if one input failed!
-			int inputPromptCount = CTestHelper.countOccurrences(out.toString(), Console.displayInputIndicatorStr);
+			int inputPromptCount = CTestHelper.countOccurrences(out.toString(), Console.DISPLAYINPUTINDICATORSTR);
 			Assertions.assertThat(inputPromptCount).isEqualTo(2);
 		}
 	}
@@ -79,6 +79,6 @@ public class MenuInputHandlerTest {
 		menuInputHandler.addAction("bla", () -> actionResult = "bla");
 		menuInputHandler.propmtAndHandleInput();
 		
-		Assertions.assertThat(out.toString()).contains(menuInputHandler.invalidInputMessage);
+		Assertions.assertThat(out.toString()).contains(menuInputHandler.INVALID_INPUT_MESSAGE);
 	}
 }

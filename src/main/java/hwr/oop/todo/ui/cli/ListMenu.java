@@ -29,7 +29,7 @@ public class ListMenu {
 
 		Main.activeTodo = new ToDoList(todoName);
 		
-		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
+		out.println("Created the ToDo-List: '" + todoName + "' successfully.");
 
 		todoMainMenu.returnToMe();
 	}
@@ -42,7 +42,7 @@ public class ListMenu {
 			Console.displayInputIndicator(out);
 			todoName = in.nextLine();
 
-			if (todoName.isEmpty() == false) {
+			if (!todoName.isEmpty()) {
 				return todoName;
 			} else {
 				out.println("Invalid name (empty). Please enter a valid name!");

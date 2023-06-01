@@ -44,7 +44,7 @@ public class MainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		Console.EnterToContinue(out, in);
+		Console.enterToContinue(out, in);
 		Console.clear(out);
 		open();
 	}

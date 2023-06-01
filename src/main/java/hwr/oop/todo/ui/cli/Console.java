@@ -4,20 +4,22 @@ import java.io.PrintStream;
 import java.util.Scanner;
 
 public class Console {
-	public final static String enterToContinueMessage = "Press [ENTER] to continue...";
-	public final static String displayInputIndicatorStr = "> ";
-	public static int clearScreenLinebreakCount = 30;
+
+	Console(){}
+	public static final String ENTERTOCONTINUEMESSAGE = "Press [ENTER] to continue...";
+	public static final String DISPLAYINPUTINDICATORSTR = "> ";
+	public static final int CLEARSCREENLINEBREAKCOUNT = 30;
 	
 	public static void clear(PrintStream out) {
-		out.print(System.lineSeparator().repeat(clearScreenLinebreakCount));
+		out.print(System.lineSeparator().repeat(CLEARSCREENLINEBREAKCOUNT));
 	}
 	
 	public static void displayInputIndicator(PrintStream out) {
-		out.print(displayInputIndicatorStr);
+		out.print(DISPLAYINPUTINDICATORSTR);
 	}
 	
-	public static void EnterToContinue(PrintStream out, Scanner in)  {
-		out.print(enterToContinueMessage);
+	public static void enterToContinue(PrintStream out, Scanner in)  {
+		out.print(ENTERTOCONTINUEMESSAGE);
 		in.nextLine();
 	}
 }

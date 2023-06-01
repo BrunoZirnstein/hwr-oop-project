@@ -6,23 +6,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class MenuInputHandler {
-	public final String invalidInputMessage = "Invalid input. Please try again";
-	public final String wrongInputIDMessage = "Invalid ID. Please enter a valid ID!";
+	public static final String INVALID_INPUT_MESSAGE = "Invalid input. Please try again";
+	public static final String WRONG_INPUT_ID_MESSAGE = "Invalid ID. Please enter a valid ID!";
 	
-	private HashMap<Integer, Runnable> actionMap;
-	private HashMap<Integer, String> actionDescriptionsMap;
+	private final HashMap<Integer, Runnable> actionMap;
+	private final HashMap<Integer, String> actionDescriptionsMap;
 	private PrintStream out = null;
 	private Scanner in = null;
 	
 	private int currentIndex = 0;
-	private int actionStartIndex = 0;
-	
+
 	public MenuInputHandler(int startWithActionIndex, PrintStream out, Scanner in) {
-		actionMap = new HashMap<Integer, Runnable>();
-		actionDescriptionsMap = new HashMap<Integer, String>();
+		actionMap = new HashMap<>();
+		actionDescriptionsMap = new HashMap<>();
 		currentIndex = startWithActionIndex;
-		actionStartIndex = startWithActionIndex;
-		
+
 		this.out = out;
 		this.in = in;
 	}
@@ -48,7 +46,7 @@ public class MenuInputHandler {
 				inputID = Integer.parseInt(in.nextLine());			
 			}
 			catch(NumberFormatException ex) {
-				out.println(invalidInputMessage);
+				out.println(INVALID_INPUT_MESSAGE);
 			}
 		}
 		
@@ -56,9 +54,9 @@ public class MenuInputHandler {
 	}
 	
 	public void handleInput(int userInput) {
-		if(actionMap.containsKey(userInput) == false)
+		if(!actionMap.containsKey(userInput))
 		{
-			out.println(wrongInputIDMessage);
+			out.println(WRONG_INPUT_ID_MESSAGE);
 			propmtAndHandleInput();
 			return;
 		}
