@@ -17,7 +17,13 @@ public class TodoMainMenu {
 	private ProjectMenu projectMenu = null;
 	private TaskMenu taskMenu = null;
 
-	private MenuActionHandler inputHandler = null;
+	public final MenuActionHandler inputHandler;
+	
+	public final String[] menuHeadline = {"ToDo List of: {}", 
+									 	  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", 
+									 	  "",
+									 	  "[ToDo MainMenu]",
+									 	  "What is it that you want to do? To proceed further, enter the action code given inside the [ ]"};
 
 	public TodoMainMenu(MainMenu mainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
@@ -41,11 +47,8 @@ public class TodoMainMenu {
 	}
 
 	public void open() {
-		out.println("ToDo List of: " + Main.activeTodo.owner());
-		out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		out.println();
-		out.println("[ToDo MainMenu]");
-		out.println("What is it that you want to do? To proceed further, enter the action code given inside the [ ]");
+		String headline = String.join(System.lineSeparator(), menuHeadline);
+		out.println(String.format(headline, Main.activeTodo.owner()));
 		inputHandler.printMenu();
 
 		inputHandler.propmtAndHandleInput();
@@ -65,6 +68,7 @@ public class TodoMainMenu {
 		open();
 	}
 
+	public final String csvSavedSucessfully_msg = "The Todo-List was saved successfully -> ";
 	private void saveCSV() {
 		// ToDo: Let the function handle the list itself, just need the ToDo-Obejct.
 		/*
@@ -77,6 +81,6 @@ public class TodoMainMenu {
 		 * }
 		 * }
 		 */
-		out.println("Saved ToDo: '" + Main.activeTodo.owner() + "' successfully.");
+		out.println(csvSavedSucessfully_msg + Main.activeTodo.owner());
 	}
 }

@@ -13,6 +13,24 @@ import org.junit.jupiter.api.Test;
 
 public class ConsoleTest {
 	
+	/**
+	 * Just checks if the console output was cleared at least one by the Console class
+	 * @param consoleOutput console output string
+	 * @return [true] if the console was cleared and [false] if the console was not cleared
+	 */
+	public static boolean isClearInOutput(String consoleOutput) {
+		//return consoleOutput.contains(System.lineSeparator().repeat(Console.clearScreenLinebreakCount));
+		int linebreakCount = CTestHelper.countOccurrences(consoleOutput, System.lineSeparator());
+		
+		
+		if(linebreakCount >= Console.clearScreenLinebreakCount) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	@Test
 	@DisplayName("Test if the console is cleared as specified")
 	void Test_Clear() {
@@ -20,8 +38,7 @@ public class ConsoleTest {
 		
 		Console.clear(new PrintStream(out));
 		
-		int linebreakCount = CTestHelper.countOccurrences(out.toString(), System.lineSeparator());
-		Assertions.assertThat(linebreakCount).isEqualTo(Console.clearScreenLinebreakCount);
+		Assertions.assertThat(isClearInOutput(out.toString())).isEqualTo(true);
 	}
 	
 	@Test

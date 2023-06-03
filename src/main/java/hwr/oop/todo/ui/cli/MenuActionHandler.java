@@ -34,10 +34,18 @@ public class MenuActionHandler {
 		currentIndex += 1;
 	}
 	
-	public void printMenu() {
+	public String getMenuPrintString() {
+		String menuString = new String();
+		
 		for(Map.Entry<Integer, String> entry : actionDescriptionsMap.entrySet()) {
-			out.println("[" + entry.getKey() + "] " + entry.getValue());
+			menuString += "[" + entry.getKey() + "] " + entry.getValue() + System.lineSeparator();
 		}
+		
+		return menuString;
+	}
+	
+	public void printMenu() {
+		out.println(getMenuPrintString());
 	}
 	
 	public void propmtAndHandleInput() {
@@ -70,5 +78,9 @@ public class MenuActionHandler {
 		
 		Runnable action = actionMap.get(userInput);
 		action.run();
+	}
+	
+	public int getCount() {
+		return currentIndex;
 	}
 }

@@ -28,11 +28,16 @@ public class MenuActionHandlerTest {
 			menuInputHandler.addAction(actions[i], null);
 		}
 		
-		menuInputHandler.printMenu();
-		
+		// check if generated menu string contains all the actions and descriptions that were addet 
+		String menuString = menuInputHandler.getMenuPrintString();
 		for(int i=0; i<actions.length; i++) {
-			Assertions.assertThat(out.toString()).contains("[" + (i+startIndex) + "] " + actions[i]);
+			String menuFragment = "[" + (i+startIndex) + "] " + actions[i];
+			Assertions.assertThat(menuString).contains(menuFragment);
 		}
+		
+		// check if the printed menu equals to the generated string
+		menuInputHandler.printMenu();
+		Assertions.assertThat(out.toString()).isEqualTo(menuString+System.lineSeparator());
 	}
 	
 	public String actionResult;

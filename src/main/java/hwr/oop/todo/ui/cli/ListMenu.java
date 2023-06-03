@@ -12,16 +12,16 @@ public class ListMenu {
 	private InputHandler in = null;
 
 	private TodoMainMenu todoMainMenu = null;
-	private MainMenu mainMenu;
+	
 	
 	public ListMenu(MainMenu mainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
 		this.in = in;
 
-		this.mainMenu = mainMenu;
 		todoMainMenu = new TodoMainMenu(mainMenu, out, in);
 	}
 
+	public final String todoCreatedSucess_msg = "Created the ToDo-List: '{}' sucessfully.";
 	public void openCreate() {
 		Console.clear(out);
 
@@ -29,13 +29,16 @@ public class ListMenu {
 
 		Main.activeTodo = new ToDoList(todoName);
 		
-		out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
+		//out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
+		out.println(String.format(todoCreatedSucess_msg, todoName));
 
 		todoMainMenu.returnToMe();
 	}
 
+	public final String todoNameInputPrompt_msg = "Enter your name / the name of the desired ToDo List.";
+	public final String toNamePrompt_emptyInputMsg = "Invalid name (empty). Please enter a valid name!";
 	private String promptToDoName() {
-		out.println("Enter your name / the name of the desired ToDo List.");
+		out.println(todoNameInputPrompt_msg);
 
 		String todoName;
 		while (true) {
@@ -47,15 +50,16 @@ public class ListMenu {
 			} else if (todoName.isEmpty() == false) {
 				return todoName;
 			} else {
-				out.println("Invalid name (empty). Please enter a valid name!");
+				out.println(toNamePrompt_emptyInputMsg);
 			}
 		}
 	}
 
+	public final String openLoadPrompt_msg = "To load a ToDo list";
 	public void openLoad() {
 		Console.clear(out);
 
-		out.println("To load a ToDo list:");
+		out.println(openLoadPrompt_msg);
 		String todoName = promptToDoName();
 
 		// Niklas: load function call with todoName which serves as the 'user' and get a

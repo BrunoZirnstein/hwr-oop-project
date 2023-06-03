@@ -1,15 +1,13 @@
 package hwr.oop.todo.ui.cli;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 public class MainMenu {
 	private PrintStream out = null;
 	private InputHandler in = null;
 	
-	private MenuActionHandler inputHandler = null;
+	public final MenuActionHandler inputHandler;
 	private ListMenu manageToDoMenu;
 	
 	public final String[] menuHeadline = {"Welcome to the ultimate-u-never-forget ToDo List", 
@@ -18,12 +16,11 @@ public class MainMenu {
 									 	  "[MainMenu]"};
 	
 	
-	
 	public MainMenu(OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
         this.in = in;
 		manageToDoMenu = new ListMenu(this, out, in);
-		
+		// https://pitest.org/quickstart/maven/#mutators
 		inputHandler = new MenuActionHandler(1, this.out, this.in);
 		inputHandler.addAction("Create&Load ToDo List", () -> manageToDoMenu.openCreate());
 		inputHandler.addAction("Load ToDo List from file", () -> manageToDoMenu.openLoad());

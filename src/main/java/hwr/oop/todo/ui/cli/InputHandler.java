@@ -58,6 +58,7 @@ public class InputHandler {
 			inputGetCount += 1;			
 		}
 		
+		// programm beenden
 		return returnValue;
 	}
 	

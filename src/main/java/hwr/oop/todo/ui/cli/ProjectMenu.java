@@ -23,6 +23,7 @@ public class ProjectMenu{
 		this.todoMainMenu = todoMainMenu;
 	}
 	
+	public final String openCreate_successMsg = System.lineSeparator() + "Project '{}' sucessfully created.";
 	public void openCreate() {
 		Console.clear(out);
 		
@@ -37,17 +38,18 @@ public class ProjectMenu{
 		Project newProject = new Project(newProjectName, deadline);
 		Main.activeTodo.addProject(newProject);
 		
-		out.println();
-		out.println("Project '" + newProjectName + "' sucessfully created.");
+		out.println(openCreate_successMsg);
 		todoMainMenu.returnToMe();
 	}
 	
+	public final String promptProjectNameInput_msg = "What's the name of the project?";
+	public final String promptProjectNameInput_invalidInputMsg = "Invalid project name (empty). Please enter a valid project name!";
 	/**
 	 * Prompts the user to enter a name for the project and handles if the user enters invalid names (e.g. empty string)
 	 * @return The user entered project name
 	 */
 	private String promptProjectNameInput() {
-		out.println("What's the name of the project?");
+		out.println(promptProjectNameInput_msg);
 		
 		String projectName;
 		while(true)
@@ -62,17 +64,19 @@ public class ProjectMenu{
 				return projectName;
 			} 
 			else {
-				out.println("Invalid project name (empty). Please enter a valid project name!");
+				out.println(promptProjectNameInput_invalidInputMsg);
 			}
 		}
 	}
 	
+	public final String promptDeadlineInput_msg = "What's the deadline of the project? Format: YYYY-MM-DD (or leave blank)";
+	public final String promptDeadlineInput_InvalidInputErrormMsg = "Invalid date format! Please enter the deadline in the Format: YYYY-MM-DD (or leave blank)";
 	/**
 	 * Prompts the user to enter a deadline for the project and handles invalid input (e.g. wrong date input format).
 	 * @return The user entered deadline
 	 */
 	private LocalDate promptDeadlineInput() {
-		out.println("What's the deadline of the project? Format: YYYY-MM-DD (or leave blank)");
+		out.println(promptDeadlineInput_msg);
 		
 		String deadlineStr = null;
 		LocalDate deadline = null;
@@ -92,7 +96,7 @@ public class ProjectMenu{
 					return deadline;
 				}
 				catch (DateTimeParseException ex) {
-					out.println("Invalid date format! Please enter the deadline in the Format: YYYY-MM-DD (or leave blank)");
+					out.println(promptDeadlineInput_InvalidInputErrormMsg);
 				}
 			}
 			else
