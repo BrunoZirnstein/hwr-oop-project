@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,17 +12,73 @@ import org.junit.jupiter.api.Test;
 
 public class MainMenuTest {
 	
+	public static String getMenuHeadline(MainMenu mainMenu) {
+		return String.join(System.lineSeparator(), mainMenu.menuHeadline);
+	}
+	
 	@Test
 	@DisplayName("Open Main Menu Test")
-	void testMenuOpen() throws IOException
-	{
-		InputStream input = CTestHelper.createInputStreamForInput("4\n");	// the open method already expects an input, but we want the function to quit immediately
+	void testMenuOpen() throws IOException {
+		InputStream input = CTestHelper.createInputStreamForInput("");
+		InputHandler inputHandler = new InputHandler(new Scanner(input), 0);
 		OutputStream output = new ByteArrayOutputStream();
 		
-		MainMenu mainMenu = new MainMenu(output, input);
+		MainMenu mainMenu = new MainMenu(output, inputHandler);
 		mainMenu.open();
 		
+		
+		// Check if MainMenu display it's headline
+		Assertions.assertThat(output.toString()).contains(getMenuHeadline(mainMenu));
+		
+		// Check if MainMenu display it's user input options
+		Assertions.assertThat(output.toString()).contains(mainMenu.inputHandler.getMenuPrintString());
+		
+		// Check if MainMenu asks for input
+		Assertions.assertThat(output.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
+	}
+
+	@Test
+	void Test_ReturnToMe() {
+		InputStream input = CTestHelper.createInputStreamForInput("\n");
+		InputHandler inputHandler = new InputHandler(new Scanner(input), 1);
+		OutputStream output = new ByteArrayOutputStream();
+		
+		MainMenu mainMenu = new MainMenu(output, inputHandler);
+		mainMenu.returnToMe();
+		
+		// Check if the console was cleared
+		Assertions.assertThat(output.toString()).contains(System.lineSeparator().repeat(Console.CLEAR_SCREEN_LINEBREAK_COUNT));
+		
+		// Check if the main menu is displayed again (cheap test, the actual open function
+		// of the mainMenu is sufficiently tested in a separate unit test)
+		// We just check if the menu headline was printed.
 		Assertions.assertThat(output.toString()).contains(String.join(System.lineSeparator(), mainMenu.menuHeadline));
+		
+		
+		// Test if the returnToMe function terminates when no input can be retrieved
+		inputHandler = new InputHandler(new Scanner(input), 0);
+		output = new ByteArrayOutputStream();
+		
+		mainMenu = new MainMenu(output, inputHandler);
+		mainMenu.returnToMe();
+		
+		// if the returnToMe function aborted, the menu should not be printed
+		Assertions.assertThat(output.toString()).doesNotContain(String.join(System.lineSeparator(), mainMenu.menuHeadline));
+	}
+	
+	@Test
+	void Test_MainMenuConstructor() {
+		InputStream input = CTestHelper.createInputStreamForInput("\n");
+		InputHandler inputHandler = new InputHandler(new Scanner(input), 1);
+		OutputStream output = new ByteArrayOutputStream();
+		
+		MainMenu mainMenu = new MainMenu(output, inputHandler);
+		
+		// Check if MainMenu displays all input
+		int mainMenuOptions = mainMenu.inputHandler.getCount();
+		int expectedMenuOptions = 4;
+		String errorMessage = "The expected Menu Input options of " + expectedMenuOptions + " was instead " + mainMenuOptions + ". The MainMenu's constructor might changed the options (MenuActionHandler)";
+		Assertions.assertThat(mainMenuOptions).withFailMessage(errorMessage).isEqualTo(expectedMenuOptions);
 	}
     
 	/*
