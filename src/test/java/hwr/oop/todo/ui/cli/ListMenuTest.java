@@ -27,10 +27,10 @@ public class ListMenuTest {
 		listMenu.openCreate();
 		
 		// test if the function created a to-do list
-		Assertions.assertThat(Main.activeTodo).isNotEqualTo(null);
+		Assertions.assertThat(Main.activeTodo).isNotNull();
 		
 		// test if the created to-do list matches the same name that was entered in the console
-		Assertions.assertThat(Main.activeTodo.owner()).isEqualTo(inputTodoName);
+		Assertions.assertThat(Main.activeTodo.owner()).contains(inputTodoName);
 		
 		// test if the menu displayed it's "successfully created" message
 		Assertions.assertThat(out.toString()).contains(String.format(listMenu.todoCreatedSucess_msg, inputTodoName));
@@ -54,7 +54,7 @@ public class ListMenuTest {
 		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isEqualTo(true);
 		
 		// test if a null-named ToDo list was created
-		Assertions.assertThat(Main.activeTodo.owner()).isEqualTo(null);
+		Assertions.assertThat(Main.activeTodo.owner()).isEmpty();
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class ListMenuTest {
 			}
 			
 			// otherwise, a ToDo list with the given name must have been created
-			Assertions.assertThat(Main.activeTodo.owner()).isEqualTo(userInput);
+			Assertions.assertThat(Main.activeTodo.owner()).contains(userInput);
 		}
 	}
 	
