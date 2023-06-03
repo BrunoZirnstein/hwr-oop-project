@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,10 +22,19 @@ class ToDoListTest {
     }
 
     @Test
+    @DisplayName("Create ToDo list with Id")
+    void newToDoList_WithId() {
+        ToDoListId savedId = new ToDoListId();
+        ToDoList list = new ToDoList(savedId);
+        ToDoListId id = list.id();
+        assertThat(id).isEqualTo(savedId);
+    }
+
+    @Test
     @DisplayName("New ToDo list is associated with user")
     void newToDoList_IsAssociatedWithUser() {
         ToDoList list = new ToDoList("Jason");
-        assertThat(list.owner()).isEqualTo("Jason");
+        assertThat(list.owner()).contains("Jason");
     }
 
     @Test
@@ -133,8 +140,18 @@ class ToDoListTest {
         ToDoList list = new ToDoList("Jason");
         list.updateOwner("Thomas");
 
-        String owner = list.owner();
-        assertThat(owner).isEqualTo("Thomas");
+        Optional<String> owner = list.owner();
+        assertThat(owner).contains("Thomas");
+    }
+
+    @Test
+    @DisplayName("List owner can be removed")
+    void removeOwner() {
+        ToDoList list = new ToDoList("Jason");
+        list.removeOwner();
+
+        Optional<String> owner = list.owner();
+        assertThat(owner).isEmpty();
     }
 
     @Test
