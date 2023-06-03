@@ -1,9 +1,5 @@
 package hwr.oop.todo.core;
 
-import hwr.oop.todo.core.Project;
-import hwr.oop.todo.core.Task;
-import hwr.oop.todo.core.TaskTag;
-import hwr.oop.todo.core.ToDoList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +14,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ToDoListTest {
+
+    @Test
+    @DisplayName("New ToDo list is created with UUID")
+    void newToDoList_HasUUID() {
+        ToDoList list = new ToDoList("Jason");
+        ToDoListId id = list.id();
+        assertThat(id).isInstanceOf(ToDoListId.class);
+    }
+
     @Test
     @DisplayName("New ToDo list is associated with user")
     void newToDoList_IsAssociatedWithUser() {
@@ -81,7 +86,7 @@ class ToDoListTest {
     @DisplayName("Add task with project name")
     void addTask_WithProject() {
         ToDoList list = new ToDoList("Bruno");
-        Project project = new Project("university", null);
+        Project project = new Project.Builder("university").build();
         list.addProject(project);
 
         Task task = new Task.Builder("Water plants").projectName("university")
@@ -136,7 +141,7 @@ class ToDoListTest {
     @DisplayName("Create project in list")
     void addProject() {
         ToDoList list = new ToDoList("Bruno");
-        Project project = new Project("university", null);
+        Project project = new Project.Builder("Test").build();
 
         list.addProject(project);
 
@@ -149,7 +154,7 @@ class ToDoListTest {
     void removeProject() {
         ToDoList list = new ToDoList("Bruno");
 
-        Project project = new Project("university", null);
+        Project project = new Project.Builder("university").build();
         list.addProject(project);
 
         assertDoesNotThrow(() -> list.removeProject("university"));
@@ -163,7 +168,7 @@ class ToDoListTest {
     void removeProjectByObject() {
         ToDoList list = new ToDoList("Bruno");
 
-        Project project = new Project("university", null);
+        Project project = new Project.Builder("Test").build();
         list.addProject(project);
 
         assertDoesNotThrow(() -> list.removeProjectByObject(project));
@@ -171,6 +176,45 @@ class ToDoListTest {
         List<Project> projects = list.projects();
         assertThat(projects).isEmpty();
     }
+
+    @Test
+    @DisplayName("Get task with given id, valid id")
+    void taskById_ValidID() {
+        ToDoList list = new ToDoList("Jason");
+
+        Task task = new Task.Builder("Water plants").build();
+        TaskId id = task.id();
+
+        list.addTask(task);
+        Task filteredTask = list.taskById(id);
+
+        assertThat(filteredTask).isEqualTo(task);
+    }
+
+    @Test
+    @DisplayName("Get task with given id, invalid id")
+    void taskById_EmptyTasks() {
+        ToDoList list = new ToDoList("Jason");
+
+        TaskId id = new TaskId();
+        assertThatThrownBy(() -> list.taskById(id)).isInstanceOf(
+                InvalidParameterException.class).hasMessage(
+                "Cannot get task from ToDo list, given id does not exist.");
+    }
+
+    @Test
+    @DisplayName("Get task with given id, invalid id")
+    void taskById_InvalidID() {
+        ToDoList list = new ToDoList("Jason");
+        Task task = new Task.Builder("Water plants").build();
+        list.addTask(task);
+
+        TaskId id = new TaskId();
+        assertThatThrownBy(() -> list.taskById(id)).isInstanceOf(
+                InvalidParameterException.class).hasMessage(
+                "Cannot get task from ToDo list, given id does not exist.");
+    }
+
 
     @Test
     @DisplayName("Get task with given title, valid task")
@@ -272,12 +316,12 @@ class ToDoListTest {
     void tasksByProject_InvalidProjects_ThrowException() {
         ToDoList list = new ToDoList("Jason");
 
-        LocalDate projectDeadline = LocalDate.of(2023, 4, 4);
-        Project project = new Project("university", projectDeadline);
+        LocalDate projectDate = LocalDate.of(2023, 4, 4);
+        Project project = new Project.Builder("Test").deadline(projectDate)
+                .build();
         list.addProject(project);
 
-        assertThatThrownBy(
-                () -> list.tasksByProject("work")).isInstanceOf(
+        assertThatThrownBy(() -> list.tasksByProject("work")).isInstanceOf(
                 InvalidParameterException.class).hasMessage(
                 "Cannot get tasks from ToDo list, given project name does not exist.");
     }
@@ -287,8 +331,9 @@ class ToDoListTest {
     void tasksByProject_WithDeletedProject_ThrowException() {
         ToDoList list = new ToDoList("Jason");
 
-        LocalDate projectDeadline = LocalDate.of(2023, 4, 4);
-        Project project = new Project("university", projectDeadline);
+        LocalDate projectDate = LocalDate.of(2023, 4, 4);
+        Project project = new Project.Builder("university").deadline(
+                projectDate).build();
         list.addProject(project);
 
         Task task = new Task.Builder("Water plants").projectName("university")
@@ -308,8 +353,9 @@ class ToDoListTest {
     void tasksByProject_ValidProject_NoTask() {
         ToDoList list = new ToDoList("Jason");
 
-        LocalDate date = LocalDate.of(2023, 4, 4);
-        Project project = new Project("university", date);
+        LocalDate projectDate = LocalDate.of(2023, 4, 4);
+        Project project = new Project.Builder("university").deadline(
+                projectDate).build();
         list.addProject(project);
 
         List<Task> filteredTasks = list.tasksByProject("university");
@@ -322,17 +368,19 @@ class ToDoListTest {
         ToDoList list = new ToDoList("Jason");
 
         LocalDate projectDate = LocalDate.of(2023, 4, 4);
-        Project project = new Project("university", projectDate);
+        Project project = new Project.Builder("university").deadline(
+                projectDate).build();
         list.addProject(project);
 
-        Project otherProject = new Project("home", projectDate);
+        Project otherProject = new Project.Builder("home").build();
         list.addProject(otherProject);
 
         Task universityTask = new Task.Builder("Study OOP").projectName(
                 "university").build();
         list.addTask(universityTask);
 
-        Task homeTask = new Task.Builder("Clean floor").projectName("home").build();
+        Task homeTask = new Task.Builder("Clean floor").projectName("home")
+                .build();
         list.addTask(homeTask);
 
         List<Task> filteredTasks = list.tasksByProject("university");
@@ -345,7 +393,8 @@ class ToDoListTest {
         ToDoList list = new ToDoList("Bruno");
 
         LocalDate projectDate = LocalDate.of(2023, 4, 4);
-        Project project = new Project("university", projectDate);
+        Project project = new Project.Builder("university").deadline(
+                projectDate).build();
         list.addProject(project);
 
         Project filteredProject = list.projectByName("university");
@@ -358,11 +407,11 @@ class ToDoListTest {
         ToDoList list = new ToDoList("Bruno");
 
         LocalDate projectDate = LocalDate.of(2023, 4, 4);
-        Project project = new Project("home", projectDate);
+        Project project = new Project.Builder("home").deadline(projectDate)
+                .build();
         list.addProject(project);
 
-        assertThatThrownBy(
-                () -> list.projectByName("university")).isInstanceOf(
+        assertThatThrownBy(() -> list.projectByName("university")).isInstanceOf(
                 InvalidParameterException.class).hasMessage(
                 "Cannot get project object from ToDo list, given project name does not exist.");
     }
@@ -371,9 +420,8 @@ class ToDoListTest {
     @DisplayName("Get project object by name, empty projects")
     void projectByName_EmptyProjects_ThrowException() {
         ToDoList list = new ToDoList("Bruno");
-        
-        assertThatThrownBy(
-                () -> list.projectByName("university")).isInstanceOf(
+
+        assertThatThrownBy(() -> list.projectByName("university")).isInstanceOf(
                 InvalidParameterException.class).hasMessage(
                 "Cannot get project object from ToDo list, given project name does not exist.");
     }

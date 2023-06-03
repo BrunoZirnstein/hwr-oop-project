@@ -52,7 +52,7 @@ public class TaskMenu {
 			if(userInput == null) {
 				return null;
 			}
-			else if(userInput.isEmpty() == false) {
+			else if(!userInput.isEmpty()) {
 				return userInput;
 			}
 			else {

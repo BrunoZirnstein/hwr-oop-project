@@ -38,8 +38,8 @@ public class TodoMainMenu {
 		inputHandler.addAction("Delete Project", null);
 		inputHandler.addAction("Create Tasks (quick create)", () -> taskMenu.openCreateSimple());
 		inputHandler.addAction("Create Task (detailed)", null);
-		inputHandler.addAction("Save ToDo List in file..", () -> saveCSV());
-		inputHandler.addAction("Go back", () -> mainMenu.returnToMe());
+		inputHandler.addAction("Save ToDo List in file..", this::saveCSV);
+		inputHandler.addAction("Go back", mainMenu::returnToMe);
 	}
 
 	public void open() {

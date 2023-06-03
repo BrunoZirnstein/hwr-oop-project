@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class Task {
-    private String title;
+    private final TaskId id;
     private final List<TaskTag> tags;
+    private String title;
     private String description;
     private LocalDate deadline;
     private TaskStatus status;
@@ -17,6 +18,7 @@ public class Task {
     private Task(String title, List<TaskTag> tags, String description,
                  LocalDate deadline, TaskStatus status, TaskPriority priority,
                  String projectName) {
+        this.id = new TaskId();
         this.title = title;
         this.tags = tags;
         this.description = description;
@@ -25,6 +27,8 @@ public class Task {
         this.priority = priority;
         this.projectName = projectName;
     }
+
+    public TaskId id() {return id;}
 
     public String title() {
         return title;
