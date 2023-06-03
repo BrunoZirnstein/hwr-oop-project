@@ -82,7 +82,7 @@ public class ListMenuTest {
 			Assertions.assertThat(consoleOutput).contains(listMenu.todoNameInputPrompt_msg);
 			
 			// test if the console user-input indicator is shown
-			Assertions.assertThat(consoleOutput).contains(Console.displayInputIndicatorStr);
+			Assertions.assertThat(consoleOutput).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
 			
 			// test if the input was handled correctly
 			if(userInput != null) {

@@ -3,12 +3,10 @@ package hwr.oop.todo.ui.cli;
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.core.Project;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
 
 public class ProjectMenu{
 	private PrintStream out = null;

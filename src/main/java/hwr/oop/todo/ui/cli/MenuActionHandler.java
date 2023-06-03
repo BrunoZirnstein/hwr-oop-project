@@ -3,14 +3,13 @@ package hwr.oop.todo.ui.cli;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class MenuActionHandler {
-	public final String invalidInputMessage = "Invalid input. Please try again";
-	public final String wrongInputIDMessage = "Invalid ID. Please enter a valid ID!";
+	public final String INVALID_INPUT_MESSAGE = "Invalid input. Please try again";
+	public final String WRONG_INPUT_ID_MESSAGE = "Invalid ID. Please enter a valid ID!";
 	
-	private HashMap<Integer, Runnable> actionMap;
-	private HashMap<Integer, String> actionDescriptionsMap;
+	private final HashMap<Integer, Runnable> actionMap;
+	private final HashMap<Integer, String> actionDescriptionsMap;
 	private PrintStream out = null;
 	private InputHandler in = null;
 	
@@ -61,7 +60,7 @@ public class MenuActionHandler {
 				inputID = Integer.parseInt(result);			
 			}
 			catch(NumberFormatException ex) {
-				out.println(invalidInputMessage);
+				out.println(INVALID_INPUT_MESSAGE);
 			}
 		}
 		
@@ -71,7 +70,7 @@ public class MenuActionHandler {
 	public void handleInput(int userInput) {
 		if(actionMap.containsKey(userInput) == false)
 		{
-			out.println(wrongInputIDMessage);
+			out.println(WRONG_INPUT_ID_MESSAGE);
 			propmtAndHandleInput();
 			return;
 		}
@@ -81,6 +80,6 @@ public class MenuActionHandler {
 	}
 	
 	public int getCount() {
-		return currentIndex;
+		return currentIndex-actionStartIndex;
 	}
 }

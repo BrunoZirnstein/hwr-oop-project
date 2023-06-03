@@ -1,13 +1,9 @@
 package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
-import hwr.oop.todo.core.Task;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 public class TodoMainMenu {
 	private PrintStream out = null;
@@ -60,7 +56,7 @@ public class TodoMainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		if(Console.EnterToContinue(out, in) == false) {
+		if(Console.enterToContinue(out, in) == false) {
 			return;
 		}
 			

@@ -34,7 +34,7 @@ public class MainMenuTest {
 		Assertions.assertThat(output.toString()).contains(mainMenu.inputHandler.getMenuPrintString());
 		
 		// Check if MainMenu asks for input
-		Assertions.assertThat(output.toString()).contains(Console.displayInputIndicatorStr);
+		Assertions.assertThat(output.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class MainMenuTest {
 		mainMenu.returnToMe();
 		
 		// Check if the console was cleared
-		Assertions.assertThat(output.toString()).contains(System.lineSeparator().repeat(Console.clearScreenLinebreakCount));
+		Assertions.assertThat(output.toString()).contains(System.lineSeparator().repeat(Console.CLEAR_SCREEN_LINEBREAK_COUNT));
 		
 		// Check if the main menu is displayed again (cheap test, the actual open function
 		// of the mainMenu is sufficiently tested in a separate unit test)
@@ -76,7 +76,7 @@ public class MainMenuTest {
 		
 		// Check if MainMenu displays all input
 		int mainMenuOptions = mainMenu.inputHandler.getCount();
-		int expectedMenuOptions = 5;
+		int expectedMenuOptions = 4;
 		String errorMessage = "The expected Menu Input options of " + expectedMenuOptions + " was instead " + mainMenuOptions + ". The MainMenu's constructor might changed the options (MenuActionHandler)";
 		Assertions.assertThat(mainMenuOptions).withFailMessage(errorMessage).isEqualTo(expectedMenuOptions);
 	}

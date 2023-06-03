@@ -2,10 +2,8 @@ package hwr.oop.todo.ui.cli;
 
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.core.ToDoList;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 public class ListMenu {
 	private PrintStream out = null;
@@ -29,7 +27,6 @@ public class ListMenu {
 
 		Main.activeTodo = new ToDoList(todoName);
 		
-		//out.println("Created the ToDo-List: '" + todoName + "' sucessfully.");
 		out.println(String.format(todoCreatedSucess_msg, todoName));
 
 		todoMainMenu.returnToMe();

@@ -5,11 +5,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.logging.ConsoleHandler;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConsoleTest {
 	
@@ -23,7 +23,7 @@ public class ConsoleTest {
 		int linebreakCount = CTestHelper.countOccurrences(consoleOutput, System.lineSeparator());
 		
 		
-		if(linebreakCount >= Console.clearScreenLinebreakCount) {
+		if(linebreakCount >= Console.CLEAR_SCREEN_LINEBREAK_COUNT) {
 			return true;
 		}
 		else {
@@ -38,7 +38,7 @@ public class ConsoleTest {
 		
 		Console.clear(new PrintStream(out));
 		
-		Assertions.assertThat(isClearInOutput(out.toString())).isEqualTo(true);
+		assertThat(isClearInOutput(out.toString())).isEqualTo(true);
 	}
 	
 	@Test
@@ -47,10 +47,10 @@ public class ConsoleTest {
 		InputStream in = CTestHelper.createInputStreamForInput("\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), -1);
 		
-		boolean fncResult = Console.EnterToContinue(new PrintStream(out), inputHandler);
+		boolean fncResult = Console.enterToContinue(new PrintStream(out), inputHandler);
 		
-		Assertions.assertThat(out.toString()).isEqualTo(Console.enterToContinueMessage);
-		Assertions.assertThat(fncResult).isEqualTo(true);
+		assertThat(out.toString()).isEqualTo(Console.ENTER_TO_CONTINUE_MESSAGE);
+		assertThat(fncResult).isEqualTo(true);
 	}
 	
 	@Test
@@ -61,9 +61,9 @@ public class ConsoleTest {
 		InputHandler inputHandler = new InputHandler(in, 0);	//no input is allowed
 		
 		
-		boolean fncResult = Console.EnterToContinue(new PrintStream(out), inputHandler);	// not allowed input, should return false
+		boolean fncResult = Console.enterToContinue(new PrintStream(out), inputHandler);	// not allowed input, should return false
 		
-		Assertions.assertThat(fncResult).isEqualTo(false);
+		assertThat(fncResult).isEqualTo(false);
 	}
 	
 	@Test
@@ -72,12 +72,13 @@ public class ConsoleTest {
 		
 		Console.displayInputIndicator(new PrintStream(out));
 		
-		Assertions.assertThat(out.toString()).isEqualTo(Console.displayInputIndicatorStr);
+		assertThat(out.toString()).isEqualTo(Console.DISPLAY_INPUT_INDICATOR_STR);
 	}
 	
 	@Test
 	void Test_ConsoleInstantiate_ToCalmDown_MutationTester()
 	{
 		Console c = new Console();
+		assertThat(c).isNotNull();
 	}
 }

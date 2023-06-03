@@ -28,7 +28,7 @@ public class TodoMainMenuTest {
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		
 		// Avoid nonsense mutation test error : Check if menu contains just as much input options as dynamically given in constructor..
-		int expectedMenuCount = 7;
+		int expectedMenuCount = 6;
 		int actualMenuCount = todoMainMenu.inputHandler.getCount();
 		String errorMsg = "The TodoMainMenu menu actions count (" + actualMenuCount + ") does not match to the asserted one (" + expectedMenuCount + ").";
 		Assertions.assertThat(actualMenuCount).withFailMessage(errorMsg).isEqualTo(expectedMenuCount);
@@ -63,7 +63,7 @@ public class TodoMainMenuTest {
 		Assertions.assertThat(out.toString()).contains(todoMainMenu.inputHandler.getMenuPrintString());
 		
 		// test if input indicator was printed (which means the input will be received)
-		Assertions.assertThat(out.toString()).contains(Console.displayInputIndicatorStr);
+		Assertions.assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ public class TodoMainMenuTest {
 		todoMainMenu.returnToMe();
 		
 		// Check if the console was cleared
-		Assertions.assertThat(out.toString()).contains(System.lineSeparator().repeat(Console.clearScreenLinebreakCount));
+		Assertions.assertThat(out.toString()).contains(System.lineSeparator().repeat(Console.CLEAR_SCREEN_LINEBREAK_COUNT));
 		
 		// Check if the main menu is displayed again (cheap test, the actual open function
 		// of the mainMenu is sufficiently tested in a separate unit test)

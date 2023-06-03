@@ -41,7 +41,7 @@ public class ProjectMenuTest {
 		Assertions.assertThatNoException().isThrownBy(() -> Main.activeTodo.projectByName(userInput_projectName));
 		
 		// Check if both input getting private functions displayed their input indicators
-		long inputIndicatorCount = out.toString().chars().filter(ch -> ch == Console.displayInputIndicatorStr.charAt(0)).count();
+		long inputIndicatorCount = out.toString().chars().filter(ch -> ch == Console.DISPLAY_INPUT_INDICATOR_STR.charAt(0)).count();
 		Assertions.assertThat(inputIndicatorCount).isEqualTo(3);	// 3 because of the next menu
 		
 		// Check if the method created the project with the deadline the user specified
@@ -83,7 +83,7 @@ public class ProjectMenuTest {
 		// Check if method tells the user what to do
 		Assertions.assertThat(out.toString()).contains(menu.promptProjectNameInput_msg);
 		
-		Assertions.assertThat(out.toString()).contains(Console.displayInputIndicatorStr);
+		Assertions.assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
 		
 		// Check if function tells the user about the invalid (empty) input
 		Assertions.assertThat(out.toString()).contains(menu.promptProjectNameInput_invalidInputMsg);

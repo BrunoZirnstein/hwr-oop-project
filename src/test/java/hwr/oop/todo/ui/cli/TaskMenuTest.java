@@ -80,7 +80,7 @@ public class TaskMenuTest {
 		Assertions.assertThat(out.toString()).contains(menu.promptTaskName_msg);
 		
 		// Test if functions displays input indicator
-		Assertions.assertThat(out.toString()).contains(Console.displayInputIndicatorStr);
+		Assertions.assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
 	}
 	
 	@Test
