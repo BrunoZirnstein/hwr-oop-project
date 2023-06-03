@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MenuInputHandler {
+public class MenuActionHandler {
 	public static final String INVALID_INPUT_MESSAGE = "Invalid input. Please try again";
 	public static final String WRONG_INPUT_ID_MESSAGE = "Invalid ID. Please enter a valid ID!";
 	
@@ -16,7 +16,7 @@ public class MenuInputHandler {
 	private int currentIndex = 0;
 	private int actionStartIndex = 0;
 	
-	public MenuInputHandler(int startWithActionIndex, PrintStream out, Scanner in) {
+	public MenuActionHandler(int startWithActionIndex, PrintStream out, InputHandler in) {
 		actionMap = new HashMap<>();
 		actionDescriptionsMap = new HashMap<>();
 		currentIndex = startWithActionIndex;

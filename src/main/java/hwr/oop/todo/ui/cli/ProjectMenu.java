@@ -33,7 +33,7 @@ public class ProjectMenu{
 			return;
 		}
 		
-		Project newProject = new Project(newProjectName, deadline);
+		Project newProject = new Project.Builder(newProjectName).deadline(deadline).build();
 		Main.activeTodo.addProject(newProject);
 		
 		out.println(openCreate_successMsg);

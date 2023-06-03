@@ -64,7 +64,7 @@ public class MenuActionHandlerTest {
 			Assertions.assertThat(out.toString()).containsOnlyOnce(Console.DISPLAY_INPUT_INDICATOR_STR);
 		} else {
 			// invalid InputID must result in error message and prompt to try again!
-			Assertions.assertThat(out.toString()).contains(menuInputHandler.WRONG_INPUT_ID_MESSAGE);
+			Assertions.assertThat(out.toString()).contains(MenuActionHandler.WRONG_INPUT_ID_MESSAGE);
 
 			// the user input Indicator must be there twice, if one input failed!
 			int inputPromptCount = CTestHelper.countOccurrences(out.toString(), Console.DISPLAY_INPUT_INDICATOR_STR);
@@ -84,6 +84,6 @@ public class MenuActionHandlerTest {
 		menuInputHandler.addAction("bla", () -> actionResult = "bla");
 		menuInputHandler.propmtAndHandleInput();
 		
-		Assertions.assertThat(out.toString()).contains(menuInputHandler.INVALID_INPUT_MESSAGE);
+		Assertions.assertThat(out.toString()).contains(MenuActionHandler.INVALID_INPUT_MESSAGE);
 	}
 }
