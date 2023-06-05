@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import hwr.oop.todo.ui.Main;
 
-public class ListMenuTest {
+class ListMenuTest {
 	
 	@Test
 	void Test_openCreate() {
@@ -33,7 +33,7 @@ public class ListMenuTest {
 		Assertions.assertThat(Main.activeTodo.owner()).contains(inputTodoName);
 		
 		// test if the menu displayed it's "successfully created" message
-		Assertions.assertThat(out.toString()).contains(String.format(listMenu.todoCreatedSucess_msg, inputTodoName));
+		Assertions.assertThat(out.toString()).contains(String.format(ListMenu.TODO_CREATED_SUCCESS_MSG, inputTodoName));
 		
 		// test if the TodoMainMenu is properly displayed
 		Assertions.assertThat(out.toString()).contains(TodoMainMenuTest.getMenuHeadline(todoMainMenu));
@@ -51,9 +51,9 @@ public class ListMenuTest {
 		listMenu.openCreate();
 		
 		// test if clear function was called -> can only be tested when no input is given
-		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isEqualTo(true);
+		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isTrue();
 		
-		// test if a null-named ToDo list was created
+		// test if a null-named To-Do list was created
 		Assertions.assertThat(Main.activeTodo.owner()).isEmpty();
 	}
 	
@@ -74,7 +74,7 @@ public class ListMenuTest {
 			String consoleOutput = out.toString();
 			
 			// test if the output was generated that tells the user what to do
-			Assertions.assertThat(consoleOutput).contains(listMenu.todoNameInputPrompt_msg);
+			Assertions.assertThat(consoleOutput).contains(ListMenu.TODO_NAME_INPUT_PROMPT_MSG);
 			
 			// test if the console user-input indicator is shown
 			Assertions.assertThat(consoleOutput).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
@@ -84,13 +84,13 @@ public class ListMenuTest {
 				if(userInput.isEmpty()) {
 					
 					// when the input string is empty, a message must appear to notify the user
-					Assertions.assertThat(consoleOutput).contains(listMenu.toNamePrompt_emptyInputMsg);
+					Assertions.assertThat(consoleOutput).contains(ListMenu.TO_NAME_PROMPT_EMPTY_INPUT_MSG);
 					
 					return;
 				} 
 			}
 			
-			// otherwise, a ToDo list with the given name must have been created
+			// otherwise, a To-Do list with the given name must have been created
 			Assertions.assertThat(Main.activeTodo.owner()).contains(userInput);
 		}
 	}
@@ -106,10 +106,10 @@ public class ListMenuTest {
 		listMenu.openLoad();
 		
 		// test if console was cleared
-		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isEqualTo(true);
+		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isTrue();
 		
 		// test if function tells the user what to do
-		Assertions.assertThat(out.toString()).contains(listMenu.openLoadPrompt_msg);
+		Assertions.assertThat(out.toString()).contains(listMenu.OPEN_LOAD_PROMPT_MSG);
 	}
 	
 	@Test

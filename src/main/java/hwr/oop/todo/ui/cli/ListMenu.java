@@ -19,7 +19,7 @@ public class ListMenu {
 		todoMainMenu = new TodoMainMenu(mainMenu, out, in);
 	}
 
-	public final String todoCreatedSucess_msg = "Created the ToDo-List: '{}' sucessfully.";
+	public static final String TODO_CREATED_SUCCESS_MSG = "Created the ToDo-List: '{}' successfully.";
 	public void openCreate() {
 		Console.clear(out);
 
@@ -27,15 +27,15 @@ public class ListMenu {
 
 		Main.activeTodo = new ToDoList(todoName);
 		
-		out.println(String.format(todoCreatedSucess_msg, todoName));
+		out.println(String.format(TODO_CREATED_SUCCESS_MSG, todoName));
 
 		todoMainMenu.returnToMe();
 	}
 
-	public final String todoNameInputPrompt_msg = "Enter your name / the name of the desired ToDo List.";
-	public final String toNamePrompt_emptyInputMsg = "Invalid name (empty). Please enter a valid name!";
+	public static final String TODO_NAME_INPUT_PROMPT_MSG = "Enter your name / the name of the desired ToDo List.";
+	public static final String TO_NAME_PROMPT_EMPTY_INPUT_MSG = "Invalid name (empty). Please enter a valid name!";
 	private String promptToDoName() {
-		out.println(todoNameInputPrompt_msg);
+		out.println(TODO_NAME_INPUT_PROMPT_MSG);
 
 		String todoName;
 		while (true) {
@@ -44,23 +44,23 @@ public class ListMenu {
 
 			if (todoName == null) {
 				return null;
-			} else if (todoName.isEmpty() == false) {
+			} else if (!todoName.isEmpty()) {
 				return todoName;
 			} else {
-				out.println(toNamePrompt_emptyInputMsg);
+				out.println(TO_NAME_PROMPT_EMPTY_INPUT_MSG);
 			}
 		}
 	}
 
-	public final String openLoadPrompt_msg = "To load a ToDo list";
+	public static final String OPEN_LOAD_PROMPT_MSG = "To load a ToDo list";
 	public void openLoad() {
 		Console.clear(out);
 
-		out.println(openLoadPrompt_msg);
+		out.println(OPEN_LOAD_PROMPT_MSG);
 		String todoName = promptToDoName();
 
 		// Niklas: load function call with todoName which serves as the 'user' and get a
-		// ToDo object to override Main.activeToDo.
+		// To-Do object to override Main.activeToDo.
 		/*
 		 * try {
 		 * CSVReader reader = new CSVReader();
@@ -68,7 +68,7 @@ public class ListMenu {
 		 * todoMainMenu.returnToMe();
 		 * }
 		 * catch (Exception e) {
-		 * out.println("Something horrible happend, the todo list was not found (maybe)"
+		 * out.println("Something horrible happend, the to-do list was not found (maybe)"
 		 * );
 		 * mainMenu.returnToMe();
 		 * }

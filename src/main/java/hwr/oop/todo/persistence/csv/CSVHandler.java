@@ -4,7 +4,6 @@ import hwr.oop.todo.core.*;
 import hwr.oop.todo.persistence.PersistenceAdapter;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;

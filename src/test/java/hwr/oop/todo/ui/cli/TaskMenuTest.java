@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.ui.Main;
 
-public class TaskMenuTest {
+class TaskMenuTest {
 
 	@Test
 	void Test_openCreateSimple() {
@@ -38,7 +38,7 @@ public class TaskMenuTest {
 		Assertions.assertThatNoException().isThrownBy(() -> Main.activeTodo.taskByTitle(taskName_userInput));
 		
 		// Test if the success-message was displayed
-		Assertions.assertThat(out.toString()).contains(String.format(menu.openCreateSimpleSuccess_msg, taskName_userInput));
+		Assertions.assertThat(out.toString()).contains(String.format(menu.openCreateSimpleSuccessMsg, taskName_userInput));
 		
 		// Test if function returned to TodoMainMenu
 		Assertions.assertThat(out.toString()).contains(TodoMainMenuTest.getMenuHeadline(todoMainMenu));
@@ -61,7 +61,7 @@ public class TaskMenuTest {
 		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isTrue();
 		
 		// When the input was killed, no "successfully created" message can be displayed
-		Assertions.assertThat(out.toString()).doesNotContain(menu.openCreateSimpleSuccess_msg);
+		Assertions.assertThat(out.toString()).doesNotContain(menu.openCreateSimpleSuccessMsg);
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class TaskMenuTest {
 		menu.openCreateSimple();
 		
 		// Test if function displays it's prompt
-		Assertions.assertThat(out.toString()).contains(menu.promptTaskName_msg);
+		Assertions.assertThat(out.toString()).contains(TaskMenu.PROMPT_TASK_NAME_MSG);
 		
 		// Test if functions displays input indicator
 		Assertions.assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
@@ -96,6 +96,6 @@ public class TaskMenuTest {
 		menu.openCreateSimple();
 		
 		// Test if invalid input message is displayed with empty input
-		Assertions.assertThat(out.toString()).contains(menu.promptTaskName_invalidNameMsg);
+		Assertions.assertThat(out.toString()).contains(TaskMenu.PROMPT_TASK_NAME_INVALID_NAME_MSG);
 	}
 }

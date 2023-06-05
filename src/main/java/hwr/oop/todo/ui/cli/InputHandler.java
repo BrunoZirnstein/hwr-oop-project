@@ -31,12 +31,7 @@ public class InputHandler {
 	 * @return [true] if the input method can be called or false if otherwise
 	 */
 	private boolean isInputAllowed() {
-		if(inputGetCount < maxInputs || maxInputs < 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return inputGetCount < maxInputs || maxInputs < 0;
 	}
 	
 	public String next() {

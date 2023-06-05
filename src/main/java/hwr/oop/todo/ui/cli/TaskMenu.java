@@ -19,7 +19,7 @@ public class TaskMenu {
 		this.todoMainMenu = todoMainMenu;
 	}
 	
-	public final String openCreateSimpleSuccess_msg = System.lineSeparator() + "Task '{}' sucessfully created.";
+	public final String openCreateSimpleSuccessMsg = System.lineSeparator() + "Task '{}' sucessfully created.";
 	public void openCreateSimple() {
 		Console.clear(out);
 		
@@ -32,14 +32,14 @@ public class TaskMenu {
 		Task newTask = new Task.Builder(taskName).build();
 		Main.activeTodo.addTask(newTask);
 		
-		out.println(String.format(openCreateSimpleSuccess_msg, taskName));
+		out.println(String.format(openCreateSimpleSuccessMsg, taskName));
 		todoMainMenu.returnToMe();
 	}
 	
-	public final String promptTaskName_msg = "Enter a name for the task.";
-	public final String promptTaskName_invalidNameMsg = "Invalid (empty) name. Please enter a new name.";
+	public static final String PROMPT_TASK_NAME_MSG = "Enter a name for the task.";
+	public static final String PROMPT_TASK_NAME_INVALID_NAME_MSG = "Invalid (empty) name. Please enter a new name.";
 	private String promptTaskName() {
-		out.println(promptTaskName_msg);
+		out.println(PROMPT_TASK_NAME_MSG);
 		
 		String userInput = null;
 		while(true)
@@ -54,7 +54,7 @@ public class TaskMenu {
 				return userInput;
 			}
 			else {
-				out.println(promptTaskName_invalidNameMsg);
+				out.println(PROMPT_TASK_NAME_INVALID_NAME_MSG);
 			}
 		}
 	}

@@ -79,7 +79,7 @@ public class TodoMainMenuTest {
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		todoMainMenu.open();
 		
-		Assertions.assertThat(out.toString()).contains(todoMainMenu.csvSavedSucessfully_msg);
+		Assertions.assertThat(out.toString()).contains(TodoMainMenu.CSV_SAVED_SUCCESSFULLY_MSG);
 	}
 	
 	@Test
