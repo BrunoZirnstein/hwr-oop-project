@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class MenuActionHandlerTest {
+class MenuActionHandlerTest {
 	
 	@ParameterizedTest
 	@ValueSource(ints = {0, 1, 2})
@@ -23,9 +23,9 @@ public class MenuActionHandlerTest {
 		MenuActionHandler menuInputHandler = new MenuActionHandler(startIndex, new PrintStream(out), null);
 		
 		String[] actions = {"Act1", "Act2"};
-		
-		for(int i=0; i<actions.length; i++) {
-			menuInputHandler.addAction(actions[i], null);
+
+		for (String action : actions) {
+			menuInputHandler.addAction(action, null);
 		}
 		
 		// check if generated menu string contains all the actions and descriptions that were addet 
@@ -37,7 +37,7 @@ public class MenuActionHandlerTest {
 		
 		// check if the printed menu equals to the generated string
 		menuInputHandler.printMenu();
-		Assertions.assertThat(out.toString()).isEqualTo(menuString+System.lineSeparator());
+		Assertions.assertThat(out.toString()).hasToString(menuString+System.lineSeparator());
 	}
 	
 	public String actionResult;
@@ -49,7 +49,7 @@ public class MenuActionHandlerTest {
 		InputStream in = CTestHelper.createInputStreamForInput(inputNum + "\n" + "0\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), -1);
 		
-		String expectedResult[] = { "0 input executed!", "1 input executed", "2 input executed" };
+		String[] expectedResult = { "0 input executed!", "1 input executed", "2 input executed" };
 		
 		// execute what is being tested
 		MenuActionHandler menuInputHandler = new MenuActionHandler(0, new PrintStream(out), inputHandler);
@@ -60,7 +60,7 @@ public class MenuActionHandlerTest {
 		
 		if(inputNum >= 0 && inputNum <= 2) {
 			// valid InputID must result in given action!
-			Assertions.assertThat(actionResult.toString()).isEqualTo(expectedResult[inputNum]);
+			Assertions.assertThat(actionResult).hasToString(expectedResult[inputNum]);
 			Assertions.assertThat(out.toString()).containsOnlyOnce(Console.DISPLAY_INPUT_INDICATOR_STR);
 		} else {
 			// invalid InputID must result in error message and prompt to try again!

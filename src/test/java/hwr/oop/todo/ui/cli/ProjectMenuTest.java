@@ -13,7 +13,7 @@ import hwr.oop.todo.core.Project;
 import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.ui.Main;
 
-public class ProjectMenuTest {
+class ProjectMenuTest {
 	
 	@Test
 	void Test_openCreate() {
@@ -32,7 +32,7 @@ public class ProjectMenuTest {
 		menu.openCreate();
 		
 		// Check if success-message was printed
-		Assertions.assertThat(out.toString()).contains(menu.openCreate_successMsg);
+		Assertions.assertThat(out.toString()).contains(menu.openCreateSuccessMsg);
 		
 		// Check if the method returned to the TodoMainMenu
 		Assertions.assertThat(out.toString()).contains(TodoMainMenuTest.getMenuHeadline(todoMainMenu));
@@ -65,7 +65,7 @@ public class ProjectMenuTest {
 		Assertions.assertThat(ConsoleTest.isClearInOutput(out.toString())).isTrue();
 		
 		// because the input was killed for both inputs, the method was shutdown, without creating any project.
-		Assertions.assertThat(out.toString()).doesNotContain(menu.openCreate_successMsg);
+		Assertions.assertThat(out.toString()).doesNotContain(menu.openCreateSuccessMsg);
 	}
 	
 	@Test
@@ -81,12 +81,12 @@ public class ProjectMenuTest {
 		menu.openCreate();
 		
 		// Check if method tells the user what to do
-		Assertions.assertThat(out.toString()).contains(menu.promptProjectNameInput_msg);
+		Assertions.assertThat(out.toString()).contains(ProjectMenu.PROMPT_PROJECT_NAME_INPUT_MSG);
 		
 		Assertions.assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
 		
 		// Check if function tells the user about the invalid (empty) input
-		Assertions.assertThat(out.toString()).contains(menu.promptProjectNameInput_invalidInputMsg);
+		Assertions.assertThat(out.toString()).contains(ProjectMenu.PROMPT_PROJECT_NAME_INPUT_INVALID_INPUT_MSG);
 	}
 	
 	@Test
@@ -101,9 +101,9 @@ public class ProjectMenuTest {
 		
 		menu.openCreate();
 		
-		Assertions.assertThat(out.toString()).contains(menu.promptDeadlineInput_msg);
+		Assertions.assertThat(out.toString()).contains(ProjectMenu.PROMPT_DEADLINE_INPUT_MSG);
 		
 		// Test if invalid input leads to the message that tells that the user
-		Assertions.assertThat(out.toString()).contains(menu.promptDeadlineInput_InvalidInputErrormMsg);
+		Assertions.assertThat(out.toString()).contains(ProjectMenu.PROMPT_DEADLINE_INPUT_INVALID_INPUT_ERROR_MSG);
 	}
 }

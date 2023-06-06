@@ -34,13 +34,13 @@ public class MenuActionHandler {
 	}
 	
 	public String getMenuPrintString() {
-		String menuString = new String();
+		StringBuilder bld = new StringBuilder();
 		
 		for(Map.Entry<Integer, String> entry : actionDescriptionsMap.entrySet()) {
-			menuString += "[" + entry.getKey() + "] " + entry.getValue() + System.lineSeparator();
+			bld.append("[").append(entry.getKey()).append("] ").append(entry.getValue()).append(System.lineSeparator());
 		}
-		
-		return menuString;
+
+		return bld.toString();
 	}
 	
 	public void printMenu() {

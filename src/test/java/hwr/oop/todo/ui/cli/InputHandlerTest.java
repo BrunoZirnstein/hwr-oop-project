@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class InputHandlerTest {
+class InputHandlerTest {
 	
 	@ParameterizedTest
 	@ValueSource(ints = {0, 1, 5, 10})

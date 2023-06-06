@@ -21,14 +21,9 @@ public class ConsoleTest {
 	public static boolean isClearInOutput(String consoleOutput) {
 		//return consoleOutput.contains(System.lineSeparator().repeat(Console.clearScreenLinebreakCount));
 		int linebreakCount = CTestHelper.countOccurrences(consoleOutput, System.lineSeparator());
-		
-		
-		if(linebreakCount >= Console.CLEAR_SCREEN_LINEBREAK_COUNT) {
-			return true;
-		}
-		else {
-			return false;
-		}
+
+
+		return linebreakCount >= Console.CLEAR_SCREEN_LINEBREAK_COUNT;
 	}
 	
 	@Test
@@ -38,7 +33,7 @@ public class ConsoleTest {
 		
 		Console.clear(new PrintStream(out));
 		
-		assertThat(isClearInOutput(out.toString())).isEqualTo(true);
+		assertThat(isClearInOutput(out.toString())).isTrue();
 	}
 	
 	@Test
@@ -49,8 +44,8 @@ public class ConsoleTest {
 		
 		boolean fncResult = Console.enterToContinue(new PrintStream(out), inputHandler);
 		
-		assertThat(out.toString()).isEqualTo(Console.ENTER_TO_CONTINUE_MESSAGE);
-		assertThat(fncResult).isEqualTo(true);
+		assertThat(out.toString()).hasToString(Console.ENTER_TO_CONTINUE_MESSAGE);
+		assertThat(fncResult).isTrue();
 	}
 	
 	@Test
@@ -63,7 +58,7 @@ public class ConsoleTest {
 		
 		boolean fncResult = Console.enterToContinue(new PrintStream(out), inputHandler);	// not allowed input, should return false
 		
-		assertThat(fncResult).isEqualTo(false);
+		assertThat(fncResult).isFalse();
 	}
 	
 	@Test
@@ -72,7 +67,7 @@ public class ConsoleTest {
 		
 		Console.displayInputIndicator(new PrintStream(out));
 		
-		assertThat(out.toString()).isEqualTo(Console.DISPLAY_INPUT_INDICATOR_STR);
+		assertThat(out.toString()).hasToString(Console.DISPLAY_INPUT_INDICATOR_STR);
 	}
 	
 	@Test

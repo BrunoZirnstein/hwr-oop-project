@@ -21,7 +21,7 @@ public class ProjectMenu{
 		this.todoMainMenu = todoMainMenu;
 	}
 	
-	public final String openCreate_successMsg = System.lineSeparator() + "Project '{}' sucessfully created.";
+	public final String openCreateSuccessMsg = System.lineSeparator() + "Project '{}' successfully created.";
 	public void openCreate() {
 		Console.clear(out);
 		
@@ -36,18 +36,18 @@ public class ProjectMenu{
 		Project newProject = new Project.Builder(newProjectName).deadline(deadline).build();
 		Main.activeTodo.addProject(newProject);
 		
-		out.println(openCreate_successMsg);
+		out.println(openCreateSuccessMsg);
 		todoMainMenu.returnToMe();
 	}
 	
-	public final String promptProjectNameInput_msg = "What's the name of the project?";
-	public final String promptProjectNameInput_invalidInputMsg = "Invalid project name (empty). Please enter a valid project name!";
+	public static final String PROMPT_PROJECT_NAME_INPUT_MSG = "What's the name of the project?";
+	public static final String PROMPT_PROJECT_NAME_INPUT_INVALID_INPUT_MSG = "Invalid project name (empty). Please enter a valid project name!";
 	/**
 	 * Prompts the user to enter a name for the project and handles if the user enters invalid names (e.g. empty string)
 	 * @return The user entered project name
 	 */
 	private String promptProjectNameInput() {
-		out.println(promptProjectNameInput_msg);
+		out.println(PROMPT_PROJECT_NAME_INPUT_MSG);
 		
 		String projectName;
 		while(true)
@@ -58,23 +58,23 @@ public class ProjectMenu{
 			if(projectName == null) {
 				return null;
 			} 
-			else if(projectName.isEmpty() == false) {
+			else if(!projectName.isEmpty()) {
 				return projectName;
 			} 
 			else {
-				out.println(promptProjectNameInput_invalidInputMsg);
+				out.println(PROMPT_PROJECT_NAME_INPUT_INVALID_INPUT_MSG);
 			}
 		}
 	}
 	
-	public final String promptDeadlineInput_msg = "What's the deadline of the project? Format: YYYY-MM-DD (or leave blank)";
-	public final String promptDeadlineInput_InvalidInputErrormMsg = "Invalid date format! Please enter the deadline in the Format: YYYY-MM-DD (or leave blank)";
+	public static final String PROMPT_DEADLINE_INPUT_MSG = "What's the deadline of the project? Format: YYYY-MM-DD (or leave blank)";
+	public static final String PROMPT_DEADLINE_INPUT_INVALID_INPUT_ERROR_MSG = "Invalid date format! Please enter the deadline in the Format: YYYY-MM-DD (or leave blank)";
 	/**
 	 * Prompts the user to enter a deadline for the project and handles invalid input (e.g. wrong date input format).
 	 * @return The user entered deadline
 	 */
 	private LocalDate promptDeadlineInput() {
-		out.println(promptDeadlineInput_msg);
+		out.println(PROMPT_DEADLINE_INPUT_MSG);
 		
 		String deadlineStr = null;
 		LocalDate deadline = null;
@@ -87,14 +87,14 @@ public class ProjectMenu{
 				return null;
 			}
 			
-			if(deadlineStr.isEmpty() == false)
+			if(!deadlineStr.isEmpty())
 			{
 				try {
 					deadline = LocalDate.parse(deadlineStr);
 					return deadline;
 				}
 				catch (DateTimeParseException ex) {
-					out.println(promptDeadlineInput_InvalidInputErrormMsg);
+					out.println(PROMPT_DEADLINE_INPUT_INVALID_INPUT_ERROR_MSG);
 				}
 			}
 			else

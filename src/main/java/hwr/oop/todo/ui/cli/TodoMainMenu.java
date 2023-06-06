@@ -56,7 +56,7 @@ public class TodoMainMenu {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		if(Console.enterToContinue(out, in) == false) {
+		if(!Console.enterToContinue(out, in)) {
 			return;
 		}
 			
@@ -64,7 +64,7 @@ public class TodoMainMenu {
 		open();
 	}
 
-	public final String csvSavedSucessfully_msg = "The Todo-List was saved successfully -> ";
+	public static final String CSV_SAVED_SUCCESSFULLY_MSG = "The Todo-List was saved successfully -> ";
 	private void saveCSV() {
 		// ToDo: Let the function handle the list itself, just need the ToDo-Obejct.
 		/*
@@ -77,6 +77,6 @@ public class TodoMainMenu {
 		 * }
 		 * }
 		 */
-		out.println(csvSavedSucessfully_msg + Main.activeTodo.owner());
+		out.println(CSV_SAVED_SUCCESSFULLY_MSG + Main.activeTodo.owner());
 	}
 }

@@ -5,9 +5,9 @@ import java.io.PrintStream;
 public class Console {
 	
 	Console(){}
-	public final static String ENTER_TO_CONTINUE_MESSAGE = "Press [ENTER] to continue...";
-	public final static String DISPLAY_INPUT_INDICATOR_STR = "> ";
-	public static int CLEAR_SCREEN_LINEBREAK_COUNT = 30;
+	public static final String ENTER_TO_CONTINUE_MESSAGE = "Press [ENTER] to continue...";
+	public static final String DISPLAY_INPUT_INDICATOR_STR = "> ";
+	public static final int CLEAR_SCREEN_LINEBREAK_COUNT = 30;
 	
 	public static void clear(PrintStream out) {
 		out.print(System.lineSeparator().repeat(CLEAR_SCREEN_LINEBREAK_COUNT));
@@ -26,11 +26,7 @@ public class Console {
 	public static boolean enterToContinue(PrintStream out, InputHandler in)  {
 		out.print(ENTER_TO_CONTINUE_MESSAGE);
 		String input = in.nextLine();
-		
-		if(input == null) {
-			return false;
-		} else {
-			return true;
-		}
+
+		return input != null;
 	}
 }

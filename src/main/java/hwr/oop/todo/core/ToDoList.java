@@ -3,17 +3,24 @@ package hwr.oop.todo.core;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ToDoList {
     private final ToDoListId id;
-    private String owner;
-
     private final List<Task> tasks;
     private final List<Project> projects;
+    private String owner;
 
     public ToDoList(String owner) {
         this.id = new ToDoListId();
         this.owner = owner;
+        this.tasks = new ArrayList<>();
+        this.projects = new ArrayList<>();
+    }
+
+    public ToDoList(ToDoListId id) {
+        this.id = id;
+        this.owner = null;
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
     }
@@ -30,12 +37,16 @@ public class ToDoList {
         return projects;
     }
 
-    public String owner() {
-        return owner;
+    public Optional<String> owner() {
+        return Optional.ofNullable(owner);
     }
 
     public void updateOwner(String name) {
         owner = name;
+    }
+
+    public void removeOwner() {
+        owner = null;
     }
 
     public void addTask(Task task) {
