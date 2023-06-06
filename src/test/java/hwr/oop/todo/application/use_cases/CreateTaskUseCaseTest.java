@@ -7,6 +7,7 @@ import hwr.oop.todo.application.ports.out.OverwriteListOutPort;
 import hwr.oop.todo.core.*;
 import hwr.oop.todo.persistence.PersistenceAdapter;
 import hwr.oop.todo.persistence.csv.CSVHandler;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,14 +23,17 @@ class CreateTaskUseCaseTest {
             persistenceAdapter, persistenceAdapter);
     ToDoList list;
 
-    @Test
-    @DisplayName("Create task")
-    void createTask() {
+    @BeforeEach
+    void setup() {
         ToDoList list = new ToDoList("Bruno");
         this.list = list;
         OverwriteListOutPort overwriteListOutPort = persistenceAdapter;
         overwriteListOutPort.overwriteList(list);
+    }
 
+    @Test
+    @DisplayName("Create task")
+    void createTask() {
         Task newTask = new Task.Builder("Water plants").description(
                         "Water all the plants in the living room and in the bedroom.")
                 .tags(List.of(new TaskTag("home")))
