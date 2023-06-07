@@ -3,6 +3,7 @@ package hwr.oop.todo.core;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ToDoList {
@@ -21,6 +22,13 @@ public class ToDoList {
     public ToDoList(ToDoListId id) {
         this.id = id;
         this.owner = null;
+        this.tasks = new ArrayList<>();
+        this.projects = new ArrayList<>();
+    }
+
+    public ToDoList(ToDoListId id, String owner) {
+        this.id = id;
+        this.owner = owner;
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
     }
@@ -128,5 +136,30 @@ public class ToDoList {
         }
 
         return projectObjects.get(0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToDoList toDoList = (ToDoList) o;
+        return Objects.equals(id, toDoList.id) && Objects.equals(tasks,
+                toDoList.tasks) && Objects.equals(projects,
+                toDoList.projects) && Objects.equals(owner, toDoList.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tasks, projects, owner);
+    }
+
+    @Override
+    public String toString() {
+        return "ToDoList{" +
+                "id=" + id +
+                ", tasks=" + tasks +
+                ", projects=" + projects +
+                ", owner='" + owner + '\'' +
+                '}';
     }
 }
