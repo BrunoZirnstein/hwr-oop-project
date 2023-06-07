@@ -19,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CreateTaskUseCaseTest {
     PersistenceAdapter persistenceAdapter = new CSVHandler();
     LoadListByIdOutPort loadListByIdOutPort = persistenceAdapter;
+    OverwriteListOutPort overwriteListOutPort = persistenceAdapter;
+
     CreateTaskInPort createTaskInPort = new CreateTaskUseCase(
             persistenceAdapter, persistenceAdapter);
     ToDoList list;
@@ -27,7 +29,6 @@ class CreateTaskUseCaseTest {
     void setup() {
         ToDoList list = new ToDoList("Bruno");
         this.list = list;
-        OverwriteListOutPort overwriteListOutPort = persistenceAdapter;
         overwriteListOutPort.overwriteList(list);
     }
 
