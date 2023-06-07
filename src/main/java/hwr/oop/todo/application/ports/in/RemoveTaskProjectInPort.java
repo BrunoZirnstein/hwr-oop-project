@@ -1,10 +1,10 @@
 package hwr.oop.todo.application.ports.in;
 
-import hwr.oop.todo.core.Task;
-import hwr.oop.todo.core.ToDoList;
+import hwr.oop.todo.core.TaskId;
+import hwr.oop.todo.core.ToDoListId;
 
 public interface RemoveTaskProjectInPort {
     void removeTaskProject(RemoveTaskProjectCommand removeTaskProjectCommand);
 
-    record RemoveTaskProjectCommand(ToDoList list, Task task) {}
+    record RemoveTaskProjectCommand(ToDoListId listId, TaskId taskId) {}
 }

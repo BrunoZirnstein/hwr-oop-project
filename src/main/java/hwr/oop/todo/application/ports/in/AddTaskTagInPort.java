@@ -1,11 +1,11 @@
 package hwr.oop.todo.application.ports.in;
 
-import hwr.oop.todo.core.Task;
-import hwr.oop.todo.core.TaskTag;
-import hwr.oop.todo.core.ToDoList;
+import hwr.oop.todo.core.TaskId;
+import hwr.oop.todo.core.ToDoListId;
 
 public interface AddTaskTagInPort {
     void addTaskTag(AddTaskTagCommand addTaskTagCommand);
 
-    record AddTaskTagCommand(ToDoList list, Task task, TaskTag newTaskTag) {}
+    record AddTaskTagCommand(ToDoListId listId, TaskId taskId,
+                             String newTagTitle) {}
 }

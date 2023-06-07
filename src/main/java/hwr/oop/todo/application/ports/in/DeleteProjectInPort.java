@@ -1,10 +1,10 @@
 package hwr.oop.todo.application.ports.in;
 
-import hwr.oop.todo.core.Project;
-import hwr.oop.todo.core.ToDoList;
+import hwr.oop.todo.core.ProjectId;
+import hwr.oop.todo.core.ToDoListId;
 
 public interface DeleteProjectInPort {
     void deleteProject(DeleteProjectCommand deleteProjectCommand);
 
-    record DeleteProjectCommand(ToDoList list, Project project) {}
+    record DeleteProjectCommand(ToDoListId listId, ProjectId projectId) {}
 }

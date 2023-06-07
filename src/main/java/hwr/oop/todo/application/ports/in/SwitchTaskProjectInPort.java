@@ -1,12 +1,12 @@
 package hwr.oop.todo.application.ports.in;
 
-import hwr.oop.todo.core.Project;
-import hwr.oop.todo.core.Task;
-import hwr.oop.todo.core.ToDoList;
+import hwr.oop.todo.core.ProjectId;
+import hwr.oop.todo.core.TaskId;
+import hwr.oop.todo.core.ToDoListId;
 
 public interface SwitchTaskProjectInPort {
     void switchTaskProject(SwitchTaskProjectCommand switchTaskProjectCommand);
 
-    record SwitchTaskProjectCommand(ToDoList list, Task tasks,
-                                    Project newProject) {}
+    record SwitchTaskProjectCommand(ToDoListId listId, TaskId taskId,
+                                    ProjectId newProjectId) {}
 }
