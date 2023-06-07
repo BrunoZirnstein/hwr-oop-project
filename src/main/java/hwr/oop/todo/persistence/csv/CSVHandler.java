@@ -5,10 +5,7 @@ import hwr.oop.todo.persistence.PersistenceAdapter;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CSVHandler implements PersistenceAdapter {
     private static final String COMMA_DELIMITER = ",";
@@ -163,7 +160,7 @@ public class CSVHandler implements PersistenceAdapter {
                 }
                 Optional<String> owner = Optional.empty();
                 if (!values.get(7).isEmpty() && values.get(8).equals(todo.id().toString())){
-                    owner = Optional.ofNullable(values.get(7));
+                    owner = Optional.of(values.get(7));
                     todo.updateOwner(owner.orElse(null));
                 }
                 if (values.get(8).equals(todo.id().toString())) {
@@ -218,20 +215,23 @@ public class CSVHandler implements PersistenceAdapter {
         return toDoList;
     }
 
-    /*
-    List<ToDoList> loadAllToDoListUsersFromFile() throws IOException {
-        List<ToDoList> todos = new ArrayList<>();
+    List<ToDoListId> loadAIdAndToDoListFromUser(String username) throws IOException {
+        List<ToDoListId> userToDos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(getFilePathTodo()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                ToDoList todo = new ToDoList(line);
-                todos.add(todo);
+                List<String> values = Arrays.asList(line.split(","));
+                if(values.get(0).equals(username)){
+                    String idBeforeEdit=values.get(1);
+                    String id = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
+                    ToDoListId liste = new ToDoListId(UUID.fromString(id));
+                    userToDos.add(liste);
+                }
             }
         }
-        return todos;
+        return userToDos;
     }
-     */
 
     void removeTaskByID(String iD) throws IOException {
         File inputFile = new File(getFilePathTask());

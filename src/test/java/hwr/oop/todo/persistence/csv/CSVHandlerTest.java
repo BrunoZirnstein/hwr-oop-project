@@ -299,6 +299,20 @@ class CSVHandlerTest {
     }
 
     @Test
+    void testLoadAIdAndToDoListFromUser() throws IOException {
+        String username = "Test_User_1";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(TEST_FILEPATH_TODO))) {
+            writer.write(username + ",ToDoListId[id=" + UUID.randomUUID() + "]\n");
+            writer.write(username + ",ToDoListId[id=" + UUID.randomUUID() + "]\n");
+        }
+        csvHandler.setFilePathToDoUser(TEST_FILEPATH_TODO);
+        List<ToDoListId> result = csvHandler.loadAIdAndToDoListFromUser(username);
+        assertEquals(2, result.size());
+        assertTrue(result.get(0).id() instanceof UUID);
+        assertTrue(result.get(1).id() instanceof UUID);
+    }
+
+    @Test
     void testRemoveTaskByID() throws IOException {
         String filePath = tempDir.resolve(TEST_FILEPATH_TASK).toString();
         csvHandler.setFilePathTask(filePath);
