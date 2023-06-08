@@ -3,6 +3,7 @@ package hwr.oop.todo.core;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Task {
@@ -28,7 +29,9 @@ public class Task {
         this.projectName = projectName;
     }
 
-    public TaskId id() {return id;}
+    public TaskId id() {
+        return id;
+    }
 
     public String title() {
         return title;
@@ -96,6 +99,30 @@ public class Task {
 
     public void deleteProject() {
         this.projectName = null;
+    }
+
+    public boolean equals(Task o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Task task = (Task) o;
+        return title.equals(
+                task.title()) && description.equals(
+                task.description()) && tags.equals(
+                task.tags()) && deadline.equals(
+                task.deadline()) && status.equals(
+                task.status()) && priority.equals(
+                task.priority()) && projectName.equals(task.projectName());
+    }
+
+    public int hashCode() {
+        return Objects.hash(title, description, tags, deadline, status,
+                priority, projectName);
     }
 
     public static class Builder {

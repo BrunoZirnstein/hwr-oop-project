@@ -82,6 +82,8 @@ public class CSVHandler implements PersistenceAdapter {
             }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.id().toString());
+            fileWriter.append(COMMA_DELIMITER);
+            fileWriter.append(task.id().toString());
             fileWriter.append(LINE_SEPARATOR);
         } catch (IOException e) {
             throw new IOException(ERROR_CSV, e);
@@ -120,7 +122,6 @@ public class CSVHandler implements PersistenceAdapter {
         }
     }
 
-
     ToDoList loadAToDoListFromUserWithAllTasks(ToDoList todo) throws IOException {
         try (BufferedReader br = new BufferedReader(
                 new FileReader(getFilePathTask()))) {
@@ -129,7 +130,7 @@ public class CSVHandler implements PersistenceAdapter {
                 List<String> values = Arrays.asList(line.split(","));
                 String title = values.get(0);
                 String description = null;
-                if (!values.get(1).isEmpty()){
+                if (!values.get(1).isEmpty()) {
                     description = values.get(1);
                 }
                 List<TaskTag> tags = new ArrayList<>();
@@ -148,7 +149,7 @@ public class CSVHandler implements PersistenceAdapter {
                 // Should be changed if all Tasks have a priority!
                 TaskPriority priority = null;
                 if (values.get(5).isEmpty()) {
-                    priority = TaskPriority.valueOf(null);
+                    priority = null;
                 } else {
                     priority = TaskPriority.valueOf(
                             values.get(5).toUpperCase());
@@ -165,12 +166,17 @@ public class CSVHandler implements PersistenceAdapter {
                     todo = createAllSavedProjects(projectName.orElse(null), todo);
                 }
                 Optional<String> owner = Optional.empty();
-                if ((!values.get(7).isEmpty()) && values.get(8).equals(todo.id().toString())){
+                if ((!values.get(7).isEmpty()) && values.get(8).equals(todo.id().toString())) {
                     owner = Optional.of(values.get(7));
                     todo.updateOwner(owner.orElse(null));
                 }
                 if (values.get(8).equals(todo.id().toString())) {
+                    String idBeforeEdit = values.get(9);
+                    String taskIdString = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
+                    UUID taskUUID = UUID.fromString(taskIdString);
+                    TaskId id = new TaskId(taskUUID);
                     Task task = new Task.Builder(title)
+                            .id(id)
                             .description(description)
                             .tags(tags)
                             .deadline(deadline)
@@ -203,6 +209,7 @@ public class CSVHandler implements PersistenceAdapter {
         }
         return toDoList;
     }
+
     ToDoList createAllSavedProjects(String projectName, ToDoList toDoList) throws IOException {
         Project project = null;
         try (BufferedReader reader = new BufferedReader(
@@ -228,8 +235,8 @@ public class CSVHandler implements PersistenceAdapter {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> values = Arrays.asList(line.split(","));
-                if(values.get(0).equals(username)){
-                    String idBeforeEdit=values.get(1);
+                if (values.get(0).equals(username)) {
+                    String idBeforeEdit = values.get(1);
                     String id = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
                     ToDoListId listId = new ToDoListId(UUID.fromString(id));
                     ToDoList list = new ToDoList(listId);
@@ -245,7 +252,7 @@ public class CSVHandler implements PersistenceAdapter {
         File tempFile = new File(getFilePathTask() + "tasktemp.csv");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
@@ -266,7 +273,7 @@ public class CSVHandler implements PersistenceAdapter {
         File tempFile = new File(getFilePathProject() + "projecttemp.csv");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
@@ -281,8 +288,7 @@ public class CSVHandler implements PersistenceAdapter {
         tempFile.renameTo(inputFile);
     }
 
-
-    public void overwriteList(ToDoList toDoList){
+    public void overwriteList(ToDoList toDoList) {
         try {
             removeProjectByID(toDoList.id().toString());
             for (int i = 0; i < toDoList.projects().size(); i++) {
@@ -290,7 +296,7 @@ public class CSVHandler implements PersistenceAdapter {
                 saveNewProject(element, toDoList);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading / saving the project file",e);
+            throw new RuntimeException("Error reading / saving the project file", e);
         }
         try {
             removeTaskByID(toDoList.id().toString());
@@ -299,18 +305,17 @@ public class CSVHandler implements PersistenceAdapter {
                 saveNewTask(element, toDoList);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error reading / saving the task file",e);
+            throw new RuntimeException("Error reading / saving the task file", e);
         }
     }
 
-
-    public ToDoList loadListById(ToDoListId id){
+    public ToDoList loadListById(ToDoListId id) {
         ToDoList todo = new ToDoList(id);
         try {
             todo = loadAToDoListFromUserWithAllTasks(todo);
             return todo;
         } catch (IOException e) {
-            throw new RuntimeException("Error reading the file",e);
+            throw new RuntimeException("Error reading the file", e);
         }
     }
 
