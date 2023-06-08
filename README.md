@@ -7,8 +7,8 @@ This repository contains a student project created for an ongoing lecture on obj
 ## Feature List
 | Number | Feature | Test | Responsible | Status |
 |--------|---------|-------|-------------|-----------|
-| 1      |    add task   |    ✔️     |     Bruno        |       Blocked    |
-| 2      |    create list   |    ✔️     |     Bruno        |    Blocked   |
+| 1      |    add task   |    ✔️     |     Bruno        |       DONE    |
+| 2      |    create list   |    ✔️     |     Bruno        |    DONE   |
 | 3      |    create project   |    ✔️     |     Bruno        | Blocked   |
 
 ## ToDo List
