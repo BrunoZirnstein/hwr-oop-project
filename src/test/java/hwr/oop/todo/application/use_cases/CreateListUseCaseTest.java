@@ -3,7 +3,6 @@ package hwr.oop.todo.application.use_cases;
 import hwr.oop.todo.application.ports.in.CreateListInPort;
 import hwr.oop.todo.application.ports.out.LoadListByIdOutPort;
 import hwr.oop.todo.core.ToDoList;
-import hwr.oop.todo.core.ToDoListId;
 import hwr.oop.todo.persistence.PersistenceAdapter;
 import hwr.oop.todo.persistence.csv.CSVHandler;
 import org.junit.jupiter.api.DisplayName;
@@ -21,13 +20,13 @@ class CreateListUseCaseTest {
     @Test
     @DisplayName("Create list")
     void createList() {
-        CreateListCommand createListCommand = new CreateListCommand("Bruno");
-        ToDoList newList = createListInPort.createList(createListCommand);
+        String owner = "Bruno";
+        CreateListCommand createListCommand = new CreateListCommand(owner);
+        ToDoList createdList = createListInPort.createList(createListCommand);
+        ToDoList newList = new ToDoList(createdList.id(), owner);
 
         ToDoList savedList = loadListByIdOutPort.loadListById(newList.id());
 
-        System.out.println(savedList);
-        System.out.println(newList);
         assertThat(savedList).isEqualTo(newList);
     }
 }
