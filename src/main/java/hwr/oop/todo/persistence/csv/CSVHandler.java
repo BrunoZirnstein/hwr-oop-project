@@ -112,7 +112,7 @@ public class CSVHandler implements PersistenceAdapter {
             fileWriter.append(COMMA_DELIMITER);
             Optional<LocalDate> deadline = Optional.ofNullable(project.deadline());
             if (deadline.isPresent()) {
-                fileWriter.append(deadline.toString());
+                fileWriter.append(deadline.get().toString());
             }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.id().toString());
@@ -228,6 +228,24 @@ public class CSVHandler implements PersistenceAdapter {
         return toDoList;
     }
 
+    String getOwnerFromID(ToDoList toDoList) throws IOException{
+        String owner = null;
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(getFilePathTodo()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<String> values = Arrays.asList(line.split(","));
+                String idBeforeEdit = values.get(1);
+                String todoIdString = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
+                UUID todoUUID = UUID.fromString(todoIdString);
+                if (todoUUID.equals(toDoList.id().id())) {
+                    owner = values.get(0);
+                }
+            }
+            return owner;
+        }
+    }
+
     List<ToDoList> loadAIdAndToDoListFromUser(String username) throws IOException {
         List<ToDoList> userToDos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
@@ -263,7 +281,6 @@ public class CSVHandler implements PersistenceAdapter {
                 }
             }
         }
-
         inputFile.delete();
         tempFile.renameTo(inputFile);
     }
@@ -288,6 +305,27 @@ public class CSVHandler implements PersistenceAdapter {
         tempFile.renameTo(inputFile);
     }
 
+    void removeToDoListByID(String iD) throws IOException {
+        File inputFile = new File(getFilePathTodo());
+        File tempFile = new File(getFilePathTodo() + "todotemp.csv");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
+
+                if (!fields.isEmpty() && fields.size() >= 2 && !fields.get(1).equals(iD)) {
+                    writer.write(line);
+                    writer.write(LINE_SEPARATOR);
+                }
+            }
+        }
+        inputFile.delete();
+        tempFile.renameTo(inputFile);
+    }
+
+
     public void overwriteList(ToDoList toDoList) {
         try {
             removeProjectByID(toDoList.id().toString());
@@ -307,12 +345,20 @@ public class CSVHandler implements PersistenceAdapter {
         } catch (IOException e) {
             throw new RuntimeException("Error reading / saving the task file", e);
         }
+        try {
+            removeToDoListByID(toDoList.id().toString());
+            saveNewToDoList(toDoList);
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading / saving the todo file",e);
+        }
     }
 
     public ToDoList loadListById(ToDoListId id) {
         ToDoList todo = new ToDoList(id);
         try {
             todo = loadAToDoListFromUserWithAllTasks(todo);
+            String owner = getOwnerFromID(todo);
+            todo.updateOwner(owner);
             return todo;
         } catch (IOException e) {
             throw new RuntimeException("Error reading the file", e);
