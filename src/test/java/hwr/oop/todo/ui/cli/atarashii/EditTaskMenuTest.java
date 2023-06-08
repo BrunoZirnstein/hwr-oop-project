@@ -17,7 +17,7 @@ import hwr.oop.todo.ui.cli.CTestHelper;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
 
-public class EditTaskMenuTest {
+class EditTaskMenuTest {
 	
 	public String getMainMenuHeadline(EditTaskMenu menu, Task t) {
 		String headline = String.join(System.lineSeparator(), menu.menuHeadline);
@@ -32,7 +32,7 @@ public class EditTaskMenuTest {
 		Scanner in = new Scanner(inputStream);
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
-		Main.activeTodo = new ToDoList("GLaDOS");
+		Main.changeActiveTodo(new ToDoList("GLaDOS"));
 		Task t = new Task.Builder("Wait for Acknex 9 Release").build();
 		
 		EditTaskMenu menu = new EditTaskMenu(new PrintStream(out), inputHandler, new EmptyMenu(), t);

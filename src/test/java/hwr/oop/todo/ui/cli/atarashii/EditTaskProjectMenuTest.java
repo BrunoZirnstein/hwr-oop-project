@@ -17,7 +17,7 @@ import hwr.oop.todo.ui.cli.CTestHelper;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
 
-public class EditTaskProjectMenuTest {
+class EditTaskProjectMenuTest {
 	public String getMainMenuHeadline(EditTaskProjectMenu menu, Task t) {
 		String headline = String.join(System.lineSeparator(), menu.menuHeadline);
 		headline = String.format(headline, t.title());
@@ -31,7 +31,7 @@ public class EditTaskProjectMenuTest {
 		Scanner in = new Scanner(inputStream);
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
-		Main.activeTodo = new ToDoList("GLaDOS");
+		Main.changeActiveTodo(new ToDoList("GLaDOS"));
 		Task t = new Task.Builder("Find the meaning of life").build();
 		
 		EditTaskProjectMenu menu = new EditTaskProjectMenu(new PrintStream(out), inputHandler, new EmptyMenu(), t);

@@ -87,7 +87,7 @@ public class ProjectMenu{
 				return null;
 			}
 			
-			if(deadlineStr.isEmpty() == false)
+			if(!deadlineStr.isEmpty())
 			{
 				try {
 					deadline = LocalDate.parse(deadlineStr);

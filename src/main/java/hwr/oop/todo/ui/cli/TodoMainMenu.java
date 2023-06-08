@@ -47,7 +47,7 @@ public class TodoMainMenu {
 		out.println(String.format(headline, Main.activeTodo.owner()));
 		inputHandler.printMenu();
 
-		inputHandler.propmtAndHandleInput();
+		inputHandler.promptAndHandleInput();
 	}
 
 	/**

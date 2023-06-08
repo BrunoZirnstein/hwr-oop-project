@@ -16,12 +16,12 @@ import hwr.oop.todo.ui.cli.ConsoleTest;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.MenuActionHandler;
 
-public class InputOptionsMenuTest {
+class InputOptionsMenuTest {
 	
-	class mymenu extends InputOptionsMenu {
+	static class myMenu extends InputOptionsMenu {
 		public final MenuActionHandler actionHandler;
 		
-		public mymenu(PrintStream out, InputHandler in) {
+		public myMenu(PrintStream out, InputHandler in) {
 			this.out = out;
 			this.in = in;
 			
@@ -51,8 +51,8 @@ public class InputOptionsMenuTest {
 				"That Was Great."
 		};
 		
-		mymenu menu = new mymenu(output, inputHandler);
-		mymenu.printMenu(output, menu.actionHandler, headline, null);
+		myMenu menu = new myMenu(output, inputHandler);
+		myMenu.printMenu(output, menu.actionHandler, headline, null);
 		
 		// check if menu is printed out correctly
 		assertThat(out.toString()).contains(String.join(System.lineSeparator(), headline));
@@ -68,7 +68,7 @@ public class InputOptionsMenuTest {
 		Scanner in = new Scanner(inputStream);
 		InputHandler inputHandler = new InputHandler(in, 1);
 		
-		mymenu menu = new mymenu(output, inputHandler);
+		myMenu menu = new myMenu(output, inputHandler);
 		menu.returnToMe();
 		
 		// check if user was informed to press ENTER
@@ -89,7 +89,7 @@ public class InputOptionsMenuTest {
 		Scanner in = new Scanner(inputStream);
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
-		mymenu menu = new mymenu(output, inputHandler);
+		myMenu menu = new myMenu(output, inputHandler);
 		menu.returnToMe();
 		
 		// check if user was informed to press ENTER

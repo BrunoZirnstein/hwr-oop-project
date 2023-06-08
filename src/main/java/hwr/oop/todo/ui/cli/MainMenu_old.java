@@ -33,7 +33,7 @@ public class MainMenu_old {
 		
 		inputHandler.printMenu();
 		
-		inputHandler.propmtAndHandleInput();
+		inputHandler.promptAndHandleInput();
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class MainMenu_old {
 	 * letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
-		if(Console.enterToContinue(out, in) == false) {
+		if(!Console.enterToContinue(out, in)) {
 			return;
 		}
 		

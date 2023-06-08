@@ -16,11 +16,15 @@ import hwr.oop.todo.ui.cli.CTestHelper;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
 
-public class DisplayTaskMenuTest {
+class DisplayTaskMenuTest {
 	public String getMainMenuHeadline(DisplayTaskMenu menu) {
 		String headline = String.join(System.lineSeparator(), menu.menuHeadline);
-		headline = String.format(headline, Main.activeTodo.owner().get());
-		return headline;
+
+		if (Main.activeTodo().owner().isPresent()) {
+			return String.format(headline, Main.activeTodo().owner().get());
+		} else {
+			return "";
+		}
 	}
 	
 	@Test
@@ -30,7 +34,7 @@ public class DisplayTaskMenuTest {
 		Scanner in = new Scanner(inputStream);
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
-		Main.activeTodo = new ToDoList("GLaDOS");
+		Main.changeActiveTodo(new ToDoList("GLaDOS"));
 		
 		DisplayTaskMenu menu = new DisplayTaskMenu(new PrintStream(out), inputHandler, new EmptyMenu());
 		menu.open();

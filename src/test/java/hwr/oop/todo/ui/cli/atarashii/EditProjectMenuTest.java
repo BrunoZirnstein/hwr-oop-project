@@ -17,7 +17,7 @@ import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
 import hwr.oop.todo.core.Project;
 
-public class EditProjectMenuTest {
+class EditProjectMenuTest {
 	public String getMainMenuHeadline(EditProjectMenu menu, Project p) {
 		String headline = String.join(System.lineSeparator(), menu.menuHeadline);
 		headline = String.format(headline, p.title());
@@ -31,7 +31,7 @@ public class EditProjectMenuTest {
 		Scanner in = new Scanner(inputStream);
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
-		Main.activeTodo = new ToDoList("GLaDOS");
+		Main.changeActiveTodo(new ToDoList("GLaDOS"));
 		Project p = new Project.Builder("Order 66").build();
 		
 		EditProjectMenu menu = new EditProjectMenu(new PrintStream(out), inputHandler, new EmptyMenu(), p);
