@@ -108,7 +108,10 @@ public class CSVHandler implements PersistenceAdapter {
                 true)) {
             fileWriter.append(project.title());
             fileWriter.append(COMMA_DELIMITER);
-            fileWriter.append(project.deadline().toString());
+            Optional<LocalDate> deadline = Optional.ofNullable(project.deadline());
+            if (deadline.isPresent()) {
+                fileWriter.append(deadline.toString());
+            }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.id().toString());
             fileWriter.append(LINE_SEPARATOR);
@@ -125,7 +128,10 @@ public class CSVHandler implements PersistenceAdapter {
             while ((line = br.readLine()) != null) {
                 List<String> values = Arrays.asList(line.split(","));
                 String title = values.get(0);
-                String description = values.get(1);
+                String description = null;
+                if (!values.get(1).isEmpty()){
+                    description = values.get(1);
+                }
                 List<TaskTag> tags = new ArrayList<>();
                 if (!values.get(2).isEmpty()) {
                     String[] tagValues = values.get(2).split(";");
@@ -142,7 +148,7 @@ public class CSVHandler implements PersistenceAdapter {
                 // Should be changed if all Tasks have a priority!
                 TaskPriority priority = null;
                 if (values.get(5).isEmpty()) {
-                    priority = TaskPriority.valueOf("HIGH");
+                    priority = TaskPriority.valueOf(null);
                 } else {
                     priority = TaskPriority.valueOf(
                             values.get(5).toUpperCase());
