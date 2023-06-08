@@ -5,10 +5,7 @@ import hwr.oop.todo.persistence.PersistenceAdapter;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CSVHandler implements PersistenceAdapter {
     private static final String COMMA_DELIMITER = ",";
@@ -111,7 +108,10 @@ public class CSVHandler implements PersistenceAdapter {
                 true)) {
             fileWriter.append(project.title());
             fileWriter.append(COMMA_DELIMITER);
-            fileWriter.append(project.deadline().toString());
+            Optional<LocalDate> deadline = Optional.ofNullable(project.deadline());
+            if (deadline.isPresent()) {
+                fileWriter.append(deadline.toString());
+            }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.id().toString());
             fileWriter.append(LINE_SEPARATOR);
@@ -128,7 +128,10 @@ public class CSVHandler implements PersistenceAdapter {
             while ((line = br.readLine()) != null) {
                 List<String> values = Arrays.asList(line.split(","));
                 String title = values.get(0);
-                String description = values.get(1);
+                String description = null;
+                if (!values.get(1).isEmpty()){
+                    description = values.get(1);
+                }
                 List<TaskTag> tags = new ArrayList<>();
                 if (!values.get(2).isEmpty()) {
                     String[] tagValues = values.get(2).split(";");
@@ -145,7 +148,7 @@ public class CSVHandler implements PersistenceAdapter {
                 // Should be changed if all Tasks have a priority!
                 TaskPriority priority = null;
                 if (values.get(5).isEmpty()) {
-                    priority = TaskPriority.valueOf("HIGH");
+                    priority = TaskPriority.valueOf(null);
                 } else {
                     priority = TaskPriority.valueOf(
                             values.get(5).toUpperCase());
@@ -162,8 +165,8 @@ public class CSVHandler implements PersistenceAdapter {
                     todo = createAllSavedProjects(projectName.orElse(null), todo);
                 }
                 Optional<String> owner = Optional.empty();
-                if (!values.get(7).isEmpty() && values.get(8).equals(todo.id().toString())){
-                    owner = Optional.ofNullable(values.get(7));
+                if ((!values.get(7).isEmpty()) && values.get(8).equals(todo.id().toString())){
+                    owner = Optional.of(values.get(7));
                     todo.updateOwner(owner.orElse(null));
                 }
                 if (values.get(8).equals(todo.id().toString())) {
@@ -218,20 +221,24 @@ public class CSVHandler implements PersistenceAdapter {
         return toDoList;
     }
 
-    /*
-    List<ToDoList> loadAllToDoListUsersFromFile() throws IOException {
-        List<ToDoList> todos = new ArrayList<>();
+    List<ToDoList> loadAIdAndToDoListFromUser(String username) throws IOException {
+        List<ToDoList> userToDos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(getFilePathTodo()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                ToDoList todo = new ToDoList(line);
-                todos.add(todo);
+                List<String> values = Arrays.asList(line.split(","));
+                if(values.get(0).equals(username)){
+                    String idBeforeEdit=values.get(1);
+                    String id = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
+                    ToDoListId listId = new ToDoListId(UUID.fromString(id));
+                    ToDoList list = new ToDoList(listId);
+                    userToDos.add(list);
+                }
             }
         }
-        return todos;
+        return userToDos;
     }
-     */
 
     void removeTaskByID(String iD) throws IOException {
         File inputFile = new File(getFilePathTask());
