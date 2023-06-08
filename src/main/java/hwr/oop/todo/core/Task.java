@@ -16,10 +16,10 @@ public class Task {
     private TaskPriority priority;
     private String projectName;
 
-    private Task(String title, List<TaskTag> tags, String description,
-                 LocalDate deadline, TaskStatus status, TaskPriority priority,
-                 String projectName) {
-        this.id = new TaskId();
+    private Task(TaskId id, String title, List<TaskTag> tags,
+                 String description, LocalDate deadline, TaskStatus status,
+                 TaskPriority priority, String projectName) {
+        this.id = id;
         this.title = title;
         this.tags = tags;
         this.description = description;
@@ -89,6 +89,11 @@ public class Task {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" + "id=" + id + ", tags=" + tags + ", title='" + title + '\'' + ", description='" + description + '\'' + ", deadline=" + deadline + ", status=" + status + ", priority=" + priority + ", projectName='" + projectName + '\'' + '}';
+    }
+
     public void changePriority(TaskPriority priority) {
         this.priority = priority;
     }
@@ -101,32 +106,28 @@ public class Task {
         this.projectName = null;
     }
 
-    public boolean equals(Task o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return title.equals(
-                task.title()) && description.equals(
-                task.description()) && tags.equals(
-                task.tags()) && deadline.equals(
-                task.deadline()) && status.equals(
-                task.status()) && priority.equals(
-                task.priority()) && projectName.equals(task.projectName());
+        return Objects.equals(id, task.id) && Objects.equals(tags,
+                task.tags) && Objects.equals(title,
+                task.title) && Objects.equals(description,
+                task.description) && Objects.equals(deadline,
+                task.deadline) && status == task.status && priority == task.priority && Objects.equals(
+                projectName, task.projectName);
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(title, description, tags, deadline, status,
+        return Objects.hash(id, tags, title, description, deadline, status,
                 priority, projectName);
     }
 
     public static class Builder {
         private final String title;
+        private TaskId id = new TaskId();
         private List<TaskTag> tags = new ArrayList<>();
         private String description = null;
         private LocalDate deadline = null;
@@ -136,6 +137,11 @@ public class Task {
 
         public Builder(String title) {
             this.title = title;
+        }
+
+        public Builder id(TaskId id) {
+            this.id = id;
+            return this;
         }
 
         public Builder tags(List<TaskTag> tags) {
@@ -169,7 +175,7 @@ public class Task {
         }
 
         public Task build() {
-            return new Task(title, tags, description, deadline, status,
+            return new Task(id, title, tags, description, deadline, status,
                     priority, projectName);
         }
     }
