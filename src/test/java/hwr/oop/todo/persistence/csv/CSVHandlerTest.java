@@ -306,10 +306,10 @@ class CSVHandlerTest {
             writer.write(username + ",ToDoListId[id=" + UUID.randomUUID() + "]\n");
         }
         csvHandler.setFilePathToDoUser(TEST_FILEPATH_TODO);
-        List<ToDoListId> result = csvHandler.loadAIdAndToDoListFromUser(username);
+        List<ToDoList> result = csvHandler.loadAIdAndToDoListFromUser(username);
         assertEquals(2, result.size());
-        assertTrue(result.get(0).id() instanceof UUID);
-        assertTrue(result.get(1).id() instanceof UUID);
+        assertTrue(result.get(0).id().id() instanceof UUID);
+        assertTrue(result.get(1).id().id() instanceof UUID);
     }
 
     @Test

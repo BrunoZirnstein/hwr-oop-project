@@ -159,7 +159,7 @@ public class CSVHandler implements PersistenceAdapter {
                     todo = createAllSavedProjects(projectName.orElse(null), todo);
                 }
                 Optional<String> owner = Optional.empty();
-                if (!values.get(7).isEmpty() && values.get(8).equals(todo.id().toString())){
+                if ((!values.get(7).isEmpty()) && values.get(8).equals(todo.id().toString())){
                     owner = Optional.of(values.get(7));
                     todo.updateOwner(owner.orElse(null));
                 }
@@ -215,8 +215,8 @@ public class CSVHandler implements PersistenceAdapter {
         return toDoList;
     }
 
-    List<ToDoListId> loadAIdAndToDoListFromUser(String username) throws IOException {
-        List<ToDoListId> userToDos = new ArrayList<>();
+    List<ToDoList> loadAIdAndToDoListFromUser(String username) throws IOException {
+        List<ToDoList> userToDos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(getFilePathTodo()))) {
             String line;
@@ -225,8 +225,9 @@ public class CSVHandler implements PersistenceAdapter {
                 if(values.get(0).equals(username)){
                     String idBeforeEdit=values.get(1);
                     String id = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
-                    ToDoListId liste = new ToDoListId(UUID.fromString(id));
-                    userToDos.add(liste);
+                    ToDoListId listId = new ToDoListId(UUID.fromString(id));
+                    ToDoList list = new ToDoList(listId);
+                    userToDos.add(list);
                 }
             }
         }
