@@ -3,7 +3,7 @@ package hwr.oop.todo.ui.cli;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-public class MainMenu {
+public class MainMenu_old {
 	private PrintStream out = null;
 	private InputHandler in = null;
 	
@@ -16,7 +16,7 @@ public class MainMenu {
 									 	  "[MainMenu]"};
 	
 	
-	public MainMenu(OutputStream out, InputHandler in) {
+	public MainMenu_old(OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
         this.in = in;
 		manageToDoMenu = new ListMenu(this, out, in);

@@ -24,7 +24,7 @@ public class TaskMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput(taskName_userInput + "\n\n");	// second line break for returnToMe function
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 2);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		TaskMenu menu = new TaskMenu(todoMainMenu, out, inputHandler);
 		
@@ -51,7 +51,7 @@ public class TaskMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("");	// second line break for returnToMe function
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 0);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		TaskMenu menu = new TaskMenu(todoMainMenu, out, inputHandler);
 		
@@ -70,7 +70,7 @@ public class TaskMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("bla\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 1);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		TaskMenu menu = new TaskMenu(todoMainMenu, out, inputHandler);
 		
@@ -89,7 +89,7 @@ public class TaskMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 1);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		TaskMenu menu = new TaskMenu(todoMainMenu, out, inputHandler);
 		

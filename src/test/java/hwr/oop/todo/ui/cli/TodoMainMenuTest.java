@@ -24,7 +24,7 @@ public class TodoMainMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 0);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		
 		// Avoid nonsense mutation test error : Check if menu contains just as much input options as dynamically given in constructor..
@@ -52,7 +52,7 @@ public class TodoMainMenuTest {
 		String todoListName = "Learn_Japanese";
 		Main.activeTodo = new ToDoList(todoListName);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		todoMainMenu.open();
 		
@@ -75,7 +75,7 @@ public class TodoMainMenuTest {
 		String todoListName = "Learn_Japanese";
 		Main.activeTodo = new ToDoList(todoListName);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		todoMainMenu.open();
 		
@@ -88,7 +88,7 @@ public class TodoMainMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 1);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		todoMainMenu.returnToMe();
 		

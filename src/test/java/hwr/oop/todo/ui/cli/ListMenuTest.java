@@ -21,7 +21,7 @@ public class ListMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput(inputTodoName + "\n\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 2);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		ListMenu listMenu = new ListMenu(mainMenu, out, inputHandler);
 		listMenu.openCreate();
@@ -46,7 +46,7 @@ public class ListMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 0);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		ListMenu listMenu = new ListMenu(mainMenu, out, inputHandler);
 		listMenu.openCreate();
 		
@@ -67,7 +67,7 @@ public class ListMenuTest {
 			InputStream in = CTestHelper.createInputStreamForInput(userInput + "\n");
 			InputHandler inputHandler = new InputHandler(new Scanner(in), 1);
 			
-			MainMenu mainMenu = new MainMenu(out, inputHandler);
+			MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 			ListMenu listMenu = new ListMenu(mainMenu, out, inputHandler);
 			listMenu.openCreate(); // -> openCreate calls the private promptToDoName function.
 			
@@ -101,7 +101,7 @@ public class ListMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 0);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		ListMenu listMenu = new ListMenu(mainMenu, out, inputHandler);
 		listMenu.openLoad();
 		
@@ -118,7 +118,7 @@ public class ListMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 0);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		ListMenu listMenu = new ListMenu(mainMenu, out, inputHandler);
 		listMenu.openRemove();
 	}

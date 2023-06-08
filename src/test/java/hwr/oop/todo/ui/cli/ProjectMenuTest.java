@@ -25,7 +25,7 @@ public class ProjectMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput(userInput_projectName + "\n" + userInput_projectDeadline + "\n\n");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 3);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		ProjectMenu menu = new ProjectMenu(todoMainMenu, out, inputHandler);
 		
@@ -55,7 +55,7 @@ public class ProjectMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("");
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 0);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		ProjectMenu menu = new ProjectMenu(todoMainMenu, out, inputHandler);
 		
@@ -74,7 +74,7 @@ public class ProjectMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("\n");	// invalid input
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 1);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		ProjectMenu menu = new ProjectMenu(todoMainMenu, out, inputHandler);
 		
@@ -95,7 +95,7 @@ public class ProjectMenuTest {
 		InputStream in = CTestHelper.createInputStreamForInput("bla\n12-3\n");	// invalid input for promptDeadlineInput call
 		InputHandler inputHandler = new InputHandler(new Scanner(in), 2);
 		
-		MainMenu mainMenu = new MainMenu(out, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(out, inputHandler);
 		TodoMainMenu todoMainMenu = new TodoMainMenu(mainMenu, out, inputHandler);
 		ProjectMenu menu = new ProjectMenu(todoMainMenu, out, inputHandler);
 		

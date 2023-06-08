@@ -12,7 +12,7 @@ public class ListMenu {
 	private TodoMainMenu todoMainMenu = null;
 	
 	
-	public ListMenu(MainMenu mainMenu, OutputStream out, InputHandler in) {
+	public ListMenu(MainMenu_old mainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
 		this.in = in;
 

@@ -76,9 +76,63 @@ public class ConsoleTest {
 	}
 	
 	@Test
-	void Test_ConsoleInstantiate_ToCalmDown_MutationTester()
-	{
-		Console c = new Console();
-		assertThat(c).isNotNull();
+	void Test_promptForString() {
+		String validUserInput = "日本語が大好きです。";
+		OutputStream out = new ByteArrayOutputStream();
+																	// first input is empty
+		InputStream inputStream = CTestHelper.createInputStreamForInput("\n" + validUserInput + "\n");
+		Scanner in = new Scanner(inputStream);
+		InputHandler inputHandler = new InputHandler(in, 2);
+		
+		String methodPromptMsg = "Enter some string!";
+		String invalidInputMsg = "Invalid input bro!"; 
+		String result = Console.promptForString(new PrintStream(out), inputHandler, true, methodPromptMsg, invalidInputMsg);
+		
+		// we specified that the console should be cleared, check if that really happened
+		assertThat(isClearInOutput(out.toString())).isTrue();
+		
+		// check if method display our messages correctly
+		assertThat(out.toString()).containsOnlyOnce(methodPromptMsg);
+		assertThat(out.toString()).containsOnlyOnce(invalidInputMsg);	// must be there because first we passed an empty input
+		assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
+		
+		// check if method returned our valid, non empty input
+		assertThat(result).isEqualTo(validUserInput);
+	}
+	
+	@Test
+	void Test_promptForString_noInvalidStringHandling() {
+		String validUserInput = "日本語が大好きです。";
+		OutputStream out = new ByteArrayOutputStream();
+																	// first input is empty
+		InputStream inputStream = CTestHelper.createInputStreamForInput("\n" + validUserInput + "\n");
+		Scanner in = new Scanner(inputStream);
+		InputHandler inputHandler = new InputHandler(in, 2);
+		
+		String methodPromptMsg = "Enter some string!";													  // -> no invalid-input handling
+		String result = Console.promptForString(new PrintStream(out), inputHandler, false, methodPromptMsg, null);
+		
+		// we specified that the console should not be cleared, check if that really happened
+		assertThat(isClearInOutput(out.toString())).isFalse();
+		
+		// check if method display our messages correctly
+		assertThat(out.toString()).containsOnlyOnce(methodPromptMsg);
+		assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
+		
+		// check if method returned our invalid input
+		assertThat(result).isEqualTo("");
+	}
+	
+	@Test
+	void Test_promptForString_inputHandlerAbort() {
+		OutputStream out = new ByteArrayOutputStream();
+		InputStream inputStream = CTestHelper.createInputStreamForInput("");
+		Scanner in = new Scanner(inputStream);
+		InputHandler inputHandler = new InputHandler(in, 0); // no input possible
+		
+		String result = Console.promptForString(new PrintStream(out), inputHandler, false, "bla", null);
+		
+		// our result must be null!
+		assertThat(result).isNull();;
 	}
 }

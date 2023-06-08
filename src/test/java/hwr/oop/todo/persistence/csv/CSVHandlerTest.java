@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static hwr.oop.todo.core.TaskPriority.HIGH;
 import static org.junit.jupiter.api.Assertions.*;

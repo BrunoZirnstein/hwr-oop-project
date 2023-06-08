@@ -9,7 +9,7 @@ public class TodoMainMenu {
 	private PrintStream out = null;
 	private InputHandler in = null;
 
-	private MainMenu mainMenu = null;
+	private MainMenu_old mainMenu = null;
 	private ProjectMenu projectMenu = null;
 	private TaskMenu taskMenu = null;
 
@@ -21,7 +21,7 @@ public class TodoMainMenu {
 									 	  "[ToDo MainMenu]",
 									 	  "What is it that you want to do? To proceed further, enter the action code given inside the [ ]"};
 
-	public TodoMainMenu(MainMenu mainMenu, OutputStream out, InputHandler in) {
+	public TodoMainMenu(MainMenu_old mainMenu, OutputStream out, InputHandler in) {
 		this.out = new PrintStream(out);
 		this.in = in;
 
@@ -52,8 +52,7 @@ public class TodoMainMenu {
 
 	/**
 	 * Just a little function that lets the user return to the MainMenu (reopen's
-	 * it) by
-	 * letting the user press any key in order to return to the MainMenu.
+	 * it) by letting the user press any key in order to return to the MainMenu.
 	 */
 	public void returnToMe() {
 		if(Console.enterToContinue(out, in) == false) {

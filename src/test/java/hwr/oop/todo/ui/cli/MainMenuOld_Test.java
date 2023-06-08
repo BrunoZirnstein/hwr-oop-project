@@ -10,9 +10,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class MainMenuTest {
+public class MainMenuOld_Test {
 	
-	public static String getMenuHeadline(MainMenu mainMenu) {
+	public static String getMenuHeadline(MainMenu_old mainMenu) {
 		return String.join(System.lineSeparator(), mainMenu.menuHeadline);
 	}
 	
@@ -23,7 +23,7 @@ public class MainMenuTest {
 		InputHandler inputHandler = new InputHandler(new Scanner(input), 0);
 		OutputStream output = new ByteArrayOutputStream();
 		
-		MainMenu mainMenu = new MainMenu(output, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(output, inputHandler);
 		mainMenu.open();
 		
 		
@@ -43,7 +43,7 @@ public class MainMenuTest {
 		InputHandler inputHandler = new InputHandler(new Scanner(input), 1);
 		OutputStream output = new ByteArrayOutputStream();
 		
-		MainMenu mainMenu = new MainMenu(output, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(output, inputHandler);
 		mainMenu.returnToMe();
 		
 		// Check if the console was cleared
@@ -59,7 +59,7 @@ public class MainMenuTest {
 		inputHandler = new InputHandler(new Scanner(input), 0);
 		output = new ByteArrayOutputStream();
 		
-		mainMenu = new MainMenu(output, inputHandler);
+		mainMenu = new MainMenu_old(output, inputHandler);
 		mainMenu.returnToMe();
 		
 		// if the returnToMe function aborted, the menu should not be printed
@@ -72,7 +72,7 @@ public class MainMenuTest {
 		InputHandler inputHandler = new InputHandler(new Scanner(input), 1);
 		OutputStream output = new ByteArrayOutputStream();
 		
-		MainMenu mainMenu = new MainMenu(output, inputHandler);
+		MainMenu_old mainMenu = new MainMenu_old(output, inputHandler);
 		
 		// Check if MainMenu displays all input
 		int mainMenuOptions = mainMenu.inputHandler.getCount();
