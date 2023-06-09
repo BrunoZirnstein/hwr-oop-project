@@ -8,8 +8,8 @@ public class Project {
     private String title;
     private LocalDate deadline;
 
-    private Project(String title, LocalDate deadline) {
-        this.id = new ProjectId();
+    private Project(ProjectId id,String title, LocalDate deadline) {
+        this.id = id;
         this.title = title;
         this.deadline = deadline;
     }
@@ -39,10 +39,16 @@ public class Project {
 
     public static class Builder {
         private final String title;
+        private ProjectId id = new ProjectId();
         private LocalDate deadline;
 
         public Builder(String title) {
             this.title = title;
+        }
+
+        public Builder id(ProjectId id) {
+            this.id = id;
+            return this;
         }
 
         public Builder deadline(LocalDate deadline) {
@@ -51,7 +57,7 @@ public class Project {
         }
 
         public Project build() {
-            return new Project(title, deadline);
+            return new Project(id, title, deadline);
         }
 
 
