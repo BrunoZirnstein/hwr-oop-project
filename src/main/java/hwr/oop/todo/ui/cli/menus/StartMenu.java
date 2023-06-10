@@ -12,10 +12,10 @@ public class StartMenu extends InputOptionsMenu {
 
     public static final String LOAD_OR_CREATE_SUCCESS_MSG_PREFIX = "Success!: ";
     public final MenuActionHandler inputHandler;
-    public final String[] menuHeadline = {"Welcome to the ultimate-u-never-forget ToDo List",
-            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-            "",
-            "[Startmenu]"};
+    public final String[] menuHeadline = {	"Welcome to the ultimate-u-never-forget ToDo List",
+								            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+								            "",
+								            "[Startmenu]"};
     private final MainMenu mainMenu;
 
     public StartMenu(PrintStream out, InputHandler in) {

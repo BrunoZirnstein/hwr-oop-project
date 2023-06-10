@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -129,5 +130,122 @@ public class ConsoleTest {
 
         // our result must be null!
         assertThat(result).isNull();
+    }
+    
+    
+    @Test
+    void Test_promptForDate() {
+    	String userInputDate = "2023-06-11";
+    	
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput("bla\n" + userInputDate + "\n");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 2);
+        
+        String promptMsg = "Hello and welcome to the Aperture Science Computer aidet enrichtment center";
+        String errorMsg = "You failed!";
+        
+        LocalDate result = Console.promptForDate(new PrintStream(out), inputHandler, true, promptMsg, errorMsg);
+        
+        // check if everything is correctly displayed
+        assertThat(isClearInOutput(out.toString())).isTrue();
+        assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
+        assertThat(out.toString()).contains(promptMsg);
+        
+        // check if wrong input got correct message
+        assertThat(out.toString()).contains(errorMsg);
+        
+        // check if result matches the input
+        assertThat(result).isEqualTo(LocalDate.parse(userInputDate));        
+    }
+    
+    @Test
+    void Test_promptForDate_inputKilled() {
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput("");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 0); // no input possible
+        
+        LocalDate result = Console.promptForDate(new PrintStream(out), inputHandler, true, "", "");
+        
+        // check if result is null
+        assertThat(result).isNull();
+    }
+    
+    @Test
+    void Test_promptForDate_emptyInput() {
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput(System.lineSeparator() + "2023-12-12\n");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 2);
+        
+        LocalDate result = Console.promptForDate(new PrintStream(out), inputHandler, false, "", null);
+        
+        // check if result is null
+        assertThat(result).isNull();
+    }
+    
+    @Test
+    void Test_promptForDate_defaultError() {
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput("bla\n");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 1);
+        
+        Console.promptForDate(new PrintStream(out), inputHandler, true, "", null);
+        
+        // check if result is null
+        assertThat(out.toString()).contains(Console.PROMPT_FOR_DATE_CONVERSION_ERROR_MSG);
+    }
+    
+    
+    enum testEnum {
+    	GNAMPF, GLADOS;
+    }
+    
+    @Test
+    void Test_promptForEnum() {
+    	String userEnumInput = "GLADOS";
+    	
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput("bla\n" + userEnumInput + "\n");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 2);
+        
+        String displayMsg = "Enter an enum!";
+        String errorMsg = "Wrong enum / couldnt convert!";
+        testEnum result = Console.promptForEnum(testEnum.class, new PrintStream(out), inputHandler, true, false, displayMsg, errorMsg);
+        
+        // check if everything was displayed correctly
+        assertThat(isClearInOutput(out.toString())).isTrue();
+        assertThat(out.toString()).contains(errorMsg); // first input must created error message
+        assertThat(out.toString()).contains(displayMsg);
+        assertThat(out.toString()).contains(Console.DISPLAY_INPUT_INDICATOR_STR);
+        
+        assertThat(result).isEqualTo(testEnum.valueOf(userEnumInput));
+    }
+    
+    @Test
+    void Test_promptForEnum_inputKilled() {
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput("");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 0);
+        
+        testEnum result = Console.promptForEnum(testEnum.class, new PrintStream(out), inputHandler, false, false, "bla", "bleb");
+        assertThat(result).isNull();
+    }
+    
+    @Test
+    void Test_promptForEnum_emptyInput() {
+    	OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput(System.lineSeparator() + "GNAMPF\n");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 2);
+        
+        String errorMsg = "error 404";
+        testEnum result = Console.promptForEnum(testEnum.class, new PrintStream(out), inputHandler, false, true, "bla", errorMsg);
+        assertThat(result).isNull();
+        assertThat(out.toString()).doesNotContain(errorMsg);
     }
 }
