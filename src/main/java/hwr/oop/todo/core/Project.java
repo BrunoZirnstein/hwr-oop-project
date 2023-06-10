@@ -2,6 +2,7 @@ package hwr.oop.todo.core;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Project {
     private final ProjectId id;
@@ -15,7 +16,7 @@ public class Project {
     }
 
     public ProjectId id() {
-        return this.id;
+        return id;
     }
 
     public String title() {

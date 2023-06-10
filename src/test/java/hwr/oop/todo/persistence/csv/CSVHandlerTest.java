@@ -10,11 +10,13 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import static hwr.oop.todo.core.TaskPriority.HIGH;
+import static hwr.oop.todo.core.TaskPriority.LOW;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CSVHandlerTest {
@@ -28,6 +30,22 @@ class CSVHandlerTest {
     // CSVHandler csvHandler = new CSVHandler();
     private ToDoList todo = new ToDoList("Test_User_1");
     private ToDoList todo2 = new ToDoList("Test_User_2");
+    UUID taskUUID1 = UUID.fromString("f492f7fe-55cb-4a43-8e40-ccb23eda4062");
+    UUID taskUUID2 = UUID.fromString("f492f7fe-55cb-4a43-8e40-ccb23eda4063");
+    UUID taskUUID3 = UUID.fromString("f492f7fe-55cb-4a43-8e40-ccb23eda4064");
+    UUID projectUUID1 = UUID.fromString("f492f7fe-55cb-4a43-8e40-ccb23eda4065");
+    UUID projectUUID2 = UUID.fromString("f492f7fe-55cb-4a43-8e40-ccb23eda4066");
+    private TaskId taskId1 = new TaskId(taskUUID1);
+    private TaskId taskId2 = new TaskId(taskUUID2);
+    private TaskId taskId3 = new TaskId(taskUUID3);
+    private Task task1 = new Task.Builder("Task 1").id(taskId1).description("Desccription 1").tags(List.of(new TaskTag("tag1"), new TaskTag("tag2"))).deadline(LocalDate.of(2023,06,01)).status(TaskStatus.DONE).priority(HIGH).projectName("Project 1").build();
+    private Task task2 = new Task.Builder("Task 2").id(taskId1).description("Desccription 2").tags(List.of(new TaskTag("tag3"))).deadline(LocalDate.of(2023,06,02)).status(TaskStatus.BLOCKED).priority(LOW).projectName("Project 1").build();
+    private Task task3 = new Task.Builder("Task 3").id(taskId1).description("Desccription 3").status(TaskStatus.TODO).priority(HIGH).projectName("Project 2").build();
+
+    private ProjectId projectId1 = new ProjectId(projectUUID1);
+    private ProjectId projectId2 = new ProjectId(projectUUID2);
+    private Project proj1 = new Project.Builder("Project 1").id(projectId1).deadline(LocalDate.of(2023,06,01)).build();
+    private Project proj2 = new Project.Builder("Project 2").id(projectId2).deadline(LocalDate.of(2023,06,02)).build();
     @TempDir
     static Path tempDir;
 
@@ -41,13 +59,29 @@ class CSVHandlerTest {
             throw new RuntimeException(e);
         }
     }
+    private void createTaskTestFile(String filePath) {
+        try (BufferedWriter projectWriter = new BufferedWriter(new FileWriter(filePath))) {
+            projectWriter.write("");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private void createProjectTestData(String filePath) {
         try (BufferedWriter projectWriter = new BufferedWriter(new FileWriter(filePath))) {
-            projectWriter.write("Project 1,2023-06-01,"+todo.id().toString()+"\n");
-            projectWriter.write("Project 2,2023-06-02,"+todo.id().toString()+"\n");
-            projectWriter.write("Project 2,2023-06-02,"+todo2.id().toString()+"\n");
+            projectWriter.write("Project 1,2023-06-01,"+todo.id().toString()+","+proj1.id().toString()+"\n");
+            projectWriter.write("Project 2,2023-06-02,"+todo.id().toString()+","+proj2.id().toString()+"\n");
+            projectWriter.write("Project 2,2023-06-02,"+todo2.id().toString()+",ProjectId[id=f492f7fe-55cb-4a43-8e40-ccb23eda4067]\n");
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createProjectTestFile(String filePath) {
+        try (BufferedWriter projectWriter = new BufferedWriter(new FileWriter(filePath))) {
+            projectWriter.write("");
+} catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -172,7 +206,7 @@ class CSVHandlerTest {
         assertTrue(file.exists());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = br.readLine();
-            String expectedLine = "Test_User_1,"+todo.id().toString();
+            String expectedLine = "Test_User_1," + todo.id().toString();
             assertEquals(expectedLine, line);
         }
     }
@@ -185,7 +219,11 @@ class CSVHandlerTest {
         assertEquals("Error in CSV-Creation!", exception.getMessage());
         assertNotNull(exception.getCause());
         assertTrue(exception.getCause() instanceof FileNotFoundException);
+        String filePath = csvHandler.getFilePathTodo();
+        File file = new File(filePath);
+        assertFalse(file.exists());
     }
+
 
     @Test
     void testSaveNewProject() throws IOException {
@@ -198,7 +236,7 @@ class CSVHandlerTest {
         Assertions.assertTrue(file.exists());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line = br.readLine();
-            String expectedLine = "Test Project,2023-05-07,"+todo.id().toString();
+            String expectedLine = "Test Project,2023-05-07," + todo.id().toString() + "," + project.id().toString();
             assertEquals(expectedLine, line);
         }
     }
@@ -210,6 +248,9 @@ class CSVHandlerTest {
         String filePathProject = "nonexistent_directory/test_project.csv";
         csvHandler.setFilePathProject(filePathProject);
         assertThrows(IOException.class, () -> csvHandler.saveNewProject(project, todo));
+        String filePath = csvHandler.getFilePathProject();
+        File file = new File(filePath);
+        assertFalse(file.exists());
     }
 
     @Test
@@ -218,13 +259,13 @@ class CSVHandlerTest {
         String filePathProject = "invalidpath/test_project.csv";
         csvHandler.setFilePathProject(filePathProject);
         todo.updateOwner("Test_User_1");
-        try {
-            csvHandler.saveNewProject(project, todo);
-            fail("Expected an IOException to be thrown");
-        } catch (IOException e) {
-            assertEquals("Error in CSV-Creation!", e.getMessage());
-        }
+        IOException exception = assertThrows(IOException.class, () -> csvHandler.saveNewProject(project, todo));
+        assertEquals("Error in CSV-Creation!", exception.getMessage());
+        String filePath = csvHandler.getFilePathProject();
+        File file = new File(filePath);
+        assertFalse(file.exists());
     }
+
 
     @Test
     void testLoadAToDoListFromUserWithAllTasks() throws IOException {
@@ -242,56 +283,65 @@ class CSVHandlerTest {
         todo = csvHandler.loadAToDoListFromUserWithAllTasks(todo);
         assertEquals(3, todo.tasks().size());
         assertEquals("Task 1", todo.tasks().get(0).title());
-        assertEquals("Task 2", todo.tasks().get(1).title());
-        assertEquals("Task 3", todo.tasks().get(2).title());
-
         assertEquals("Description 1", todo.tasks().get(0).description());
-        assertEquals("Description 2", todo.tasks().get(1).description());
-        assertEquals("Description 3", todo.tasks().get(2).description());
-
         assertEquals(2, todo.tasks().get(0).tags().size());
-        assertEquals(1, todo.tasks().get(1).tags().size());
-        assertEquals(0, todo.tasks().get(2).tags().size());
-
         assertEquals(LocalDate.of(2023, 6, 1), todo.tasks().get(0).deadline());
-        assertEquals(LocalDate.of(2023, 6, 2), todo.tasks().get(1).deadline());
-        assertNull(todo.tasks().get(2).deadline());
-
         assertEquals(TaskStatus.DONE, todo.tasks().get(0).status());
-        assertEquals(TaskStatus.BLOCKED, todo.tasks().get(1).status());
-        assertEquals(TaskStatus.TODO, todo.tasks().get(2).status());
-
         assertEquals(HIGH, todo.tasks().get(0).priority());
-        assertEquals(TaskPriority.LOW, todo.tasks().get(1).priority());
-        assertEquals(HIGH, todo.tasks().get(2).priority());
-
         assertEquals("Project 1", todo.tasks().get(0).projectName().orElse(null));
+        String taskIdString1 = "78ad8f00-05fa-11ee-be56-0242ac120002";
+        TaskId taskId1 = new TaskId(UUID.fromString(taskIdString1));
+        assertEquals(taskId1, todo.tasks().get(0).id());
+        assertEquals("Task 2", todo.tasks().get(1).title());
+        assertEquals("Description 2", todo.tasks().get(1).description());
+        assertEquals(1, todo.tasks().get(1).tags().size());
+        assertEquals(LocalDate.of(2023, 6, 2), todo.tasks().get(1).deadline());
+        assertEquals(TaskStatus.BLOCKED, todo.tasks().get(1).status());
+        assertEquals(TaskPriority.LOW, todo.tasks().get(1).priority());
         assertEquals("Project 1", todo.tasks().get(1).projectName().orElse(null));
+        String taskIdString2 = "78ad8f00-05fa-11ee-be56-0242ac120003";
+        TaskId taskId2 = new TaskId(UUID.fromString(taskIdString2));
+        assertEquals(taskId2, todo.tasks().get(1).id());
+        assertEquals("Task 3", todo.tasks().get(2).title());
+        assertEquals("Description 3", todo.tasks().get(2).description());
+        assertEquals(0, todo.tasks().get(2).tags().size());
+        assertNull(todo.tasks().get(2).deadline());
+        assertEquals(TaskStatus.TODO, todo.tasks().get(2).status());
+        assertEquals(HIGH, todo.tasks().get(2).priority());
         assertEquals("Project 2", todo.tasks().get(2).projectName().orElse(null));
-
-        String idBeforeEdit = "TaskId[id=78ad8f00-05fa-11ee-be56-0242ac120002]";
-        String taskIdString = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
-        UUID taskUUID = UUID.fromString(taskIdString);
-        TaskId taskid = new TaskId(taskUUID);
-        String idBeforeEdit2 = "TaskId[id=78ad8f00-05fa-11ee-be56-0242ac120003]";
-        String taskIdString2 = idBeforeEdit2.substring(idBeforeEdit2.indexOf('=') + 1, idBeforeEdit2.lastIndexOf(']'));
-        UUID taskUUID2 = UUID.fromString(taskIdString2);
-        TaskId taskid2 = new TaskId(taskUUID2);
-        String idBeforeEdit3 = "TaskId[id=78ad8f00-05fa-11ee-be56-0242ac120004]";
-        String taskIdString3 = idBeforeEdit3.substring(idBeforeEdit3.indexOf('=') + 1, idBeforeEdit3.lastIndexOf(']'));
-        UUID taskUUID3 = UUID.fromString(taskIdString3);
-        TaskId taskid3 = new TaskId(taskUUID3);
-
-        assertEquals(taskid,todo.tasks().get(0).id());
-        assertEquals(taskid2,todo.tasks().get(1).id());
-        assertEquals(taskid3,todo.tasks().get(2).id());
-
+        String taskIdString3 = "78ad8f00-05fa-11ee-be56-0242ac120004";
+        TaskId taskId3 = new TaskId(UUID.fromString(taskIdString3));
+        assertEquals(taskId3, todo.tasks().get(2).id());
         todo2.updateOwner("Test_User_2");
         todo2.addProject(project2);
         todo2 = csvHandler.loadAToDoListFromUserWithAllTasks(todo2);
         assertEquals(1, todo2.tasks().size());
-        assertEquals(null, todo2.tasks().get(0).priority());
+        assertNull(todo2.tasks().get(0).priority());
     }
+
+    @Test
+    void testLoadAToDoListFromUserWithAllTasks2() throws IOException {
+        String filePath = tempDir.resolve(TEST_FILEPATH_TASK).toString();
+        csvHandler.setFilePathTask(filePath);
+        createTaskTestData(filePath);
+        String filePath2 = tempDir.resolve(TEST_FILEPATH_PROJECT).toString();
+        csvHandler.setFilePathProject(filePath2);
+        createProjectTestData(filePath2);
+        todo.updateOwner("Test_User_1");
+        Project project1 = new Project.Builder("Project 1").deadline(LocalDate.of(2023, 6, 1)).build();
+        todo.addProject(project1);
+        Project project2 = new Project.Builder("Project 2").deadline(LocalDate.of(2023, 6, 2)).build();
+        todo.addProject(project2);
+        todo = csvHandler.loadAToDoListFromUserWithAllTasks(todo);
+        assertEquals(3, todo.tasks().size());
+        todo2.updateOwner("Test_User_2");
+        todo2.addProject(project2);
+        todo2 = csvHandler.loadAToDoListFromUserWithAllTasks(todo2);
+        assertEquals(1, todo2.tasks().size());
+        assertNull(todo2.tasks().get(0).priority());
+        assertEquals(3, todo.tasks().size());
+    }
+
 
     @Test
     void testLoadAToDoFileFromUserWithAllTasksIOExceptionFileNotFound() {
@@ -324,6 +374,7 @@ class CSVHandlerTest {
         assertEquals(LocalDate.of(2023, 6, 2), loadedProject2.deadline());
     }
 
+
     @Test
     void testLoadAIdAndToDoListFromUser() throws IOException {
         String username = "Test_User_1";
@@ -337,6 +388,7 @@ class CSVHandlerTest {
         assertTrue(result.get(0).id().id() instanceof UUID);
         assertTrue(result.get(1).id().id() instanceof UUID);
     }
+
 
     @Test
     void testRemoveTaskByID() throws IOException {
@@ -354,37 +406,10 @@ class CSVHandlerTest {
         List<Task> tasksBeforeRemoval = csvHandler.loadAToDoListFromUserWithAllTasks(todo).tasks();
         assertEquals(3, tasksBeforeRemoval.size());
         Task taskToRemove = tasksBeforeRemoval.get(0);
-        csvHandler.removeTaskByID(todo.id().toString());
-        ToDoList toDoList2 = new ToDoList(todo.id().toString());
-        toDoList2 = csvHandler.loadAToDoListFromUserWithAllTasks(toDoList2);
-        todo = toDoList2;
+        csvHandler.removeTaskByID(taskToRemove.id().toString());
+        todo.tasks().clear();
         List<Task> tasksAfterRemoval = csvHandler.loadAToDoListFromUserWithAllTasks(todo).tasks();
-        assertEquals(0, tasksAfterRemoval.size());
-        assertFalse(tasksAfterRemoval.contains(taskToRemove));
-    }
-
-    @Test
-    void testRemoveTaskByID_2() throws IOException {
-        String filePath = tempDir.resolve(TEST_FILEPATH_TASK).toString();
-        csvHandler.setFilePathTask(filePath);
-        String filePathProject = tempDir.resolve(TEST_FILEPATH_PROJECT).toString();
-        csvHandler.setFilePathProject(filePathProject);
-        createProjectTestData(filePathProject);
-        createTaskTestData(filePath);
-        todo.updateOwner("Test_User_1");
-        Project project1 = new Project.Builder("Project 1").deadline(LocalDate.of(2023, 6, 1)).build();
-        todo.addProject(project1);
-        Project project2 = new Project.Builder("Project 2").deadline(LocalDate.of(2023, 6, 2)).build();
-        todo.addProject(project2);
-        csvHandler.loadAToDoListFromUserWithAllTasks(todo);
-        List<Task> tasksBeforeRemoval = todo.tasks();
-        assertEquals(3, tasksBeforeRemoval.size());
-        Task taskToRemove = tasksBeforeRemoval.get(0);
-        csvHandler.removeTaskByID(todo.id().toString());
-        todo = new ToDoList("Test_User_1");
-        csvHandler.loadAToDoListFromUserWithAllTasks(todo);
-        List<Task> tasksAfterRemoval = todo.tasks();
-        assertEquals(0, tasksAfterRemoval.size());
+        assertEquals(2, tasksAfterRemoval.size());
         assertFalse(tasksAfterRemoval.contains(taskToRemove));
     }
 
@@ -397,12 +422,10 @@ class CSVHandlerTest {
         List<Project> projectsBeforeRemoval = csvHandler.loadAllProjectsFromUser(todo).projects();
         assertEquals(2, projectsBeforeRemoval.size());
         Project projectToRemove = projectsBeforeRemoval.get(0);
-        csvHandler.removeProjectByID(todo.id().toString());
-        ToDoList toDoList2 = new ToDoList(todo.id().toString());
-        toDoList2 = csvHandler.loadAllProjectsFromUser(toDoList2);
-        todo = toDoList2;
+        csvHandler.removeProjectByID(projectToRemove.id().toString());
+        todo.projects().clear();
         List<Project> projectsAfterRemoval = csvHandler.loadAllProjectsFromUser(todo).projects();
-        assertEquals(0, projectsAfterRemoval.size());
+        assertEquals(1, projectsAfterRemoval.size());
         assertFalse(projectsAfterRemoval.contains(projectToRemove));
     }
 
@@ -412,24 +435,46 @@ class CSVHandlerTest {
         csvHandler.setFilePathProject(filePathProject);
         createProjectTestData(filePathProject);
         todo.updateOwner("Test_User_1");
-        todo.updateOwner("Test_User_2");
+        todo2.updateOwner("Test_User_2");
         List<Project> projectsBeforeRemoval = csvHandler.loadAllProjectsFromUser(todo).projects();
         assertEquals(2, projectsBeforeRemoval.size());
         Project projectToRemove = projectsBeforeRemoval.get(0);
-        csvHandler.removeProjectByID(todo.id().toString());
+        csvHandler.removeProjectByID(todo.projects().get(0).id().toString());
         ToDoList todo3 = new ToDoList(todo.id());
         todo3 = csvHandler.loadAllProjectsFromUser(todo3);
         todo = todo3;
         List<Project> projectsAfterRemoval = csvHandler.loadAllProjectsFromUser(todo).projects();
-        assertEquals(0, projectsAfterRemoval.size());
+        assertEquals(1, projectsAfterRemoval.size());
         List<Project> projectsAfterRemovalUser2 = csvHandler.loadAllProjectsFromUser(todo2).projects();
         assertEquals(1, projectsAfterRemovalUser2.size());
         assertFalse(projectsAfterRemoval.contains(projectToRemove));
         csvHandler.removeProjectByID("nonexistent_id");
         List<Project> projectsAfterInvalidRemoval = csvHandler.loadAllProjectsFromUser(todo).projects();
-        assertEquals(0, projectsAfterInvalidRemoval.size());
+        assertEquals(1, projectsAfterInvalidRemoval.size());
         assertFalse(projectsAfterInvalidRemoval.contains(projectToRemove));
     }
+
+    @Test
+    void testRemoveToDoListByID() throws IOException {
+        String filePath = tempDir.resolve(TEST_FILEPATH_TODO).toString();
+        csvHandler.setFilePathToDoUser(filePath);
+        createToDoListTestData(filePath);
+        String todoListId = todo.id().toString();
+        csvHandler.removeToDoListByID(todoListId);
+        boolean isLineRemoved = csvHandler.getOwnerFromID(todo) == null;
+        assertTrue(isLineRemoved);
+    }
+
+    @Test
+    void testLoadAIdAndToDoListFromUser2() throws IOException {
+        String filePath = tempDir.resolve(TEST_FILEPATH_TODO).toString();
+        csvHandler.setFilePathToDoUser(filePath);
+        createToDoListTestData(filePath);
+        String username = "Test_User_1";
+        List<ToDoList> userToDos = csvHandler.loadAIdAndToDoListFromUser(username);
+        assertEquals(todo.id(), userToDos.get(0).id());
+    }
+
 
 
     @Test
@@ -501,16 +546,17 @@ class CSVHandlerTest {
         String filePathToDo = tempDir.resolve(TEST_FILEPATH_TODO).toString();
         csvHandler.setFilePathToDoUser(filePathToDo);
         createToDoListTestData(filePathToDo);
-        createProjectTestData(filePathProject);
-        createTaskTestData(filePath);
+        createProjectTestFile(filePathProject);
+        createTaskTestFile(filePath);
         todo.updateOwner("Test_User_1");
-        Project project1 = new Project.Builder("Project 1").deadline(LocalDate.of(2023, 6, 1)).build();
-        todo.addProject(project1);
-        Project project2 = new Project.Builder("Project 2").deadline(LocalDate.of(2023, 6, 2)).build();
-        todo.addProject(project2);
-        Task task = new Task.Builder("Task 1")
-                .description("Description 1")
-                .tags(List.of(new TaskTag("tag1"), new TaskTag("tag2")))
+        todo.addProject(proj1);
+        todo.addProject(proj2);
+        todo.addTask(task1);
+        todo.addTask(task2);
+        todo.addTask(task3);
+        Task task = new Task.Builder("Task 4")
+                .description("Description 4")
+                .tags(List.of(new TaskTag("tag4"), new TaskTag("tag5")))
                 .deadline(LocalDate.of(2023, 6, 1))
                 .status(TaskStatus.DONE)
                 .priority(TaskPriority.HIGH)
@@ -523,6 +569,7 @@ class CSVHandlerTest {
         assertEquals(todo.projects().size(), loadedToDoList.projects().size());
         assertEquals(todo.tasks().size(), loadedToDoList.tasks().size());
     }
+
 
     @Test
     void testLoadListById() throws IOException {
@@ -541,6 +588,7 @@ class CSVHandlerTest {
         assertEquals(3, loadedToDoList.tasks().size());
         assertEquals(2, loadedToDoList.projects().size());
     }
+
 
     @Test
     void testLoadListByIdCatchBlock() {
