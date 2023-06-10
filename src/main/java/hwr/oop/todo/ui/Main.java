@@ -2,7 +2,7 @@ package hwr.oop.todo.ui;
 
 import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.ui.cli.InputHandler;
-import hwr.oop.todo.ui.cli.atarashii.StartMenu;
+import hwr.oop.todo.ui.cli.menus.StartMenu;
 
 import java.util.Scanner;
 

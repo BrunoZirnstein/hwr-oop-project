@@ -1,4 +1,4 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.CTestHelper;

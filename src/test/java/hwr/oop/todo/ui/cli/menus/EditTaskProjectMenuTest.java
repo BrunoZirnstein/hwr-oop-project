@@ -1,4 +1,4 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,21 +10,18 @@ import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
+import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.CTestHelper;
 import hwr.oop.todo.ui.cli.InputHandler;
-import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
+import hwr.oop.todo.ui.cli.menus.MenuTestHelper.EmptyMenu;
 
-class DisplayTaskMenuTest {
-	public String getMainMenuHeadline(DisplayTaskMenu menu) {
+class EditTaskProjectMenuTest {
+	public String getMainMenuHeadline(EditTaskProjectMenu menu, Task t) {
 		String headline = String.join(System.lineSeparator(), menu.menuHeadline);
-
-		if (Main.activeTodo().owner().isPresent()) {
-			return String.format(headline, Main.activeTodo().owner().get());
-		} else {
-			return "";
-		}
+		headline = String.format(headline, t.title());
+		return headline;
 	}
 	
 	@Test
@@ -35,16 +32,17 @@ class DisplayTaskMenuTest {
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
 		Main.changeActiveTodo(new ToDoList("GLaDOS"));
+		Task t = new Task.Builder("Find the meaning of life").build();
 		
-		DisplayTaskMenu menu = new DisplayTaskMenu(new PrintStream(out), inputHandler, new EmptyMenu());
+		EditTaskProjectMenu menu = new EditTaskProjectMenu(new PrintStream(out), inputHandler, new EmptyMenu(), t);
 		menu.open();
 		
 		// just an assertion to cool down PIT-Mutation test a little bit - this is actually implementation detail
-		int expectedActionCount = 5;
+		int expectedActionCount = 4;
 		assertThat(menu.actionHandler.getCount()).isEqualTo(expectedActionCount);
 		
 		// check if mainMenu is displayed
-		assertThat(out.toString()).contains(getMainMenuHeadline(menu));
+		assertThat(out.toString()).contains(getMainMenuHeadline(menu, t));
 		assertThat(out.toString()).contains(menu.actionHandler.getMenuPrintString());
 	}
 }

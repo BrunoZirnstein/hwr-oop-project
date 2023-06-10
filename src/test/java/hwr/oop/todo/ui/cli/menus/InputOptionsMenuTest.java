@@ -1,4 +1,4 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

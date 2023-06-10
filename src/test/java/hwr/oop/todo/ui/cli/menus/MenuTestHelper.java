@@ -1,4 +1,4 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 public class MenuTestHelper {
 	

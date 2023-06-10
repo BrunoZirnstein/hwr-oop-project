@@ -1,4 +1,4 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,17 +10,17 @@ import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
-import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.CTestHelper;
 import hwr.oop.todo.ui.cli.InputHandler;
-import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
+import hwr.oop.todo.ui.cli.menus.MenuTestHelper.EmptyMenu;
+import hwr.oop.todo.core.Project;
 
-class EditTaskProjectMenuTest {
-	public String getMainMenuHeadline(EditTaskProjectMenu menu, Task t) {
+class EditProjectMenuTest {
+	public String getMainMenuHeadline(EditProjectMenu menu, Project p) {
 		String headline = String.join(System.lineSeparator(), menu.menuHeadline);
-		headline = String.format(headline, t.title());
+		headline = String.format(headline, p.title());
 		return headline;
 	}
 	
@@ -32,9 +32,9 @@ class EditTaskProjectMenuTest {
 		InputHandler inputHandler = new InputHandler(in, 0);
 		
 		Main.changeActiveTodo(new ToDoList("GLaDOS"));
-		Task t = new Task.Builder("Find the meaning of life").build();
+		Project p = new Project.Builder("Order 66").build();
 		
-		EditTaskProjectMenu menu = new EditTaskProjectMenu(new PrintStream(out), inputHandler, new EmptyMenu(), t);
+		EditProjectMenu menu = new EditProjectMenu(new PrintStream(out), inputHandler, new EmptyMenu(), p);
 		menu.open();
 		
 		// just an assertion to cool down PIT-Mutation test a little bit - this is actually implementation detail
@@ -42,7 +42,10 @@ class EditTaskProjectMenuTest {
 		assertThat(menu.actionHandler.getCount()).isEqualTo(expectedActionCount);
 		
 		// check if mainMenu is displayed
-		assertThat(out.toString()).contains(getMainMenuHeadline(menu, t));
+		assertThat(out.toString()).contains(getMainMenuHeadline(menu, p));
 		assertThat(out.toString()).contains(menu.actionHandler.getMenuPrintString());
+		
+		// check if printed menu headline contains the project title
+		assertThat(out.toString()).contains(p.title());
 	}
 }

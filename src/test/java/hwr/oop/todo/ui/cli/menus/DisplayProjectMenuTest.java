@@ -1,10 +1,11 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.CTestHelper;
 import hwr.oop.todo.ui.cli.InputHandler;
-import hwr.oop.todo.ui.cli.atarashii.MenuTestHelper.EmptyMenu;
+import hwr.oop.todo.ui.cli.menus.MenuTestHelper.EmptyMenu;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;

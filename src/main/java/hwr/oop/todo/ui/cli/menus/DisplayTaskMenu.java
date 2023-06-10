@@ -1,23 +1,26 @@
-package hwr.oop.todo.ui.cli.atarashii;
+package hwr.oop.todo.ui.cli.menus;
 
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.MenuActionHandler;
 
 import java.io.PrintStream;
 
-public class DisplayProjectMenu extends InputOptionsMenu {
+public class DisplayTaskMenu extends InputOptionsMenu {
+
     public final MenuActionHandler actionHandler;
     public final String[] menuHeadline = {"Display Task Menu",
             "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
             ""};
 
-    public DisplayProjectMenu(PrintStream out, InputHandler in, InputOptionsMenu parentMenu) {
+    public DisplayTaskMenu(PrintStream out, InputHandler in, InputOptionsMenu parentMenu) {
         this.out = out;
         this.in = in;
 
         actionHandler = new MenuActionHandler(1, out, in);
-        actionHandler.addAction("All projects", null);
-        actionHandler.addAction("Projects by title", null);
+        actionHandler.addAction("Display all tasks", null);
+        actionHandler.addAction("Display tasks by project", null);
+        actionHandler.addAction("Display tasks by tag", null);
+        actionHandler.addAction("Display tasks by title", null);
         actionHandler.addAction("Go back..", parentMenu::returnToMe);
     }
 
