@@ -17,7 +17,7 @@ public class CreateProjectUseCase implements CreateProjectInPort {
     }
 
     @Override
-    public void createProject(CreateProjectCommand createProjectCommand) {
+    public Project createProject(CreateProjectCommand createProjectCommand) {
         Project newProject = new Project.Builder(
                 createProjectCommand.projectOwner()).deadline(
                 createProjectCommand.projectDeadline()).build();
@@ -26,5 +26,7 @@ public class CreateProjectUseCase implements CreateProjectInPort {
                 createProjectCommand.listId());
         list.addProject(newProject);
         overwriteListOutPort.overwriteList(list);
+
+        return newProject;
     }
 }

@@ -5,10 +5,7 @@ import hwr.oop.todo.application.ports.in.CreateTaskInPort;
 import hwr.oop.todo.application.ports.in.CreateTaskInPort.CreateTaskCommand;
 import hwr.oop.todo.application.ports.out.LoadListByIdOutPort;
 import hwr.oop.todo.application.ports.out.OverwriteListOutPort;
-import hwr.oop.todo.core.Task;
-import hwr.oop.todo.core.TaskPriority;
-import hwr.oop.todo.core.TaskTag;
-import hwr.oop.todo.core.ToDoList;
+import hwr.oop.todo.core.*;
 import hwr.oop.todo.persistence.PersistenceAdapter;
 import hwr.oop.todo.persistence.csv.CSVHandler;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,11 +68,11 @@ class CreateTaskUseCaseTest {
         createProjectInPort.createProject(createProjectCommand);
 
         CreateTaskCommand createTaskCommand = new CreateTaskCommand(list.id(),
-                title, description, tags, deadline, null, priority);
+                title, description, tags, deadline, projectName, priority);
         Task savedTask = createTaskInPort.createTask(createTaskCommand);
 
         Task newTask = new Task.Builder(title).id(savedTask.id()).description(description)
-                .tags(tags).deadline(deadline)
+                .tags(tags).deadline(deadline).projectName(projectName)
                 .priority(priority).build();
 
         ToDoList savedList = loadListByIdOutPort.loadListById(list.id());

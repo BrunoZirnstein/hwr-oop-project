@@ -33,6 +33,19 @@ public class ToDoList {
         this.projects = new ArrayList<>();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToDoList toDoList = (ToDoList) o;
+        return Objects.equals(id, toDoList.id) && Objects.equals(tasks, toDoList.tasks) && Objects.equals(projects, toDoList.projects) && Objects.equals(owner, toDoList.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tasks, projects, owner);
+    }
+
     public ToDoListId id() {
         return id;
     }
@@ -136,30 +149,5 @@ public class ToDoList {
         }
 
         return projectObjects.get(0);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ToDoList toDoList = (ToDoList) o;
-        return Objects.equals(id, toDoList.id) && Objects.equals(tasks,
-                toDoList.tasks) && Objects.equals(projects,
-                toDoList.projects) && Objects.equals(owner, toDoList.owner);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tasks, projects, owner);
-    }
-
-    @Override
-    public String toString() {
-        return "ToDoList{" +
-                "id=" + id +
-                ", tasks=" + tasks +
-                ", projects=" + projects +
-                ", owner='" + owner + '\'' +
-                '}';
     }
 }
