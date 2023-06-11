@@ -37,7 +37,7 @@ class CreateProjectUseCaseTest {
     @DisplayName("Create project")
     void createProject() {
         String title = "university";
-        LocalDate deadline = LocalDate.of(2023, 06, 20);
+        LocalDate deadline = LocalDate.of(2023, 6, 20);
 
         CreateProjectCommand createProjectCommand = new CreateProjectCommand(
                 list.id(), title, deadline);

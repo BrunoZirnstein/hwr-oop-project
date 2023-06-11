@@ -73,7 +73,7 @@ public class CSVHandler implements PersistenceAdapter {
             fileWriter.append(COMMA_DELIMITER);
             Optional<String> projectName = task.projectName();
             if (projectName.isPresent()) {
-                fileWriter.append(projectName.get());
+                fileWriter.append(projectName.orElse(null));
             }
             fileWriter.append(COMMA_DELIMITER);
             Optional<String> owner = todo.owner();
@@ -116,6 +116,8 @@ public class CSVHandler implements PersistenceAdapter {
             }
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(todo.id().toString());
+            fileWriter.append(COMMA_DELIMITER);
+            fileWriter.append(project.id().toString());
             fileWriter.append(LINE_SEPARATOR);
         } catch (IOException e) {
             throw new IOException(ERROR_CSV, e);
@@ -123,6 +125,7 @@ public class CSVHandler implements PersistenceAdapter {
     }
 
     ToDoList loadAToDoListFromUserWithAllTasks(ToDoList todo) throws IOException {
+        todo.tasks().clear();
         try (BufferedReader br = new BufferedReader(
                 new FileReader(getFilePathTask()))) {
             String line;
@@ -146,29 +149,13 @@ public class CSVHandler implements PersistenceAdapter {
                 }
                 TaskStatus status = TaskStatus.valueOf(
                         values.get(4).toUpperCase());
-                // Should be changed if all Tasks have a priority!
                 TaskPriority priority = null;
-                if (values.get(5).isEmpty()) {
-                    priority = null;
-                } else {
-                    priority = TaskPriority.valueOf(
-                            values.get(5).toUpperCase());
+                if (!values.get(5).isEmpty()) {
+                    priority = TaskPriority.valueOf(values.get(5).toUpperCase());
                 }
                 Optional<String> projectName = Optional.empty();
                 if (!values.get(6).isEmpty()) {
                     projectName = Optional.ofNullable(values.get(6));
-                    for (Project pro : todo.projects()) {
-                        if (pro.title().equals(projectName.orElse(null))) {
-                            todo.removeProject(projectName.orElse(null));
-                            break;
-                        }
-                    }
-                    todo = createAllSavedProjects(projectName.orElse(null), todo);
-                }
-                Optional<String> owner = Optional.empty();
-                if ((!values.get(7).isEmpty()) && values.get(8).equals(todo.id().toString())) {
-                    owner = Optional.of(values.get(7));
-                    todo.updateOwner(owner.orElse(null));
                 }
                 if (values.get(8).equals(todo.id().toString())) {
                     String idBeforeEdit = values.get(9);
@@ -194,33 +181,27 @@ public class CSVHandler implements PersistenceAdapter {
     }
 
     ToDoList loadAllProjectsFromUser(ToDoList toDoList) throws IOException {
+        toDoList.projects().clear();
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(getFilePathProject()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> values = Arrays.asList(line.split(","));
                 String title = values.get(0);
-                LocalDate deadline = LocalDate.parse(values.get(1));
-                if (values.get(2).equals(toDoList.id().toString())) {
-                    Project project = new Project.Builder(title).deadline(deadline).build();
-                    toDoList.addProject(project);
+                LocalDate deadline = null;
+                if (!values.get(1).isEmpty()){
+                    deadline = LocalDate.parse(values.get(1));
                 }
-            }
-        }
-        return toDoList;
-    }
-
-    ToDoList createAllSavedProjects(String projectName, ToDoList toDoList) throws IOException {
-        Project project = null;
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader(getFilePathProject()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                List<String> values = Arrays.asList(line.split(","));
-                String title = values.get(0);
-                LocalDate deadline = LocalDate.parse(values.get(1));
-                if (values.get(2).equals(toDoList.id().toString()) && values.get(0).equals(projectName)) {
-                    project = new Project.Builder(title).deadline(deadline).build();
+                String idBeforeEdit = values.get(2);
+                String idBeforeEditFromList = toDoList.id().toString();
+                String id = idBeforeEdit.substring(idBeforeEdit.indexOf('=') + 1, idBeforeEdit.lastIndexOf(']'));
+                String idTodo = idBeforeEditFromList.substring(idBeforeEditFromList.indexOf('=') + 1, idBeforeEditFromList.lastIndexOf(']'));
+                if (id.equals(idTodo)) {
+                    String projectIdBeforeEdit = values.get(3);
+                    String projectIdAfterEdit = projectIdBeforeEdit.substring(projectIdBeforeEdit.indexOf('=') + 1, projectIdBeforeEdit.lastIndexOf(']'));
+                    UUID projectUUID = UUID.fromString(projectIdAfterEdit);
+                    ProjectId projectId = new ProjectId(projectUUID);
+                    Project project = new Project.Builder(title).id(projectId).deadline(deadline).build();
                     toDoList.addProject(project);
                 }
             }
@@ -270,12 +251,11 @@ public class CSVHandler implements PersistenceAdapter {
         File tempFile = new File(getFilePathTask() + "tasktemp.csv");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
-
-                if (!fields.isEmpty() && fields.size() >= 9 && !fields.get(8).equals(iD)) {
+                if (!fields.isEmpty() && !fields.get(9).equals(iD)) {
                     writer.write(line);
                     writer.write(LINE_SEPARATOR);
                 }
@@ -290,12 +270,12 @@ public class CSVHandler implements PersistenceAdapter {
         File tempFile = new File(getFilePathProject() + "projecttemp.csv");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 List<String> fields = Arrays.asList(line.split(COMMA_DELIMITER));
 
-                if (!fields.isEmpty() && fields.size() >= 3 && !fields.get(2).equals(iD)) {
+                if (fields.size() >= 2 && !fields.get(3).equals(iD)) {
                     writer.write(line);
                     writer.write(LINE_SEPARATOR);
                 }
@@ -356,6 +336,7 @@ public class CSVHandler implements PersistenceAdapter {
     public ToDoList loadListById(ToDoListId id) {
         ToDoList todo = new ToDoList(id);
         try {
+            todo = loadAllProjectsFromUser(todo);
             todo = loadAToDoListFromUserWithAllTasks(todo);
             String owner = getOwnerFromID(todo);
             todo.updateOwner(owner);
