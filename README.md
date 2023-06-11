@@ -11,6 +11,14 @@ This repository contains a student project created for an ongoing lecture on obj
 | 2      |    create list   |    ✔️     |     Bruno        |    DONE   |
 | 3      |    create project   |    ✔️     |     Bruno        | DONE   |
 
+use cases funktionieren mit persistence,
+
+existierende use cases werden von Menu benutzt,
+
+fast alle Menüklassen wie in menu overwiew angelegt,
+
+restliche funktionalitäten (noch nicht über use cases implementiert) benutzt Menü noch die Business Logik
+
 ## ToDo List
 
 [TODO]: # (For each feature implemented, add a row to the table!)
