@@ -1,6 +1,6 @@
 package hwr.oop.todo.ui.cli.menus;
 
-import hwr.oop.todo.application.ports.in.CreateTaskInPort;
+import hwr.oop.todo.application.ports.in.CreateTaskInPort.CreateTaskCommand;
 import hwr.oop.todo.core.Task;
 import hwr.oop.todo.core.TaskPriority;
 import hwr.oop.todo.core.TaskStatus;
@@ -8,24 +8,31 @@ import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.Console;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.MenuActionHandler;
-import hwr.oop.todo.application.ports.in.CreateTaskInPort.CreateTaskCommand;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-import static hwr.oop.todo.application.ports.in.CreateTaskInPort.*;
-
 public class MainMenu extends InputOptionsMenu {
 
-    private final DisplayTaskMenu displayTaskMenu;
-    private final DisplayProjectMenu displayProjectMenu;
-
+    public static final String CREATE_SIMPLE_TASK_MSG = "Enter the name of the task you want to create.";
+    public static final String CREATE_SIMPLE_TASK_ERROR_MSG = "Invalid (empty) task name.";
+    public static final String CREATE_SIMPLE_TASK_SUCCESS_MSG = "Successfully created the task %s";
+    public static final String CREATE_TASK_DATE_MSG = "Please enter a endline date for your task in the format YYYY-MM-DD";
+    public static final String CREATE_TASK_DESCR_MSG = "Please enter a task description or press ENTER to leave blank";
+    public static final String CREATE_TASK_STATUS_MSG_PREFIX = "Please enter a task status. The following task status'es are available:"
+            + System.lineSeparator() + "%s";
+    public static final String CREATE_TASK_STATUS_ERROR_MSG = "No valid status was entered. Please enter a valid status.";
+    public static final String CREATE_TASK_PRIORITY_MSG_PREFIX = "Please enter a task priority. The following task-priorities are available: "
+            + System.lineSeparator() + "%s";
+    public static final String CREATE_TASK_PRIORITY_ERROR_MSG = "No valid task priority was entered. Please enter a valid task priority.";
     public final MenuActionHandler actionHandler;
-    public final String[] menuHeadline = { "ToDo-List of: %s",
+    public final String[] menuHeadline = {"ToDo-List of: %s",
             "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
             "",
-            "[MainMenu]" };
+            "[MainMenu]"};
+    private final DisplayTaskMenu displayTaskMenu;
+    private final DisplayProjectMenu displayProjectMenu;
 
     public MainMenu(PrintStream out, InputHandler in, InputOptionsMenu parentMenu) {
         this.out = out;
@@ -51,10 +58,6 @@ public class MainMenu extends InputOptionsMenu {
         printMenu(out, actionHandler, menuHeadline, Main.activeTodo().owner().orElse(null));
     }
 
-    public static final String CREATE_SIMPLE_TASK_MSG = "Enter the name of the task you want to create.";
-    public static final String CREATE_SIMPLE_TASK_ERROR_MSG = "Invalid (empty) task name.";
-    public static final String CREATE_SIMPLE_TASK_SUCCESS_MSG = "Successfully created the task %s";
-
     private void createSimpleTask() {
         String taskName = Console.promptForString(out, in, true, CREATE_SIMPLE_TASK_MSG, CREATE_SIMPLE_TASK_ERROR_MSG);
 
@@ -66,15 +69,6 @@ public class MainMenu extends InputOptionsMenu {
         out.println(String.format(CREATE_SIMPLE_TASK_SUCCESS_MSG, taskName));
         returnToMe();
     }
-
-    public static final String CREATE_TASK_DATE_MSG = "Please enter a endline date for your task in the format YYYY-MM-DD";
-    public static final String CREATE_TASK_DESCR_MSG = "Please enter a task description or press ENTER to leave blank";
-    public static final String CREATE_TASK_STATUS_MSG_PREFIX = "Please enter a task status. The following task status'es are available:"
-            + System.lineSeparator() + "%s";
-    public static final String CREATE_TASK_STATUS_ERROR_MSG = "No valid status was entered. Please enter a valid status.";
-    public static final String CREATE_TASK_PRIORITY_MSG_PREFIX = "Please enter a task priority. The following task-priorities are available: "
-            + System.lineSeparator() + "%s";
-    public static final String CREATE_TASK_PRIORITY_ERROR_MSG = "No valid task priority was entered. Please enter a valid task priority.";
 
     private void createTask() {
         String taskName = Console.promptForString(out, in, true, CREATE_SIMPLE_TASK_MSG, CREATE_SIMPLE_TASK_ERROR_MSG);
