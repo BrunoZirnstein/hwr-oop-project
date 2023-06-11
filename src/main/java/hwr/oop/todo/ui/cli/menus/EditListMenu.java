@@ -24,7 +24,7 @@ public class EditListMenu extends InputOptionsMenu {
 
     @Override
     public void open() {
-        Main.activeTodo().owner().ifPresentOrElse(owner -> printMenu(out, actionHandler, menuHeadline, owner),
-                () -> printMenu(out, actionHandler, menuHeadline, ""));
+        printMenu(out, actionHandler, menuHeadline, Main.activeTodo().owner()
+        																.orElse(""));
     }
 }

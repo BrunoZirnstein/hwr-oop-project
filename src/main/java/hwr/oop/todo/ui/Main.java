@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static final StartMenu startMenu = new StartMenu(System.out, new InputHandler(new Scanner(System.in), -1));
     private static ToDoList activeTodo = null;
 
     public static void main(String[] args) {
+    	StartMenu startMenu = new StartMenu(System.out, new InputHandler(new Scanner(System.in), -1)); // start menu creation must take place here for UnitTest
         startMenu.open();
     }
 

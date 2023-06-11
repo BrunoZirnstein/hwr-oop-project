@@ -1,6 +1,7 @@
 package hwr.oop.todo.ui.cli.menus;
 
 import hwr.oop.todo.core.Task;
+import hwr.oop.todo.core.TaskPriority;
 import hwr.oop.todo.core.TaskStatus;
 import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.Console;
@@ -9,9 +10,11 @@ import hwr.oop.todo.ui.cli.MenuActionHandler;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class MainMenu extends InputOptionsMenu {
 
+	private final DisplayTaskMenu displayTaskMenu;
     public final MenuActionHandler actionHandler;
     public final String[] menuHeadline = {"ToDo-List of: %s",
             "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
@@ -21,11 +24,13 @@ public class MainMenu extends InputOptionsMenu {
     public MainMenu(PrintStream out, InputHandler in, InputOptionsMenu parentMenu) {
         this.out = out;
         this.in = in;
+        
+        displayTaskMenu = new DisplayTaskMenu(out, in, this);
 
         actionHandler = new MenuActionHandler(1, out, in);
         actionHandler.addAction("Create Task [quick]", this::createSimpleTask);
-        actionHandler.addAction("Create task [detailed]", null);
-        actionHandler.addAction("Show Tasks", null);
+        actionHandler.addAction("Create task [detailed]", this::createTask);
+        actionHandler.addAction("Show Tasks", displayTaskMenu::open);
         actionHandler.addAction("Edit Tasks", null);
         actionHandler.addAction("Create Project", null);
         actionHandler.addAction("Edit Project", null);
@@ -56,13 +61,29 @@ public class MainMenu extends InputOptionsMenu {
     	returnToMe();
     }
 
-    public static final String CREATE_TASK_DATE_MSG = "Please enter a date for your task in the format YYYY-MM-DD";
+    public static final String CREATE_TASK_DATE_MSG = "Please enter a endline date for your task in the format YYYY-MM-DD";
+    public static final String CREATE_TASK_DESCR_MSG = "Please enter a task description or press ENTER to leave blank";
+    public static final String CREATE_TASK_STATUS_MSG_PREFIX = "Please enter a task status. The following task status'es are available:" + System.lineSeparator() + "%s";
+    public static final String CREATE_TASK_STATUS_ERROR_MSG = "No valid status was entered. Please enter a valid status.";
+    public static final String CREATE_TASK_PRIORITY_MSG_PREFIX = "Please enter a task priority. The following task-priorities are available: " + System.lineSeparator() + "%s";
+    public static final String CREATE_TASK_PRORITY_ERROR_MSG = "No valid task priority was entered. Please enter a valid task priority.";
     private void createTask() {
     	String taskName = Console.promptForString(out, in, true, CREATE_SIMPLE_TASK_MSG, CREATE_SIMPLE_TASK_ERROR_MSG);
     	
+    	String description = Console.promptForString(out, in, false, CREATE_TASK_DESCR_MSG, null);
+    	
     	LocalDate taskDate = Console.promptForDate(out, in, false, CREATE_TASK_DATE_MSG, "Invalid date format!");
     	
-    	Task t = new Task.Builder(taskName).deadline(taskDate).status(TaskStatus.DONE).build();
+    	String msg = String.format(CREATE_TASK_PRIORITY_MSG_PREFIX, Arrays.toString(TaskPriority.values()));
+    	TaskPriority priority = Console.promptForEnum(TaskPriority.class, out, in, false, false, msg, CREATE_TASK_PRORITY_ERROR_MSG);
+    	
+    	msg = String.format(CREATE_TASK_STATUS_MSG_PREFIX, Arrays.toString(TaskStatus.values()));
+    	TaskStatus status = Console.promptForEnum(TaskStatus.class, out, in, false, false, msg, CREATE_TASK_STATUS_ERROR_MSG);
+    	
+    	Task t = new Task.Builder(taskName).description(description).deadline(taskDate).status(status).priority(priority).build();
     	Main.activeTodo().addTask(t);
+    	
+    	out.println(String.format(CREATE_SIMPLE_TASK_SUCCESS_MSG, taskName));
+    	returnToMe();
     }
 }

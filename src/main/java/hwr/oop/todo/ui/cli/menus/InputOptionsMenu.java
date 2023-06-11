@@ -15,7 +15,7 @@ public abstract class InputOptionsMenu {
     protected InputHandler in;
 
     /**
-     * A shortcut to print the menu with headline and input options, as well as handle the user input.
+     * A shortcut to print the menu with headline and input options, as well as to handle the user input.
      *
      * @param actionHandler       MenuActionHandler which handles the input and prints the available input options.
      * @param headline            Headline to be printed for the menu
@@ -39,7 +39,7 @@ public abstract class InputOptionsMenu {
 
     /**
      * Let's the user press ENTER, clears the console and opens the menu.
-     * This method is specifically designed for sub-menus, which will return the super-menu.
+     * This method is specifically designed for sub-menus, which will return to the super-menu.
      */
     public void returnToMe() {
         if (!Console.enterToContinue(out, in)) {
