@@ -8,6 +8,7 @@ import hwr.oop.todo.ui.cli.MenuActionHandler;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Objects;
 
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.*;
@@ -36,7 +37,7 @@ public class DisplayTaskMenu extends InputOptionsMenu {
         printMenu(out, actionHandler, menuHeadline, null);
     }
 
-    public static final String DISPLAY_TASK_NONE = "{none}";
+    public static final String DISPLAY_TASK_NONE = "---";
     public static final String DISPLAY_ALL_TASKS_MSG = "Listing of all existing tasks:" + System.lineSeparator();
     private void displayAllTasks() {
     	Console.clear(out);
@@ -50,8 +51,14 @@ public class DisplayTaskMenu extends InputOptionsMenu {
     	
     	List<Task> taskList = Main.activeTodo().tasks();
     	for(Task t : taskList) {
+    		String projectName	= t.projectName().orElse(DISPLAY_TASK_NONE);
+    		String priority 	= Objects.toString(t.priority(), DISPLAY_TASK_NONE);
+    		String title 		= Objects.toString(t.title(), DISPLAY_TASK_NONE);
+    		String description 	= Objects.toString(t.description(), DISPLAY_TASK_NONE);
+    		String status 		= Objects.toString(t.status(), DISPLAY_TASK_NONE);
+    		String deadline 	= Objects.toString(t.deadline(), DISPLAY_TASK_NONE);
     		
-    		table.addRow(t.projectName().orElse(DISPLAY_TASK_NONE), t.priority().toString(), t.title(), t.description(), t.status().toString(), t.deadline().toString());
+    		table.addRow(projectName, priority, title, description, status, deadline);
     		table.addRule();
     	}
     	

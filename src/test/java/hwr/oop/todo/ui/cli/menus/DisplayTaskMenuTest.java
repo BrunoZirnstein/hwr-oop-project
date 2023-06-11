@@ -119,4 +119,24 @@ class DisplayTaskMenuTest {
         // check if method returned back to menu
         assertThat(out.toString()).contains(Console.ENTER_TO_CONTINUE_MESSAGE);
     }
+	
+	@Test
+	void Test_displayAllTasks_emptyAttributes() {
+		OutputStream out = new ByteArrayOutputStream();
+        InputStream inputStream = CTestHelper.createInputStreamForInput("1\n");
+        Scanner in = new Scanner(inputStream);
+        InputHandler inputHandler = new InputHandler(in, 1);     
+        
+        // create task with empty fields
+        Main.changeActiveTodo(new ToDoList("GLaDOS"));
+        Main.activeTodo().addTask(new Task.Builder("Bla").build());
+        
+        // print the tasks
+        DisplayTaskMenu menu = new DisplayTaskMenu(new PrintStream(out), inputHandler, new EmptyMenu());
+        menu.open();
+        
+        int expectedEmptyFields = 4;
+        int actualEmptyFields = StringUtils.countMatches(out.toString(), DisplayTaskMenu.DISPLAY_TASK_NONE);
+        assertThat(actualEmptyFields).isEqualTo(expectedEmptyFields);
+	}
 }
