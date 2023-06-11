@@ -8,14 +8,16 @@ import hwr.oop.todo.ui.cli.MenuActionHandler;
 
 import java.io.PrintStream;
 
+import static hwr.oop.todo.application.ports.in.CreateListInPort.CreateListCommand;
+
 public class StartMenu extends InputOptionsMenu {
 
     public static final String LOAD_OR_CREATE_SUCCESS_MSG_PREFIX = "Success!: ";
     public final MenuActionHandler inputHandler;
-    public final String[] menuHeadline = {	"Welcome to the ultimate-u-never-forget ToDo List",
-								            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-								            "",
-								            "[Startmenu]"};
+    public final String[] menuHeadline = {"Welcome to the ultimate-u-never-forget ToDo List",
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+            "",
+            "[Startmenu]"};
     private final MainMenu mainMenu;
 
     public StartMenu(PrintStream out, InputHandler in) {
@@ -43,7 +45,10 @@ public class StartMenu extends InputOptionsMenu {
         String todolistName = Console.promptForString(out, in, true, promptMsg, invalidInputMsg);
 
         out.println(LOAD_OR_CREATE_SUCCESS_MSG_PREFIX + todolistName + System.lineSeparator());
-        Main.changeActiveTodo(new ToDoList(todolistName));
+
+        CreateListCommand createListCommand = new CreateListCommand(todolistName);
+        ToDoList newList = Main.createListInPort.createList(createListCommand);
+        Main.changeActiveTodo(newList);
 
         mainMenu.open();
     }
