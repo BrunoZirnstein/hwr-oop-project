@@ -1,7 +1,6 @@
 package hwr.oop.todo.ui.cli;
 
 import java.io.PrintStream;
-import java.lang.Enum;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
