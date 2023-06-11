@@ -15,6 +15,9 @@ import java.util.Arrays;
 public class MainMenu extends InputOptionsMenu {
 
 	private final DisplayTaskMenu displayTaskMenu;
+	private final DisplayProjectMenu displayProjectMenu;
+	
+	
     public final MenuActionHandler actionHandler;
     public final String[] menuHeadline = {"ToDo-List of: %s",
             "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
@@ -26,6 +29,8 @@ public class MainMenu extends InputOptionsMenu {
         this.in = in;
         
         displayTaskMenu = new DisplayTaskMenu(out, in, this);
+        displayProjectMenu = new DisplayProjectMenu(out, in, this);
+       
 
         actionHandler = new MenuActionHandler(1, out, in);
         actionHandler.addAction("Create Task [quick]", this::createSimpleTask);
@@ -34,7 +39,7 @@ public class MainMenu extends InputOptionsMenu {
         actionHandler.addAction("Edit Tasks", null);
         actionHandler.addAction("Create Project", null);
         actionHandler.addAction("Edit Project", null);
-        actionHandler.addAction("Show Project", null);
+        actionHandler.addAction("Show Project", displayProjectMenu::open);
         actionHandler.addAction("Edit Todo-List", null);
         actionHandler.addAction("Go Back", parentMenu::returnToMe);
     }
