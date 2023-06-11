@@ -65,7 +65,7 @@ class CreateTaskUseCaseTest {
 
         CreateProjectCommand createProjectCommand = new CreateProjectCommand(
                 list.id(), projectName, null);
-        Project createdProject = createProjectInPort.createProject(createProjectCommand);
+        createProjectInPort.createProject(createProjectCommand);
 
         CreateTaskCommand createTaskCommand = new CreateTaskCommand(list.id(),
                 title, description, tags, deadline, projectName, priority);
