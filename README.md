@@ -15,7 +15,9 @@ use cases funktionieren mit persistence,
 
 existierende use cases werden von Menu benutzt,
 
-fast alle Menüklassen wie in menu overwiew angelegt
+fast alle Menüklassen wie in menu overwiew angelegt,
+
+restliche funktionalitäten (noch nicht über use cases implementiert) benutzt Menü noch die Business Logik
 
 ## ToDo List
 
