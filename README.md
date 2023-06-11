@@ -9,7 +9,7 @@ This repository contains a student project created for an ongoing lecture on obj
 |--------|---------|-------|-------------|-----------|
 | 1      |    add task   |    ✔️     |     Bruno        |       DONE    |
 | 2      |    create list   |    ✔️     |     Bruno        |    DONE   |
-| 3      |    create project   |    ✔️     |     Bruno        | Blocked   |
+| 3      |    create project   |    ✔️     |     Bruno        | DONE   |
 
 ## ToDo List
 
