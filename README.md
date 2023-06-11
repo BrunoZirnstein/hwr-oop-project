@@ -11,8 +11,11 @@ This repository contains a student project created for an ongoing lecture on obj
 | 2      |    create list   |    ✔️     |     Bruno        |    DONE   |
 | 3      |    create project   |    ✔️     |     Bruno        | DONE   |
 
-use cases funktionieren mit persistence
-existierende use cases werden von Menu benutzt
+use cases funktionieren mit persistence,
+
+existierende use cases werden von Menu benutzt,
+
+fast alle Menüklassen wie in menu overwiew angelegt
 
 ## ToDo List
 
