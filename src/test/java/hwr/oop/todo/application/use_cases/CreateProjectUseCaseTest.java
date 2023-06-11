@@ -41,16 +41,13 @@ class CreateProjectUseCaseTest {
 
         CreateProjectCommand createProjectCommand = new CreateProjectCommand(
                 list.id(), title, deadline);
-        createProjectInPort.createProject(createProjectCommand);
+        Project createdProject = createProjectInPort.createProject(createProjectCommand);
 
-        Project newProject = new Project.Builder(title).deadline(
+        Project newProject = new Project.Builder(title).id(createdProject.id()).deadline(
                 deadline).build();
 
         ToDoList savedList = loadListByIdOutPort.loadListById(list.id());
         List<Project> savedProjects = savedList.projects();
-
-        System.out.println(savedProjects.get(0));
-        System.out.println(newProject);
 
         assertThat(savedProjects).containsExactly(newProject);
     }
