@@ -41,11 +41,7 @@ public class MainMenu extends InputOptionsMenu {
 
     @Override
     public void open() {
-        if (Main.activeTodo().owner().isPresent()) {
-            printMenu(out, actionHandler, menuHeadline, Main.activeTodo().owner().get());
-        } else {
-            printMenu(out, actionHandler, menuHeadline, null);
-        }
+        printMenu(out, actionHandler, menuHeadline, Main.activeTodo().owner().orElse(null));
     }
     
     public static final String CREATE_SIMPLE_TASK_MSG = "Enter the name of the task you want to create.";
