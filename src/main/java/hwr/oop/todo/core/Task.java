@@ -29,6 +29,19 @@ public class Task {
         this.projectName = projectName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(id, task.id) && Objects.equals(tags, task.tags) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(deadline, task.deadline) && status == task.status && priority == task.priority && Objects.equals(projectName, task.projectName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tags, title, description, deadline, status, priority, projectName);
+    }
+
     public TaskId id() {
         return id;
     }
@@ -89,11 +102,6 @@ public class Task {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" + "id=" + id + ", tags=" + tags + ", title='" + title + '\'' + ", description='" + description + '\'' + ", deadline=" + deadline + ", status=" + status + ", priority=" + priority + ", projectName='" + projectName + '\'' + '}';
-    }
-
     public void changePriority(TaskPriority priority) {
         this.priority = priority;
     }
@@ -104,25 +112,6 @@ public class Task {
 
     public void deleteProject() {
         this.projectName = null;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(tags,
-                task.tags) && Objects.equals(title,
-                task.title) && Objects.equals(description,
-                task.description) && Objects.equals(deadline,
-                task.deadline) && status == task.status && priority == task.priority && Objects.equals(
-                projectName, task.projectName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, tags, title, description, deadline, status,
-                priority, projectName);
     }
 
     public static class Builder {

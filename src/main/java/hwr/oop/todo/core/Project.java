@@ -9,10 +9,23 @@ public class Project {
     private String title;
     private LocalDate deadline;
 
-    private Project(ProjectId id,String title, LocalDate deadline) {
+    private Project(ProjectId id, String title, LocalDate deadline) {
         this.id = id;
         this.title = title;
         this.deadline = deadline;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id) && Objects.equals(title, project.title) && Objects.equals(deadline, project.deadline);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, deadline);
     }
 
     public ProjectId id() {
