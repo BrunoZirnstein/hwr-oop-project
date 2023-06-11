@@ -7,5 +7,6 @@ import hwr.oop.todo.core.ToDoListId;
 
 public interface PersistenceAdapter extends LoadListByIdOutPort, OverwriteListOutPort {
     void overwriteList(ToDoList toDoList);
+
     ToDoList loadListById(ToDoListId id);
 }

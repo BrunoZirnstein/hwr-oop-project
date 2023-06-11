@@ -73,7 +73,7 @@ public class ConsoleTest {
 
     @Test
     void Test_promptForString() {
-        String validUserInput = "日本語が大好きです。";
+        String validUserInput = "??????????";
         OutputStream out = new ByteArrayOutputStream();
         // first input is empty
         InputStream inputStream = CTestHelper.createInputStreamForInput("\n" + validUserInput + "\n");
@@ -98,7 +98,7 @@ public class ConsoleTest {
 
     @Test
     void Test_promptForString_noInvalidStringHandling() {
-        String validUserInput = "日本語が大好きです。";
+        String validUserInput = "??????????";
         OutputStream out = new ByteArrayOutputStream();
         // first input is empty
         InputStream inputStream = CTestHelper.createInputStreamForInput("\n" + validUserInput + "\n");
