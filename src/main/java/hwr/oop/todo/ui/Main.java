@@ -4,7 +4,7 @@ import hwr.oop.todo.core.ToDoList;
 import hwr.oop.todo.persistence.PersistenceAdapter;
 import hwr.oop.todo.persistence.csv.CSVHandler;
 import hwr.oop.todo.ui.cli.InputHandler;
-import hwr.oop.todo.ui.cli.MainMenu;
+import hwr.oop.todo.ui.cli.menus.StartMenu;
 
 import java.util.Scanner;
 
