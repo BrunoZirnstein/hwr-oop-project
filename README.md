@@ -25,7 +25,7 @@ This repository contains a student project created for an ongoing lecture on obj
 | 6      | Task Klasse - optionale Parameter mit builder pattern      |   ✔️   | Bruno            |
 | 7      | Projekt Klasse anpassen       |   ✔️   | Jason & Frauke            |
 | 8      | ToDo Liste Klasse       |   ✔️   | Jason & Frauke            |
-| 9      | Hauptmenü Tasks anlegen      |      | Thomas            |
+| 9      | Hauptmenü Tasks anlegen      |    ✔️      | Thomas            |
 | 10      | Todo Klasse mit Projekten      |   ✔️    | Bruno            |
 | 11      | Update task       |     ✔️   | Jason & Frauke            |
 | 12      | CSV Read & Write anpassen       |   ✔️      | Niklas            |
