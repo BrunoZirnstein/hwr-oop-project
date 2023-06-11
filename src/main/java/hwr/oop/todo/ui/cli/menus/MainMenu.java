@@ -7,6 +7,7 @@ import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.Console;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.MenuActionHandler;
+import hwr.oop.todo.application.ports.in.CreateTaskInPort.CreateTaskCommand;
 
 import java.io.PrintStream;
 import java.time.LocalDate;
@@ -50,7 +51,10 @@ public class MainMenu extends InputOptionsMenu {
     private void createSimpleTask() {
     	String taskName = Console.promptForString(out, in, true, CREATE_SIMPLE_TASK_MSG, CREATE_SIMPLE_TASK_ERROR_MSG);
     	
-    	Task t = new Task.Builder(taskName).build();
+    	//Task t = new Task.Builder(taskName).build();
+    	
+    	CreateTaskCommand taskCommand = new CreateTaskCommand(null, taskName, null, null, null, null, null);
+    	Task t = Main.CREATE_TASK_IN_PORT.createTask(taskCommand);
     	Main.activeTodo().addTask(t);
     	
     	out.println(String.format(CREATE_SIMPLE_TASK_SUCCESS_MSG, taskName));
@@ -68,7 +72,7 @@ public class MainMenu extends InputOptionsMenu {
     	
     	String description = Console.promptForString(out, in, false, CREATE_TASK_DESCR_MSG, null);
     	
-    	LocalDate taskDate = Console.promptForDate(out, in, false, CREATE_TASK_DATE_MSG, "Invalid date format!");
+    	LocalDate deadline = Console.promptForDate(out, in, false, CREATE_TASK_DATE_MSG, "Invalid date format!");
     	
     	String msg = String.format(CREATE_TASK_PRIORITY_MSG_PREFIX, Arrays.toString(TaskPriority.values()));
     	TaskPriority priority = Console.promptForEnum(TaskPriority.class, out, in, false, false, msg, CREATE_TASK_PRORITY_ERROR_MSG);
@@ -76,7 +80,11 @@ public class MainMenu extends InputOptionsMenu {
     	msg = String.format(CREATE_TASK_STATUS_MSG_PREFIX, Arrays.toString(TaskStatus.values()));
     	TaskStatus status = Console.promptForEnum(TaskStatus.class, out, in, false, false, msg, CREATE_TASK_STATUS_ERROR_MSG);
     	
-    	Task t = new Task.Builder(taskName).description(description).deadline(taskDate).status(status).priority(priority).build();
+    	//Task t = new Task.Builder(taskName).description(description).deadline(taskDate).status(status).priority(priority).build();
+    	
+    	CreateTaskCommand taskCommand = new CreateTaskCommand(null, taskName, description, null, deadline, null, priority);
+    	Task t = Main.CREATE_TASK_IN_PORT.createTask(taskCommand);
+    	t.updateStatus(status);
     	Main.activeTodo().addTask(t);
     	
     	out.println(String.format(CREATE_SIMPLE_TASK_SUCCESS_MSG, taskName));

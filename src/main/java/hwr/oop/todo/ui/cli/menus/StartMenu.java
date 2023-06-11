@@ -5,6 +5,7 @@ import hwr.oop.todo.ui.Main;
 import hwr.oop.todo.ui.cli.Console;
 import hwr.oop.todo.ui.cli.InputHandler;
 import hwr.oop.todo.ui.cli.MenuActionHandler;
+import hwr.oop.todo.application.ports.in.CreateListInPort.CreateListCommand;
 
 import java.io.PrintStream;
 
@@ -43,7 +44,12 @@ public class StartMenu extends InputOptionsMenu {
         String todolistName = Console.promptForString(out, in, true, promptMsg, invalidInputMsg);
 
         out.println(LOAD_OR_CREATE_SUCCESS_MSG_PREFIX + todolistName + System.lineSeparator());
+        
         Main.changeActiveTodo(new ToDoList(todolistName));
+        
+//        CreateListCommand listCommand = new CreateListCommand(todolistName);
+//        ToDoList list = Main.CREATE_LIST_IN_PORT.createList(listCommand);
+//        Main.changeActiveTodo(list);
 
         mainMenu.open();
     }

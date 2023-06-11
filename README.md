@@ -49,4 +49,7 @@ This repository contains a student project created for an ongoing lecture on obj
 
 ## Additional Dependencies
 
-None
+| Number | Dependency |
+|--------|---------|
+|1|asciitable|
+
