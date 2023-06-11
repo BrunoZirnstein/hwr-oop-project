@@ -37,14 +37,15 @@ This repository contains a student project created for an ongoing lecture on obj
 | 18      | Menü Tests erstellen     |     ✔️    | Thomas            |
 | 19      | CSV Klassen bzgl. mutation coverage überarbeiten       |     ✔️      | Niklas            |
 | 20      | UML Diagramm mit Ziel-Architektur erstellen: Klassen & Package Struktur überarbeiten (IO / Application / Persistence)        |    ✔️      | Bruno            |
-| 21      |    CSV Logik an neue Architektur anpassen     |            | Niklas            |
+| 21      |    CSV Logik an neue Architektur anpassen     |       ✔️       | Niklas            |
 | 22      |    neue Architektur umsetzen: Aufteilung in Packages, Erstellen Ports     |       ✔️     | Bruno            |
-| 23      |    Ausbauen der Menü-Funktionalität und Verbesserung der bestehenden Menü-Tests    |         | Thomas            |
+| 23      |    Ausbauen der Menü-Funktionalität und Verbesserung der bestehenden Menü-Tests    |       ✔️    | Thomas            |
 | 24      |    Anpassen des Menüs an neue Architetktur (Ports)    |         | Thomas            |
 | 25      |    neue Architektur umsetzen: UseCase tests & SUT     |            | Bruno            |
 | 26      |    Id (UUID) zu Projekt, Task & ToDoList hinzufügen + benötigte Mehtoden     |       ✔️       | Jason            |
-| 26      |    Ids in eigene Klassen auslagern     |       ✔️       | Bruno            |
-| 28      |    SonarLint Issues beheben, Kommentare entfernen, allgemeines Aufräumen     |             | Jason & Frauke           |
+| 27      |    Ids in eigene Klassen auslagern     |       ✔️       | Bruno            |
+| 28      |    SonarLint Issues beheben, Kommentare entfernen, allgemeines Aufräumen     |      ✔️         | Jason & Frauke           |
+| 29      |    Create list, project & task use case mit tests implementieren     |       ✔️       | Bruno            |
 
 
 ## Additional Dependencies
